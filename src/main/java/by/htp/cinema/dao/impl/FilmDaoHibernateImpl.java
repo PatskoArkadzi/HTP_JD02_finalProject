@@ -6,10 +6,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import by.htp.cinema.dao.BaseDao;
+import by.htp.cinema.dao.FilmDao;
 import by.htp.cinema.domain.Film;
 
-public class FilmDaoHibernateImpl implements BaseDao<Film> {
+public class FilmDaoHibernateImpl implements FilmDao {
 
 	@Override
 	public void create(Film entity) {
