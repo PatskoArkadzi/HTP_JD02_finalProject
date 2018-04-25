@@ -86,7 +86,7 @@ public class Film extends Entity {
 
 	@Override
 	public String toString() {
-		return "Film [filmName=" + filmName + ", genre=" + genre + ", description=" + description + "]";
+		return "Film [\nfilmName=" + filmName + "\ngenre=" + genre + "\ndescription=" + description + "\n]\n";
 	}
 
 }
