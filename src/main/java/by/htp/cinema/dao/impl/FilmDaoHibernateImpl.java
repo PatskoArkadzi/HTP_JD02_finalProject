@@ -35,11 +35,7 @@ public class FilmDaoHibernateImpl implements FilmDao {
 	public void update(Film entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Film film=(Film)session.get(Film.class, entity.getId());
-		session.getTransaction().begin();
-		film.setFilmName(entity.getFilmName());
-		film.setGenre(entity.getGenre());
-		film.setDescription(entity.getDescription());
+		session.beginTransaction();
 		session.update(entity);
 		session.getTransaction().commit();
 		session.close();
@@ -53,7 +49,6 @@ public class FilmDaoHibernateImpl implements FilmDao {
 		session.delete(entity);
 		session.getTransaction().commit();
 		session.close();
-
 	}
 
 	@Override

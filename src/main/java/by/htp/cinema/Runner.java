@@ -10,7 +10,6 @@ public class Runner {
 
 	public static void main(String[] args) {
 		FilmDao filmDao = new FilmDaoHibernateImpl();
-		
 		/*
 		Film filmEng=new Film(1,"aaa","bbb","ccc");
 		Film filmRus=new Film(1,"ааа","ббб","ввв");
@@ -24,10 +23,10 @@ public class Runner {
 			System.out.println(f);*/
 		Film testFilm=new Film(1,"aaa","bbb","ccc");
 		filmDao.create(testFilm);
-		System.out.println(filmDao.read(8));
+		System.out.println(filmDao.read(1));
 		testFilm.setFilmName("111");
 		filmDao.update(testFilm);
-		System.out.println(filmDao.read(8));
+		System.out.println(filmDao.read(1));
 		
 	}
 
