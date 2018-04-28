@@ -11,8 +11,8 @@ public class Runner {
 	public static void main(String[] args) {
 		FilmDao filmDao = new FilmDaoHibernateImpl();
 		
-		
-		/*Film filmEng=new Film(1,"aaa","bbb","ccc");
+		/*
+		Film filmEng=new Film(1,"aaa","bbb","ccc");
 		Film filmRus=new Film(1,"ааа","ббб","ввв");
 		
 		filmDao.create(filmEng);		
@@ -22,7 +22,12 @@ public class Runner {
 
 		for (Film f : films)
 			System.out.println(f);*/
-		System.out.println(filmDao.read(1));
+		Film testFilm=new Film(1,"aaa","bbb","ccc");
+		filmDao.create(testFilm);
+		System.out.println(filmDao.read(8));
+		testFilm.setFilmName("111");
+		filmDao.update(testFilm);
+		System.out.println(filmDao.read(8));
 		
 	}
 

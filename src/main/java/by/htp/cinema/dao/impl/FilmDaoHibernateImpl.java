@@ -33,13 +33,26 @@ public class FilmDaoHibernateImpl implements FilmDao {
 
 	@Override
 	public void update(Film entity) {
-		// TODO Auto-generated method stub
-
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Film film=(Film)session.get(Film.class, entity.getId());
+		session.getTransaction().begin();
+		film.setFilmName(entity.getFilmName());
+		film.setGenre(entity.getGenre());
+		film.setDescription(entity.getDescription());
+		session.update(entity);
+		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
 	public void delete(Film entity) {
-		// TODO Auto-generated method stub
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		session.getTransaction().begin();
+		session.delete(entity);
+		session.getTransaction().commit();
+		session.close();
 
 	}
 
