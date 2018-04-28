@@ -13,14 +13,22 @@ public class FilmDaoHibernateImpl implements FilmDao {
 
 	@Override
 	public void create(Film entity) {
-		// TODO Auto-generated method stub
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		session.beginTransaction();
+		session.save(entity);
+		session.getTransaction().commit();
+		session.close();
 
 	}
 
 	@Override
 	public Film read(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Film film = (Film) session.get(Film.class, id);
+		session.close();
+		return film;
 	}
 
 	@Override

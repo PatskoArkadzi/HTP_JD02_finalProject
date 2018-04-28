@@ -1,5 +1,6 @@
 package by.htp.cinema.domain;
 
+
 public class Film extends Entity {
 
 	private static final long serialVersionUID = -241014190878434680L;
