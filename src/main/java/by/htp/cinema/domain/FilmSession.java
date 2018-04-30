@@ -1,17 +1,18 @@
 package by.htp.cinema.domain;
 
-import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "film_sessions")
-public class FilmSession implements Serializable {
+public class FilmSession extends BaseEntity {
 
 	private static final long serialVersionUID = -6832669965931418330L;
 
@@ -19,8 +20,9 @@ public class FilmSession implements Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(name = "film_id")
-	private int film_id;
+	@JoinColumn(name = "film_id")
+	@ManyToOne
+	private Film film;
 	@Column(name = "date")
 	private String date;
 	@Column(name = "time")
@@ -30,9 +32,10 @@ public class FilmSession implements Serializable {
 		super();
 	}
 
-	public FilmSession(int id, int film_id, String date, String time) {
+	public FilmSession(int id, Film film, String date, String time) {
+		super();
 		this.id = id;
-		this.film_id = film_id;
+		this.film = film;
 		this.date = date;
 		this.time = time;
 	}
@@ -45,12 +48,12 @@ public class FilmSession implements Serializable {
 		this.id = id;
 	}
 
-	public int getFilm_id() {
-		return film_id;
+	public Film getFilm() {
+		return film;
 	}
 
-	public void setFilm_id(int film_id) {
-		this.film_id = film_id;
+	public void setFilm(Film film) {
+		this.film = film;
 	}
 
 	public String getDate() {
@@ -74,7 +77,7 @@ public class FilmSession implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + film_id;
+		result = prime * result + ((film == null) ? 0 : film.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		return result;
@@ -94,7 +97,10 @@ public class FilmSession implements Serializable {
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
-		if (film_id != other.film_id)
+		if (film == null) {
+			if (other.film != null)
+				return false;
+		} else if (!film.equals(other.film))
 			return false;
 		if (id != other.id)
 			return false;
@@ -108,7 +114,7 @@ public class FilmSession implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FilmSession [id=" + id + ", film_id=" + film_id + ", date=" + date + ", time=" + time + "]";
+		return "FilmSession [id=" + id + ", film=" + film + ", date=" + date + ", time=" + time + "]";
 	}
 
 }

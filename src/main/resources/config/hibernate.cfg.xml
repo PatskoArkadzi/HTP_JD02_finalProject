@@ -18,11 +18,15 @@
 			root
 		</property>
 		<!-- <property name="hibernate.connection.password"> </property> -->
+		<property name="show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		
 		<property name="hibernate.connection.useUnicode">true</property>
 		<property name="hibernate.connection.characterEncoding">utf8</property>
 
 		<!-- <mapping resource="hbm/film.hbm.xml" /> -->
 		<mapping class="by.htp.cinema.domain.Film" />
+		<mapping class="by.htp.cinema.domain.FilmSession" />
 
 	</session-factory>
 </hibernate-configuration>
