@@ -1,23 +1,49 @@
 package by.htp.cinema.domain;
 
-public class Order extends Entity {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="orders")
+public class Order implements Serializable {
 
 	private static final long serialVersionUID = -1852653197354547323L;
+	
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+	@Column(name = "orderNumber")
 	private int orderNumber;
-	private int userId;
-	private int ticket_id;
+	@Column(name="user_id")
+	private int user_id;
+	@Column(name="isPaid")
 	private boolean isPaid;
 
 	public Order() {
 		super();
 	}
 
-	public Order(int id, int orderNumber, int userId, int ticket_id, boolean isPaid) {
-		super(id);
+	public Order(int id, int orderNumber, int userId, boolean isPaid) {
+		super();
+		this.id = id;
 		this.orderNumber = orderNumber;
-		this.userId = userId;
-		this.ticket_id = ticket_id;
+		this.user_id = userId;
 		this.isPaid = isPaid;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getOrderNumber() {
@@ -29,19 +55,11 @@ public class Order extends Entity {
 	}
 
 	public int getUserId() {
-		return userId;
+		return user_id;
 	}
 
 	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public int getTicket_id() {
-		return ticket_id;
-	}
-
-	public void setTicket_id(int ticket_id) {
-		this.ticket_id = ticket_id;
+		this.user_id = userId;
 	}
 
 	public boolean isPaid() {
@@ -55,12 +73,11 @@ public class Order extends Entity {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * getId();
+		int result = 1;
+		result = prime * result + id;
 		result = prime * result + (isPaid ? 1231 : 1237);
 		result = prime * result + orderNumber;
-		result = prime * result + ticket_id;
-		result = prime * result + userId;
+		result = prime * result + user_id;
 		return result;
 	}
 
@@ -68,29 +85,25 @@ public class Order extends Entity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (getId() != other.getId()) {
+		if (id != other.id)
 			return false;
-		}
 		if (isPaid != other.isPaid)
 			return false;
 		if (orderNumber != other.orderNumber)
 			return false;
-		if (ticket_id != other.ticket_id)
-			return false;
-		if (userId != other.userId)
+		if (user_id != other.user_id)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [orderNumber=" + orderNumber + ", userId=" + userId + ", ticket_id=" + ticket_id + ", isPaid="
-				+ isPaid + "]";
+		return "Order [id=" + id + ", orderNumber=" + orderNumber + ", userId=" + user_id + ", isPaid=" + isPaid + "]";
 	}
 
 }

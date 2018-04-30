@@ -21,8 +21,8 @@
 		<property name="hibernate.connection.useUnicode">true</property>
 		<property name="hibernate.connection.characterEncoding">utf8</property>
 
-		<mapping resource="hbm/film.hbm.xml" />
-
+		<!-- <mapping resource="hbm/film.hbm.xml" /> -->
+		<mapping class="by.htp.cinema.domain.Film" />
 
 	</session-factory>
 </hibernate-configuration>

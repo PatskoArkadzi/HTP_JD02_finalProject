@@ -1,10 +1,29 @@
 package by.htp.cinema.domain;
 
-public class FilmSession extends Entity {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "film_sessions")
+public class FilmSession implements Serializable {
 
 	private static final long serialVersionUID = -6832669965931418330L;
+
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	@Column(name = "film_id")
 	private int film_id;
+	@Column(name = "date")
 	private String date;
+	@Column(name = "time")
 	private String time;
 
 	public FilmSession() {
@@ -12,10 +31,18 @@ public class FilmSession extends Entity {
 	}
 
 	public FilmSession(int id, int film_id, String date, String time) {
-		super(id);
+		this.id = id;
 		this.film_id = film_id;
 		this.date = date;
 		this.time = time;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getFilm_id() {
@@ -45,10 +72,10 @@ public class FilmSession extends Entity {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * getId();
+		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + film_id;
+		result = prime * result + id;
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		return result;
 	}
@@ -57,20 +84,19 @@ public class FilmSession extends Entity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		FilmSession other = (FilmSession) obj;
-		if (getId() != other.getId()) {
-			return false;
-		}
 		if (date == null) {
 			if (other.date != null)
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
 		if (film_id != other.film_id)
+			return false;
+		if (id != other.id)
 			return false;
 		if (time == null) {
 			if (other.time != null)
@@ -82,7 +108,7 @@ public class FilmSession extends Entity {
 
 	@Override
 	public String toString() {
-		return "FilmSession [film_id=" + film_id + ", date=" + date + ", time=" + time + "]";
+		return "FilmSession [id=" + id + ", film_id=" + film_id + ", date=" + date + ", time=" + time + "]";
 	}
 
 }

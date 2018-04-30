@@ -1,24 +1,51 @@
 package by.htp.cinema.domain;
 
-public class User extends Entity {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
 
 	private static final long serialVersionUID = -2770196198148460284L;
+
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	@Column(name = "login")
 	private String login;
+	@Column(name = "email")
 	private String email;
+	@Column(name = "password")
 	private String password;
+	@Column(name = "role_id")
 	private int role_id;
 
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public User(int id, String login, String email, String password, int role_id) {
-		super(id);
+		this.id = id;
 		this.login = login;
 		this.email = email;
 		this.password = password;
 		this.role_id = role_id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getLogin() {
@@ -56,9 +83,9 @@ public class User extends Entity {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * getId();
+		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + id;
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + role_id;
@@ -69,18 +96,17 @@ public class User extends Entity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (getId() != other.getId()) {
-			return false;
-		}
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
+			return false;
+		if (id != other.id)
 			return false;
 		if (login == null) {
 			if (other.login != null)
@@ -99,7 +125,8 @@ public class User extends Entity {
 
 	@Override
 	public String toString() {
-		return "User [login=" + login + ", email=" + email + ", password=" + password + ", role_id=" + role_id + "]";
+		return "User [id=" + id + ", login=" + login + ", email=" + email + ", password=" + password + ", role_id="
+				+ role_id + "]";
 	}
 
 }

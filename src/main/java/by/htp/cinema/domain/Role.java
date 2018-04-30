@@ -1,8 +1,25 @@
 package by.htp.cinema.domain;
 
-public class Role extends Entity {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "roles")
+public class Role implements Serializable {
 
 	private static final long serialVersionUID = -5189925964953618535L;
+
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	@Column(name = "roleName")
 	private String roleName;
 
 	public Role() {
@@ -10,8 +27,16 @@ public class Role extends Entity {
 	}
 
 	public Role(int id, String roleName) {
-		super(id);
+		this.id = id;
 		this.roleName = roleName;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getRoleName() {
@@ -25,8 +50,8 @@ public class Role extends Entity {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * getId();
+		int result = 1;
+		result = prime * result + id;
 		result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
 		return result;
 	}
@@ -35,14 +60,13 @@ public class Role extends Entity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Role other = (Role) obj;
-		if (getId() != other.getId()) {
+		if (id != other.id)
 			return false;
-		}
 		if (roleName == null) {
 			if (other.roleName != null)
 				return false;
@@ -53,7 +77,7 @@ public class Role extends Entity {
 
 	@Override
 	public String toString() {
-		return "Role [roleName=" + roleName + "]";
+		return "Role [id=" + id + ", roleName=" + roleName + "]";
 	}
 
 }
