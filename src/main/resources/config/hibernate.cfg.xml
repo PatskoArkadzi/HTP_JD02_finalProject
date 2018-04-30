@@ -27,6 +27,12 @@
 		<!-- <mapping resource="hbm/film.hbm.xml" /> -->
 		<mapping class="by.htp.cinema.domain.Film" />
 		<mapping class="by.htp.cinema.domain.FilmSession" />
+		<mapping class="by.htp.cinema.domain.Genre" />
+		<mapping class="by.htp.cinema.domain.Order" />
+		<mapping class="by.htp.cinema.domain.Role" />
+		<mapping class="by.htp.cinema.domain.Seat" />
+		<mapping class="by.htp.cinema.domain.Ticket" />
+		<mapping class="by.htp.cinema.domain.User" />
 
 	</session-factory>
 </hibernate-configuration>
