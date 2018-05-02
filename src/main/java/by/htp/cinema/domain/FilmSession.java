@@ -31,14 +31,14 @@ public class FilmSession implements Serializable {
 	@Column(name = "time")
 	private String time;
 
-	@OneToMany(mappedBy = "sessions")
+	@OneToMany(mappedBy = "filmSession")
 	private Set<Ticket> tickets;
 
 	@ManyToOne
 	@JoinColumn(name = "film_id")
 	private Film film;
 
-	@ManyToMany(mappedBy = "orders")
+	@ManyToMany()
 	private Set<Order> orders;
 
 	@ManyToMany()

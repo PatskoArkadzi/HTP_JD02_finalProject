@@ -29,7 +29,7 @@ public class Film implements Serializable {
 	@Column(name = "description")
 	private String description;
 
-	@OneToMany(mappedBy = "sessions")
+	@OneToMany(mappedBy = "film")
 	private Set<FilmSession> filmSessions;
 
 	@ManyToMany()

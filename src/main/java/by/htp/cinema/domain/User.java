@@ -37,7 +37,7 @@ public class User implements Serializable {
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "user")
 	private Set<Order> orders;
 
 	public User() {

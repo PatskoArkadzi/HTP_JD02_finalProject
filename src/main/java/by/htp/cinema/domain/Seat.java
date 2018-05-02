@@ -29,7 +29,7 @@ public class Seat implements Serializable {
 	@Column(name = "number")
 	int number;
 
-	@OneToMany(mappedBy = "seats")
+	@OneToMany(mappedBy = "seat")
 	private Set<Ticket> tickets;
 
 	@ManyToMany()

@@ -31,7 +31,7 @@ public class Order implements Serializable {
 	@Column(name = "isPaid")
 	private boolean isPaid;
 
-	@OneToMany(mappedBy = "orders")
+	@OneToMany(mappedBy = "order")
 	private Set<Ticket> tickets;
 
 	@ManyToOne
