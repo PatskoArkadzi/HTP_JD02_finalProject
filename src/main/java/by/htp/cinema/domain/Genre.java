@@ -1,13 +1,31 @@
 package by.htp.cinema.domain;
 
+import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-public class Genre extends BaseEntity {
+@Entity
+@Table(name = "genres")
+public class Genre implements Serializable {
 
 	private static final long serialVersionUID = 8570084626243097559L;
+
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
+	@Column(name = "genreName")
 	private String genreName;
+
+	@ManyToMany(mappedBy = "genres")
 	private Set<Film> films;
 
 	public Genre() {

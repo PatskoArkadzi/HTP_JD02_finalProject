@@ -1,5 +1,7 @@
 package by.htp.cinema.domain;
 
+import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,12 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "film_sessions")
-public class FilmSession extends BaseEntity {
+@Table(name = "sessions")
+public class FilmSession implements Serializable {
 
 	private static final long serialVersionUID = -6832669965931418330L;
 
@@ -20,24 +24,40 @@ public class FilmSession extends BaseEntity {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@JoinColumn(name = "film_id")
-	@ManyToOne
-	private Film film;
+
 	@Column(name = "date")
 	private String date;
+
 	@Column(name = "time")
 	private String time;
+
+	@OneToMany(mappedBy = "sessions")
+	private Set<Ticket> tickets;
+
+	@ManyToOne
+	@JoinColumn(name = "film_id")
+	private Film film;
+
+	@ManyToMany(mappedBy = "orders")
+	private Set<Order> orders;
+
+	@ManyToMany()
+	private Set<Seat> seats;
 
 	public FilmSession() {
 		super();
 	}
 
-	public FilmSession(int id, Film film, String date, String time) {
+	public FilmSession(int id, String date, String time, Set<Ticket> tickets, Film film, Set<Order> orders,
+			Set<Seat> seats) {
 		super();
 		this.id = id;
-		this.film = film;
 		this.date = date;
 		this.time = time;
+		this.tickets = tickets;
+		this.film = film;
+		this.orders = orders;
+		this.seats = seats;
 	}
 
 	public int getId() {
@@ -46,14 +66,6 @@ public class FilmSession extends BaseEntity {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Film getFilm() {
-		return film;
-	}
-
-	public void setFilm(Film film) {
-		this.film = film;
 	}
 
 	public String getDate() {
@@ -72,6 +84,38 @@ public class FilmSession extends BaseEntity {
 		this.time = time;
 	}
 
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public Film getFilm() {
+		return film;
+	}
+
+	public void setFilm(Film film) {
+		this.film = film;
+	}
+
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
+
+	public Set<Seat> getSeats() {
+		return seats;
+	}
+
+	public void setSeats(Set<Seat> seats) {
+		this.seats = seats;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,6 +123,9 @@ public class FilmSession extends BaseEntity {
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((film == null) ? 0 : film.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
+		result = prime * result + ((seats == null) ? 0 : seats.hashCode());
+		result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		return result;
 	}
@@ -104,6 +151,21 @@ public class FilmSession extends BaseEntity {
 			return false;
 		if (id != other.id)
 			return false;
+		if (orders == null) {
+			if (other.orders != null)
+				return false;
+		} else if (!orders.equals(other.orders))
+			return false;
+		if (seats == null) {
+			if (other.seats != null)
+				return false;
+		} else if (!seats.equals(other.seats))
+			return false;
+		if (tickets == null) {
+			if (other.tickets != null)
+				return false;
+		} else if (!tickets.equals(other.tickets))
+			return false;
 		if (time == null) {
 			if (other.time != null)
 				return false;
@@ -114,7 +176,8 @@ public class FilmSession extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "FilmSession [id=" + id + ", film=" + film + ", date=" + date + ", time=" + time + "]";
+		return "FilmSession [id=" + id + ", date=" + date + ", time=" + time + ", tickets=" + tickets + ", film=" + film
+				+ ", orders=" + orders + ", seats=" + seats + "]";
 	}
 
 }

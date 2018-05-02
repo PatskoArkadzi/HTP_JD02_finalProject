@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,26 +21,33 @@ public class Ticket implements Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(name = "session_id")
-	private int session_id;
-	@Column(name = "seat_id")
-	private int seat_id;
-	@Column(name = "order_id")
-	private int order_id;
+
 	@Column(name = "price")
 	private int price;
+
+	@ManyToOne
+	@JoinColumn(name = "session_id")
+	private FilmSession filmSession;
+
+	@ManyToOne
+	@JoinColumn(name = "seat_id")
+	private Seat seat;
+
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	private Order order;
 
 	public Ticket() {
 		super();
 	}
 
-	public Ticket(int id, int session_id, int seat_id, int order_id, int price) {
+	public Ticket(int id, int price, FilmSession filmSession, Seat seat, Order order) {
 		super();
 		this.id = id;
-		this.session_id = session_id;
-		this.seat_id = seat_id;
-		this.order_id = order_id;
 		this.price = price;
+		this.filmSession = filmSession;
+		this.seat = seat;
+		this.order = order;
 	}
 
 	public int getId() {
@@ -49,30 +58,6 @@ public class Ticket implements Serializable {
 		this.id = id;
 	}
 
-	public int getSession_id() {
-		return session_id;
-	}
-
-	public void setSession_id(int session_id) {
-		this.session_id = session_id;
-	}
-
-	public int getSeat_id() {
-		return seat_id;
-	}
-
-	public void setSeat_id(int seat_id) {
-		this.seat_id = seat_id;
-	}
-
-	public int getOrder_id() {
-		return order_id;
-	}
-
-	public void setOrder_id(int order_id) {
-		this.order_id = order_id;
-	}
-
 	public int getPrice() {
 		return price;
 	}
@@ -81,15 +66,39 @@ public class Ticket implements Serializable {
 		this.price = price;
 	}
 
+	public FilmSession getFilmSession() {
+		return filmSession;
+	}
+
+	public void setFilmSession(FilmSession filmSession) {
+		this.filmSession = filmSession;
+	}
+
+	public Seat getSeat() {
+		return seat;
+	}
+
+	public void setSeat(Seat seat) {
+		this.seat = seat;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((filmSession == null) ? 0 : filmSession.hashCode());
 		result = prime * result + id;
-		result = prime * result + order_id;
+		result = prime * result + ((order == null) ? 0 : order.hashCode());
 		result = prime * result + price;
-		result = prime * result + seat_id;
-		result = prime * result + session_id;
+		result = prime * result + ((seat == null) ? 0 : seat.hashCode());
 		return result;
 	}
 
@@ -102,23 +111,32 @@ public class Ticket implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Ticket other = (Ticket) obj;
+		if (filmSession == null) {
+			if (other.filmSession != null)
+				return false;
+		} else if (!filmSession.equals(other.filmSession))
+			return false;
 		if (id != other.id)
 			return false;
-		if (order_id != other.order_id)
+		if (order == null) {
+			if (other.order != null)
+				return false;
+		} else if (!order.equals(other.order))
 			return false;
 		if (price != other.price)
 			return false;
-		if (seat_id != other.seat_id)
-			return false;
-		if (session_id != other.session_id)
+		if (seat == null) {
+			if (other.seat != null)
+				return false;
+		} else if (!seat.equals(other.seat))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", session_id=" + session_id + ", seat_id=" + seat_id + ", order_id=" + order_id
-				+ ", price=" + price + "]";
+		return "Ticket [id=" + id + ", price=" + price + ", filmSession=" + filmSession + ", seat=" + seat + ", order="
+				+ order + "]";
 	}
 
 }

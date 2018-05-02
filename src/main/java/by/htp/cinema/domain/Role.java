@@ -1,12 +1,14 @@
 package by.htp.cinema.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,16 +21,22 @@ public class Role implements Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
 	@Column(name = "roleName")
 	private String roleName;
+
+	@OneToMany(mappedBy = "roles")
+	private Set<User> users;
 
 	public Role() {
 		super();
 	}
 
-	public Role(int id, String roleName) {
+	public Role(int id, String roleName, Set<User> users) {
+		super();
 		this.id = id;
 		this.roleName = roleName;
+		this.users = users;
 	}
 
 	public int getId() {
@@ -47,12 +55,21 @@ public class Role implements Serializable {
 		this.roleName = roleName;
 	}
 
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
+		result = prime * result + ((users == null) ? 0 : users.hashCode());
 		return result;
 	}
 
@@ -72,12 +89,17 @@ public class Role implements Serializable {
 				return false;
 		} else if (!roleName.equals(other.roleName))
 			return false;
+		if (users == null) {
+			if (other.users != null)
+				return false;
+		} else if (!users.equals(other.users))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", roleName=" + roleName + "]";
+		return "Role [id=" + id + ", roleName=" + roleName + ", users=" + users + "]";
 	}
 
 }

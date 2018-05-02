@@ -1,39 +1,51 @@
 package by.htp.cinema.domain;
 
+import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="films")
-public class Film extends BaseEntity {
+@Table(name = "films")
+public class Film implements Serializable {
 
 	private static final long serialVersionUID = -241014190878434680L;
-	
+
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(name="filmName")
+
+	@Column(name = "filmName")
 	private String filmName;
-	@Column(name="genre")
-	private String genre;
-	@Column(name="description")
+
+	@Column(name = "description")
 	private String description;
+
+	@OneToMany(mappedBy = "sessions")
+	private Set<FilmSession> filmSessions;
+
+	@ManyToMany()
+	private Set<Genre> genres;
 
 	public Film() {
 		super();
 	}
 
-	public Film(int id, String filmName, String genre, String description) {
+	public Film(int id, String filmName, String description, Set<FilmSession> filmSessions, Set<Genre> genres) {
+		super();
 		this.id = id;
 		this.filmName = filmName;
-		this.genre = genre;
 		this.description = description;
+		this.filmSessions = filmSessions;
+		this.genres = genres;
 	}
 
 	public int getId() {
@@ -52,14 +64,6 @@ public class Film extends BaseEntity {
 		this.filmName = filmName;
 	}
 
-	public String getGenre() {
-		return genre;
-	}
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -68,13 +72,30 @@ public class Film extends BaseEntity {
 		this.description = description;
 	}
 
+	public Set<FilmSession> getFilmSessions() {
+		return filmSessions;
+	}
+
+	public void setFilmSessions(Set<FilmSession> filmSessions) {
+		this.filmSessions = filmSessions;
+	}
+
+	public Set<Genre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(Set<Genre> genres) {
+		this.genres = genres;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((filmName == null) ? 0 : filmName.hashCode());
-		result = prime * result + ((genre == null) ? 0 : genre.hashCode());
+		result = prime * result + ((filmSessions == null) ? 0 : filmSessions.hashCode());
+		result = prime * result + ((genres == null) ? 0 : genres.hashCode());
 		result = prime * result + id;
 		return result;
 	}
@@ -98,10 +119,15 @@ public class Film extends BaseEntity {
 				return false;
 		} else if (!filmName.equals(other.filmName))
 			return false;
-		if (genre == null) {
-			if (other.genre != null)
+		if (filmSessions == null) {
+			if (other.filmSessions != null)
 				return false;
-		} else if (!genre.equals(other.genre))
+		} else if (!filmSessions.equals(other.filmSessions))
+			return false;
+		if (genres == null) {
+			if (other.genres != null)
+				return false;
+		} else if (!genres.equals(other.genres))
 			return false;
 		if (id != other.id)
 			return false;
@@ -110,7 +136,8 @@ public class Film extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", filmName=" + filmName + ", genre=" + genre + ", description=" + description + "]";
+		return "Film [id=" + id + ", filmName=" + filmName + ", description=" + description + ", filmSessions="
+				+ filmSessions + ", genres=" + genres + "]";
 	}
 
 }

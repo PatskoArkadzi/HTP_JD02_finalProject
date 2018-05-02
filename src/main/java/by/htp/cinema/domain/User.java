@@ -1,12 +1,16 @@
 package by.htp.cinema.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,25 +23,35 @@ public class User implements Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
 	@Column(name = "login")
 	private String login;
+
 	@Column(name = "email")
 	private String email;
+
 	@Column(name = "password")
 	private String password;
-	@Column(name = "role_id")
-	private int role_id;
+
+	@ManyToOne
+	@JoinColumn(name = "role_id")
+	private Role role;
+
+	@OneToMany(mappedBy = "users")
+	private Set<Order> orders;
 
 	public User() {
 		super();
 	}
 
-	public User(int id, String login, String email, String password, int role_id) {
+	public User(int id, String login, String email, String password, Role role, Set<Order> orders) {
+		super();
 		this.id = id;
 		this.login = login;
 		this.email = email;
 		this.password = password;
-		this.role_id = role_id;
+		this.role = role;
+		this.orders = orders;
 	}
 
 	public int getId() {
@@ -72,12 +86,20 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public int getRole_id() {
-		return role_id;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRole_id(int role_id) {
-		this.role_id = role_id;
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
 	}
 
 	@Override
@@ -87,8 +109,9 @@ public class User implements Serializable {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + role_id;
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		return result;
 	}
 
@@ -113,20 +136,28 @@ public class User implements Serializable {
 				return false;
 		} else if (!login.equals(other.login))
 			return false;
+		if (orders == null) {
+			if (other.orders != null)
+				return false;
+		} else if (!orders.equals(other.orders))
+			return false;
 		if (password == null) {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (role_id != other.role_id)
+		if (role == null) {
+			if (other.role != null)
+				return false;
+		} else if (!role.equals(other.role))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", email=" + email + ", password=" + password + ", role_id="
-				+ role_id + "]";
+		return "User [id=" + id + ", login=" + login + ", email=" + email + ", password=" + password + ", role=" + role
+				+ ", orders=" + orders + "]";
 	}
 
 }

@@ -1,10 +1,10 @@
 package by.htp.cinema.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
-import by.htp.cinema.domain.BaseEntity;
 
-public interface BaseDao <T extends BaseEntity>{
+public interface BaseDao <T extends Serializable>{
 	void create (T entity);
 	T read(int id);
 	void update(T entity);
