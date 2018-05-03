@@ -8,14 +8,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import by.htp.cinema.dao.FilmDao;
-import by.htp.cinema.domain.Film;
-import by.htp.cinema.domain.Role;
+import by.htp.cinema.dao.SeatDao;
+import by.htp.cinema.domain.Seat;
 
-public class FilmDaoHibernateImpl implements FilmDao {
+public class SeatDaoHibernateImpl implements SeatDao {
 
 	@Override
-	public void create(Film entity) {
+	public void create(Seat entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		session.beginTransaction();
@@ -26,18 +25,18 @@ public class FilmDaoHibernateImpl implements FilmDao {
 	}
 
 	@Override
-	public Film read(int id) {
+	public Seat read(int id) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Criteria criteria = session.createCriteria(Role.class);
+		Criteria criteria = session.createCriteria(Seat.class);
 		criteria.add(Restrictions.eq("id", id));
-		Film film = (Film) criteria.uniqueResult();
+		Seat seat = (Seat) criteria.uniqueResult();
 		session.close();
-		return film;
+		return seat;
 	}
 
 	@Override
-	public void update(Film entity) {
+	public void update(Seat entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		session.beginTransaction();
@@ -47,7 +46,7 @@ public class FilmDaoHibernateImpl implements FilmDao {
 	}
 
 	@Override
-	public void delete(Film entity) {
+	public void delete(Seat entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		session.getTransaction().begin();
@@ -57,26 +56,26 @@ public class FilmDaoHibernateImpl implements FilmDao {
 	}
 
 	@Override
-	public List<Film> readAll() {
+	public List<Seat> readAll() {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Criteria criteria = session.createCriteria(Film.class);
+		Criteria criteria = session.createCriteria(Seat.class);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		List<Film> films = criteria.list();
+		List<Seat> seats = criteria.list();
 		session.close();
-		return films;
+		return seats;
 	}
 
 	@Override
-	public List<Film> readAll(String sortingColumn) {
+	public List<Seat> readAll(String sortingColumn) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Criteria criteria = session.createCriteria(Film.class);
+		Criteria criteria = session.createCriteria(Seat.class);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc(sortingColumn));
-		List<Film> films = criteria.list();
+		List<Seat> seats = criteria.list();
 		session.close();
-		return films;
+		return seats;
 	}
 
 }

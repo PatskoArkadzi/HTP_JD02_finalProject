@@ -26,7 +26,7 @@ public class Role implements Serializable {
 	@Column(name = "roleName")
 	private String roleName;
 
-	@OneToMany(fetch = FetchType.EAGER,mappedBy = "role")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "role")
 	private Set<User> users;
 
 	public Role() {
@@ -64,13 +64,14 @@ public class Role implements Serializable {
 		this.users = users;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
-		result = prime * result + ((users == null) ? 0 : users.hashCode());
 		return result;
 	}
 
@@ -89,11 +90,6 @@ public class Role implements Serializable {
 			if (other.roleName != null)
 				return false;
 		} else if (!roleName.equals(other.roleName))
-			return false;
-		if (users == null) {
-			if (other.users != null)
-				return false;
-		} else if (!users.equals(other.users))
 			return false;
 		return true;
 	}

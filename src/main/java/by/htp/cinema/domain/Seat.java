@@ -5,9 +5,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -29,13 +32,15 @@ public class Seat implements Serializable {
 	@Column(name = "number")
 	int number;
 
-	@OneToMany(mappedBy = "seat")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "seat")
 	private Set<Ticket> tickets;
 
-	@ManyToMany()
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "seat_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
 	private Set<Order> orders;
 
-	@ManyToMany()
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "seat_id"), inverseJoinColumns = @JoinColumn(name = "session_id"))
 	private Set<FilmSession> filmSessions;
 
 	public Seat() {

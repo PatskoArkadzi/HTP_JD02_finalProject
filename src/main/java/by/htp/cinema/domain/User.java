@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,11 +34,11 @@ public class User implements Serializable {
 	@Column(name = "password")
 	private String password;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
 	private Set<Order> orders;
 
 	public User() {
@@ -109,7 +110,6 @@ public class User implements Serializable {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		return result;
@@ -136,11 +136,6 @@ public class User implements Serializable {
 				return false;
 		} else if (!login.equals(other.login))
 			return false;
-		if (orders == null) {
-			if (other.orders != null)
-				return false;
-		} else if (!orders.equals(other.orders))
-			return false;
 		if (password == null) {
 			if (other.password != null)
 				return false;
@@ -156,8 +151,8 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", email=" + email + ", password=" + password + ", role=" + role
-				+ ", orders=" + orders + "]";
+		return "User [id=" + id + ", login=" + login + ", email=" + email + ", password=" + password + ", orders="
+				+ orders + "]";
 	}
 
 }

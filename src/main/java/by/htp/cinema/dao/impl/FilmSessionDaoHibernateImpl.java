@@ -5,11 +5,12 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
-import by.htp.cinema.dao.FilmDao;
 import by.htp.cinema.dao.FilmSessionDao;
-import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
+import by.htp.cinema.domain.Role;
 
 public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
 
@@ -21,14 +22,15 @@ public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
 		session.save(entity);
 		session.getTransaction().commit();
 		session.close();
-
 	}
 
 	@Override
 	public FilmSession read(int id) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		FilmSession filmSession = (FilmSession) session.get(FilmSession.class, id);
+		Criteria criteria = session.createCriteria(Role.class);
+		criteria.add(Restrictions.eq("id", id));
+		FilmSession filmSession = (FilmSession) criteria.uniqueResult();
 		session.close();
 		return filmSession;
 	}
@@ -57,8 +59,22 @@ public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
 	public List<FilmSession> readAll() {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-
 		Criteria criteria = session.createCriteria(FilmSession.class);
+		// delete duplicates in "left outer join" query
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<FilmSession> filmSessions = criteria.list();
+		session.close();
+		return filmSessions;
+	}
+
+	@Override
+	public List<FilmSession> readAll(String sortingColumn) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(FilmSession.class);
+		// delete duplicates in "left outer join" query
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		criteria.addOrder(Order.asc(sortingColumn));
 		List<FilmSession> filmSessions = criteria.list();
 		session.close();
 		return filmSessions;
