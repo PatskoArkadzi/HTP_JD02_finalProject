@@ -1,0 +1,95 @@
+package by.htp.cinema.dao.impl;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import by.htp.cinema.dao.GenreDao;
+import by.htp.cinema.domain.Genre;
+
+public class GenreDaoHibernateImpl implements GenreDao {
+
+	@Override
+	public void create(Genre entity) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		session.beginTransaction();
+		session.save(entity);
+		session.getTransaction().commit();
+		if (session.isOpen()) {
+			session.close();
+		}
+
+	}
+
+	@Override
+	public Genre read(int id) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(Genre.class);
+		criteria.add(Restrictions.eq("id", id));
+		Genre genre = (Genre) criteria.uniqueResult();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return genre;
+	}
+
+	@Override
+	public void update(Genre entity) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		session.beginTransaction();
+		session.update(entity);
+		session.getTransaction().commit();
+		if (session.isOpen()) {
+			session.close();
+		}
+	}
+
+	@Override
+	public void delete(Genre entity) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		session.getTransaction().begin();
+		session.delete(entity);
+		session.getTransaction().commit();
+		if (session.isOpen()) {
+			session.close();
+		}
+	}
+
+	@Override
+	public List<Genre> readAll() {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(Genre.class);
+		// delete duplicates in "left outer join" query
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Genre> genres = criteria.list();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return genres;
+	}
+
+	@Override
+	public List<Genre> readAll(String sortingColumn) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(Genre.class);
+		// delete duplicates in "left outer join" query
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		criteria.addOrder(Order.asc(sortingColumn));
+		List<Genre> genres = criteria.list();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return genres;
+	}
+
+}

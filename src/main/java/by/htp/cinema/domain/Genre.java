@@ -5,9 +5,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -25,7 +28,7 @@ public class Genre implements Serializable {
 	@Column(name = "genreName")
 	private String genreName;
 
-	@ManyToMany(mappedBy = "genres")
+	@ManyToMany(fetch = FetchType.LAZY,mappedBy = "genres")
 	private Set<Film> films;
 
 	public Genre() {
@@ -63,11 +66,12 @@ public class Genre implements Serializable {
 		this.films = films;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((films == null) ? 0 : films.hashCode());
 		result = prime * result + ((genreName == null) ? 0 : genreName.hashCode());
 		result = prime * result + id;
 		return result;
@@ -82,11 +86,6 @@ public class Genre implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Genre other = (Genre) obj;
-		if (films == null) {
-			if (other.films != null)
-				return false;
-		} else if (!films.equals(other.films))
-			return false;
 		if (genreName == null) {
 			if (other.genreName != null)
 				return false;
