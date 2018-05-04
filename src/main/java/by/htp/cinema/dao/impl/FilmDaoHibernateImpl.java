@@ -29,7 +29,7 @@ public class FilmDaoHibernateImpl implements FilmDao {
 	public Film read(int id) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Criteria criteria = session.createCriteria(Role.class);
+		Criteria criteria = session.createCriteria(Film.class);
 		criteria.add(Restrictions.eq("id", id));
 		Film film = (Film) criteria.uniqueResult();
 		session.close();

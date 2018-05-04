@@ -32,16 +32,16 @@ public class FilmSession implements Serializable {
 	@Column(name = "time")
 	private String time;
 
-	@OneToMany(mappedBy = "filmSession")
-	private Set<Ticket> tickets;
-
 	@ManyToOne
 	@JoinColumn(name = "film_id")
 	private Film film;
 
+	@OneToMany(mappedBy = "filmSession")
+	private Set<Ticket> tickets;
+
 	@ManyToMany()
 	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
-	private Set<Order> orders;
+	private Set<TicketsOrder> ticketsOrders;
 
 	@ManyToMany()
 	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "seat_id"))
@@ -51,7 +51,7 @@ public class FilmSession implements Serializable {
 		super();
 	}
 
-	public FilmSession(int id, String date, String time, Set<Ticket> tickets, Film film, Set<Order> orders,
+	public FilmSession(int id, String date, String time, Set<Ticket> tickets, Film film, Set<TicketsOrder> orders,
 			Set<Seat> seats) {
 		super();
 		this.id = id;
@@ -59,7 +59,7 @@ public class FilmSession implements Serializable {
 		this.time = time;
 		this.tickets = tickets;
 		this.film = film;
-		this.orders = orders;
+		this.ticketsOrders = orders;
 		this.seats = seats;
 	}
 
@@ -103,12 +103,12 @@ public class FilmSession implements Serializable {
 		this.film = film;
 	}
 
-	public Set<Order> getOrders() {
-		return orders;
+	public Set<TicketsOrder> getOrders() {
+		return ticketsOrders;
 	}
 
-	public void setOrders(Set<Order> orders) {
-		this.orders = orders;
+	public void setOrders(Set<TicketsOrder> orders) {
+		this.ticketsOrders = orders;
 	}
 
 	public Set<Seat> getSeats() {
@@ -126,9 +126,6 @@ public class FilmSession implements Serializable {
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((film == null) ? 0 : film.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
-		result = prime * result + ((seats == null) ? 0 : seats.hashCode());
-		result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		return result;
 	}
@@ -154,21 +151,6 @@ public class FilmSession implements Serializable {
 			return false;
 		if (id != other.id)
 			return false;
-		if (orders == null) {
-			if (other.orders != null)
-				return false;
-		} else if (!orders.equals(other.orders))
-			return false;
-		if (seats == null) {
-			if (other.seats != null)
-				return false;
-		} else if (!seats.equals(other.seats))
-			return false;
-		if (tickets == null) {
-			if (other.tickets != null)
-				return false;
-		} else if (!tickets.equals(other.tickets))
-			return false;
 		if (time == null) {
 			if (other.time != null)
 				return false;
@@ -179,8 +161,7 @@ public class FilmSession implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FilmSession [id=" + id + ", date=" + date + ", time=" + time + ", tickets=" + tickets + ", film=" + film
-				+ ", orders=" + orders + ", seats=" + seats + "]";
+		return "FilmSession [id=" + id + ", date=" + date + ", time=" + time + ", film=" + film.getFilmName() + "]";
 	}
 
 }

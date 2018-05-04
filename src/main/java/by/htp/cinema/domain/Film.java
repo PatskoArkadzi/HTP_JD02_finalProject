@@ -5,9 +5,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -29,21 +32,27 @@ public class Film implements Serializable {
 	@Column(name = "description")
 	private String description;
 
-	@OneToMany(mappedBy = "film")
+	@Column(name = "posterUrl")
+	private String posterUrl;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "film")
 	private Set<FilmSession> filmSessions;
 
-	@ManyToMany()
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "films_genres", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private Set<Genre> genres;
 
 	public Film() {
 		super();
 	}
 
-	public Film(int id, String filmName, String description, Set<FilmSession> filmSessions, Set<Genre> genres) {
+	public Film(int id, String filmName, String description, String posterUrl, Set<FilmSession> filmSessions,
+			Set<Genre> genres) {
 		super();
 		this.id = id;
 		this.filmName = filmName;
 		this.description = description;
+		this.posterUrl = posterUrl;
 		this.filmSessions = filmSessions;
 		this.genres = genres;
 	}
@@ -72,6 +81,14 @@ public class Film implements Serializable {
 		this.description = description;
 	}
 
+	public String getPosterUrl() {
+		return posterUrl;
+	}
+
+	public void setPosterUrl(String posterUrl) {
+		this.posterUrl = posterUrl;
+	}
+
 	public Set<FilmSession> getFilmSessions() {
 		return filmSessions;
 	}
@@ -94,9 +111,8 @@ public class Film implements Serializable {
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((filmName == null) ? 0 : filmName.hashCode());
-		result = prime * result + ((filmSessions == null) ? 0 : filmSessions.hashCode());
-		result = prime * result + ((genres == null) ? 0 : genres.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((posterUrl == null) ? 0 : posterUrl.hashCode());
 		return result;
 	}
 
@@ -119,25 +135,20 @@ public class Film implements Serializable {
 				return false;
 		} else if (!filmName.equals(other.filmName))
 			return false;
-		if (filmSessions == null) {
-			if (other.filmSessions != null)
-				return false;
-		} else if (!filmSessions.equals(other.filmSessions))
-			return false;
-		if (genres == null) {
-			if (other.genres != null)
-				return false;
-		} else if (!genres.equals(other.genres))
-			return false;
 		if (id != other.id)
+			return false;
+		if (posterUrl == null) {
+			if (other.posterUrl != null)
+				return false;
+		} else if (!posterUrl.equals(other.posterUrl))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", filmName=" + filmName + ", description=" + description + ", filmSessions="
-				+ filmSessions + ", genres=" + genres + "]";
+		return "Film [id=" + id + ", filmName=" + filmName + ", description=" + description + ", posterUrl=" + posterUrl
+				+ ", filmSessions=" + filmSessions + ", genres=" + genres + "]";
 	}
 
 }

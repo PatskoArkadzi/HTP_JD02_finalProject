@@ -37,7 +37,7 @@ public class Seat implements Serializable {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "seat_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
-	private Set<Order> orders;
+	private Set<TicketsOrder> ticketsOrders;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "seat_id"), inverseJoinColumns = @JoinColumn(name = "session_id"))
@@ -47,13 +47,14 @@ public class Seat implements Serializable {
 		super();
 	}
 
-	public Seat(int id, int row, int number, Set<Ticket> tickets, Set<Order> orders, Set<FilmSession> filmSessions) {
+	public Seat(int id, int row, int number, Set<Ticket> tickets, Set<TicketsOrder> ticketsOrders,
+			Set<FilmSession> filmSessions) {
 		super();
 		this.id = id;
 		this.row = row;
 		this.number = number;
 		this.tickets = tickets;
-		this.orders = orders;
+		this.ticketsOrders = ticketsOrders;
 		this.filmSessions = filmSessions;
 	}
 
@@ -89,12 +90,12 @@ public class Seat implements Serializable {
 		this.tickets = tickets;
 	}
 
-	public Set<Order> getOrders() {
-		return orders;
+	public Set<TicketsOrder> getTicketsOrders() {
+		return ticketsOrders;
 	}
 
-	public void setOrders(Set<Order> orders) {
-		this.orders = orders;
+	public void setTicketsOrders(Set<TicketsOrder> ticketsOrders) {
+		this.ticketsOrders = ticketsOrders;
 	}
 
 	public Set<FilmSession> getFilmSessions() {
@@ -109,12 +110,9 @@ public class Seat implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((filmSessions == null) ? 0 : filmSessions.hashCode());
 		result = prime * result + id;
 		result = prime * result + number;
-		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
 		result = prime * result + row;
-		result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
 		return result;
 	}
 
@@ -127,34 +125,19 @@ public class Seat implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Seat other = (Seat) obj;
-		if (filmSessions == null) {
-			if (other.filmSessions != null)
-				return false;
-		} else if (!filmSessions.equals(other.filmSessions))
-			return false;
 		if (id != other.id)
 			return false;
 		if (number != other.number)
 			return false;
-		if (orders == null) {
-			if (other.orders != null)
-				return false;
-		} else if (!orders.equals(other.orders))
-			return false;
 		if (row != other.row)
-			return false;
-		if (tickets == null) {
-			if (other.tickets != null)
-				return false;
-		} else if (!tickets.equals(other.tickets))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Seat [id=" + id + ", row=" + row + ", number=" + number + ", tickets=" + tickets + ", orders=" + orders
-				+ ", filmSessions=" + filmSessions + "]";
+		return "Seat [id=" + id + ", row=" + row + ", number=" + number + ", tickets=" + tickets + ", ticketsOrders="
+				+ ticketsOrders + ", filmSessions=" + filmSessions + "]";
 	}
 
 }

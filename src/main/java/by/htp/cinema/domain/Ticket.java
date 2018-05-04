@@ -35,13 +35,13 @@ public class Ticket implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "order_id")
-	private Order order;
+	private TicketsOrder order;
 
 	public Ticket() {
 		super();
 	}
 
-	public Ticket(int id, int price, FilmSession filmSession, Seat seat, Order order) {
+	public Ticket(int id, int price, FilmSession filmSession, Seat seat, TicketsOrder order) {
 		super();
 		this.id = id;
 		this.price = price;
@@ -82,11 +82,11 @@ public class Ticket implements Serializable {
 		this.seat = seat;
 	}
 
-	public Order getOrder() {
+	public TicketsOrder getOrder() {
 		return order;
 	}
 
-	public void setOrder(Order order) {
+	public void setOrder(TicketsOrder order) {
 		this.order = order;
 	}
 
@@ -135,8 +135,9 @@ public class Ticket implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", price=" + price + ", filmSession=" + filmSession + ", seat=" + seat + ", order="
-				+ order + "]";
+		return "Ticket [id=" + id + ", price=" + price + ", filmSession=date:" + filmSession.getDate() + "|time:"
+				+ filmSession.getTime() + ", seat=row:" + seat.getRow() + "|number:" + seat.getNumber()
+				+ ", orderNumber=" + order.getOrderNumber() + "]";
 	}
 
 }

@@ -39,13 +39,13 @@ public class User implements Serializable {
 	private Role role;
 
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
-	private Set<Order> orders;
+	private Set<TicketsOrder> orders;
 
 	public User() {
 		super();
 	}
 
-	public User(int id, String login, String email, String password, Role role, Set<Order> orders) {
+	public User(int id, String login, String email, String password, Role role, Set<TicketsOrder> orders) {
 		super();
 		this.id = id;
 		this.login = login;
@@ -95,11 +95,11 @@ public class User implements Serializable {
 		this.role = role;
 	}
 
-	public Set<Order> getOrders() {
+	public Set<TicketsOrder> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(Set<Order> orders) {
+	public void setOrders(Set<TicketsOrder> orders) {
 		this.orders = orders;
 	}
 

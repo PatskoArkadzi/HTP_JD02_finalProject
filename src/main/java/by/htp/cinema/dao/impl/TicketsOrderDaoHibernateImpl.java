@@ -8,76 +8,87 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import by.htp.cinema.dao.FilmSessionDao;
-import by.htp.cinema.domain.FilmSession;
-import by.htp.cinema.domain.Role;
+import by.htp.cinema.dao.TicketsOrderDao;
+import by.htp.cinema.domain.TicketsOrder;
 
-public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
-
+public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
+	
 	@Override
-	public void create(FilmSession entity) {
+	public void create(TicketsOrder entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		session.beginTransaction();
 		session.save(entity);
 		session.getTransaction().commit();
-		session.close();
+		if (session.isOpen()) {
+			session.close();
+		}
 	}
 
 	@Override
-	public FilmSession read(int id) {
+	public TicketsOrder read(int id) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Criteria criteria = session.createCriteria(FilmSession.class);
+		Criteria criteria = session.createCriteria(TicketsOrder.class);
 		criteria.add(Restrictions.eq("id", id));
-		FilmSession filmSession = (FilmSession) criteria.uniqueResult();
-		session.close();
-		return filmSession;
+		TicketsOrder ticketOrder = (TicketsOrder) criteria.uniqueResult();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return ticketOrder;
 	}
 
 	@Override
-	public void update(FilmSession entity) {
+	public void update(TicketsOrder entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		session.beginTransaction();
 		session.update(entity);
 		session.getTransaction().commit();
-		session.close();
+		if (session.isOpen()) {
+			session.close();
+		}
 	}
 
 	@Override
-	public void delete(FilmSession entity) {
+	public void delete(TicketsOrder entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		session.getTransaction().begin();
 		session.delete(entity);
 		session.getTransaction().commit();
-		session.close();
+		if (session.isOpen()) {
+			session.close();
+		}
 	}
 
 	@Override
-	public List<FilmSession> readAll() {
+	public List<TicketsOrder> readAll() {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Criteria criteria = session.createCriteria(FilmSession.class);
+		Criteria criteria = session.createCriteria(TicketsOrder.class);
 		// delete duplicates in "left outer join" query
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		List<FilmSession> filmSessions = criteria.list();
-		session.close();
-		return filmSessions;
+		List<TicketsOrder> ticketOrders = criteria.list();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return ticketOrders;
 	}
 
 	@Override
-	public List<FilmSession> readAll(String sortingColumn) {
+	public List<TicketsOrder> readAll(String sortingColumn) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Criteria criteria = session.createCriteria(FilmSession.class);
+		Criteria criteria = session.createCriteria(TicketsOrder.class);
 		// delete duplicates in "left outer join" query
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc(sortingColumn));
-		List<FilmSession> filmSessions = criteria.list();
-		session.close();
-		return filmSessions;
+		List<TicketsOrder> ticketOrders = criteria.list();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return ticketOrders;
 	}
 
 }

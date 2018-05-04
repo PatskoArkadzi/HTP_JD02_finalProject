@@ -5,12 +5,10 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "orders")
-public class Order implements Serializable {
+public class TicketsOrder implements Serializable {
 
 	private static final long serialVersionUID = -1852653197354547323L;
 
@@ -28,30 +26,30 @@ public class Order implements Serializable {
 	private int id;
 
 	@Column(name = "orderNumber")
-	private int orderNumber;
+	private int orderNumber;	//SQL trigger-generated column
 
 	@Column(name = "isPaid")
 	private boolean isPaid;
-
-	@OneToMany(mappedBy = "order")
-	private Set<Ticket> tickets;
 
 	@ManyToOne()
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToMany(mappedBy = "orders")
+	@OneToMany(mappedBy = "order")
+	private Set<Ticket> tickets;
+
+	@ManyToMany(mappedBy = "ticketsOrders")
 	private Set<FilmSession> filmSessions;
 
-	@ManyToMany(mappedBy = "orders")
+	@ManyToMany(mappedBy = "ticketsOrders")
 	private Set<Seat> seats;
 
-	public Order() {
+	public TicketsOrder() {
 		super();
 	}
 
-	public Order(int id, int orderNumber, boolean isPaid, Set<Ticket> tickets, User user, Set<FilmSession> filmSessions,
-			Set<Seat> seats) {
+	public TicketsOrder(int id, int orderNumber, boolean isPaid, Set<Ticket> tickets, User user,
+			Set<FilmSession> filmSessions, Set<Seat> seats) {
 		super();
 		this.id = id;
 		this.orderNumber = orderNumber;
@@ -72,10 +70,6 @@ public class Order implements Serializable {
 
 	public int getOrderNumber() {
 		return orderNumber;
-	}
-
-	public void setOrderNumber(int orderNumber) {
-		this.orderNumber = orderNumber;
 	}
 
 	public boolean isPaid() {
@@ -122,12 +116,9 @@ public class Order implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((filmSessions == null) ? 0 : filmSessions.hashCode());
 		result = prime * result + id;
 		result = prime * result + (isPaid ? 1231 : 1237);
 		result = prime * result + orderNumber;
-		result = prime * result + ((seats == null) ? 0 : seats.hashCode());
-		result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -140,27 +131,12 @@ public class Order implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
-		if (filmSessions == null) {
-			if (other.filmSessions != null)
-				return false;
-		} else if (!filmSessions.equals(other.filmSessions))
-			return false;
+		TicketsOrder other = (TicketsOrder) obj;
 		if (id != other.id)
 			return false;
 		if (isPaid != other.isPaid)
 			return false;
 		if (orderNumber != other.orderNumber)
-			return false;
-		if (seats == null) {
-			if (other.seats != null)
-				return false;
-		} else if (!seats.equals(other.seats))
-			return false;
-		if (tickets == null) {
-			if (other.tickets != null)
-				return false;
-		} else if (!tickets.equals(other.tickets))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -173,7 +149,7 @@ public class Order implements Serializable {
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", orderNumber=" + orderNumber + ", isPaid=" + isPaid + ", tickets=" + tickets
-				+ ", user=" + user + ", filmSessions=" + filmSessions + ", seats=" + seats + "]";
+				+ ", user=" + user.getLogin() + ", filmSessions=" + filmSessions + ", seats=" + seats + "]";
 	}
 
 }
