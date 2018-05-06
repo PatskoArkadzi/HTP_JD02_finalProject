@@ -20,9 +20,7 @@ public class GenreDaoHibernateImpl implements GenreDao {
 		session.beginTransaction();
 		session.save(entity);
 		session.getTransaction().commit();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 
 	}
 
@@ -33,9 +31,7 @@ public class GenreDaoHibernateImpl implements GenreDao {
 		Criteria criteria = session.createCriteria(Genre.class);
 		criteria.add(Restrictions.eq("id", id));
 		Genre genre = (Genre) criteria.uniqueResult();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 		return genre;
 	}
 
@@ -46,9 +42,7 @@ public class GenreDaoHibernateImpl implements GenreDao {
 		session.beginTransaction();
 		session.update(entity);
 		session.getTransaction().commit();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 	}
 
 	@Override
@@ -58,9 +52,7 @@ public class GenreDaoHibernateImpl implements GenreDao {
 		session.getTransaction().begin();
 		session.delete(entity);
 		session.getTransaction().commit();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 	}
 
 	@Override
@@ -71,9 +63,7 @@ public class GenreDaoHibernateImpl implements GenreDao {
 		// delete duplicates in "left outer join" query
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<Genre> genres = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 		return genres;
 	}
 
@@ -86,9 +76,7 @@ public class GenreDaoHibernateImpl implements GenreDao {
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc(sortingColumn));
 		List<Genre> genres = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 		return genres;
 	}
 

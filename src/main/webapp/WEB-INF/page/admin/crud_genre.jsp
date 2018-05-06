@@ -7,22 +7,22 @@
 <div class="container">
 	<button class="btn btn-success btn-lg" type="button"
 		data-toggle="collapse" data-target="#collapseExample"
-		aria-expanded="false" aria-controls="collapseExample">Create</button>
+		aria-expanded="false" aria-controls="collapseExample">Create genre</button>
 	<div class="collapse" id="collapseExample">
 		<div class="card card-body">
 			<div class="container">
 				<div class="row">
-					<div class=col-md-2>Роль</div>
+					<div class=col-md-2>genre</div>
 				</div>
 			</div>
 
-			<form class="create-role" action="do?action=crud_role&role_id=0"
+			<form class="create-genre" action="do?action=crud_genre&genre_id=0"
 				method=POST>
 				<div class="row">
-					<div class=col-md-1>${role.id}</div>
+					<div class=col-md-0>${genre.id}</div>
 					<div class=col-md-3>
-						<input id="role_name" class="form-control input-md"
-							name="role_name" />
+						<input id="genre_name" class="form-control input-md"
+							name="genre_name" />
 					</div>
 
 					<button id="create" value="create" name="crud_command"
@@ -35,36 +35,36 @@
 <hr>
 <div class="container">
 	<p>Введите id для поиска</p>
-	<form class="read-role" action="do?action=crud_role" method=POST>
+	<form class="read-genre" action="do?action=crud_genre" method=POST>
 		<div class="row">
 			<div class=col-md-2>
-				<input id="role_id" class="form-control input-md" name="role_id" />
+				<input id="genre_id" class="form-control input-md" name="genre_id" />
 			</div>
 			<button id="read" value="read" name="crud_command"
 				class="btn btn-success">search</button>
 		</div>
 		<p>Результат поиска:</p>
-		<p>${found_role}</p>
+		<p>${found_genre}</p>
 	</form>
 </div>
 <hr>
 <div class="container">
 	<div class="row">
 		<div class=col-md-1>ID</div>
-		<div class=col-md-2>Роль</div>
+		<div class=col-md-2>Genre</div>
 	</div>
 </div>
 
 <div class="container">
-	<c:forEach items="${rolelist}" var="role">
+	<c:forEach items="${genrelist}" var="genre">
 
-		<form class="update-role"
-			action="do?action=crud_role&role_id=${role.id}" method=POST>
+		<form class="update-genre"
+			action="do?action=crud_genre&genre_id=${genre.id}" method=POST>
 			<div class="row">
-				<div class=col-md-1>${role.id}</div>
+				<div class=col-md-1>${genre.id}</div>
 				<div class=col-md-3>
-					<input id="role_name" class="form-control input-md"
-						name="role_name" value="${role.roleName}" />
+					<input id="genre_name" class="form-control input-md"
+						name="genre_name" value="${genre.genreName}" />
 				</div>
 
 				<button id="update" value="update" name="crud_command"
@@ -76,7 +76,6 @@
 		</form>
 		<br>
 	</c:forEach>
-
 </div>
 
 
