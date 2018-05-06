@@ -2,8 +2,9 @@ package by.htp.cinema.dao.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -13,7 +14,6 @@ import by.htp.cinema.dao.RoleDao;
 import by.htp.cinema.domain.Role;
 
 public class RoleDaoHibernateImpl implements RoleDao {
-
 	@Override
 	public void create(Role entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
@@ -21,10 +21,7 @@ public class RoleDaoHibernateImpl implements RoleDao {
 		session.beginTransaction();
 		session.save(entity);
 		session.getTransaction().commit();
-		if (session.isOpen()) {
-			session.close();
-		}
-
+		session.close();
 	}
 
 	@Override
@@ -34,9 +31,7 @@ public class RoleDaoHibernateImpl implements RoleDao {
 		Criteria criteria = session.createCriteria(Role.class);
 		criteria.add(Restrictions.eq("id", id));
 		Role role = (Role) criteria.uniqueResult();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 		return role;
 	}
 
@@ -47,9 +42,7 @@ public class RoleDaoHibernateImpl implements RoleDao {
 		session.beginTransaction();
 		session.update(entity);
 		session.getTransaction().commit();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 	}
 
 	@Override
@@ -59,9 +52,7 @@ public class RoleDaoHibernateImpl implements RoleDao {
 		session.getTransaction().begin();
 		session.delete(entity);
 		session.getTransaction().commit();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 	}
 
 	@Override
@@ -72,9 +63,7 @@ public class RoleDaoHibernateImpl implements RoleDao {
 		// delete duplicates in "left outer join" query
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<Role> roles = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 		return roles;
 	}
 
@@ -87,9 +76,7 @@ public class RoleDaoHibernateImpl implements RoleDao {
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc(sortingColumn));
 		List<Role> roles = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 		return roles;
 	}
 

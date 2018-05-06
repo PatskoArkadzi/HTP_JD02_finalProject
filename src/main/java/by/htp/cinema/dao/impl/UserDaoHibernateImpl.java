@@ -61,6 +61,7 @@ public class UserDaoHibernateImpl implements UserDao {
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		criteria.addOrder(Order.asc("id"));
 		List<User> users = criteria.list();
 		session.close();
 		return users;
