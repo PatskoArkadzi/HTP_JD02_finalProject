@@ -32,7 +32,6 @@
 					Описание : <br> ${film.description}
 				</p>
 			</div>
-
 		</div>
 		<hr>
 		<br>
