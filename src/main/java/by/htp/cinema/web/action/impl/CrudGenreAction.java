@@ -32,8 +32,9 @@ public class CrudGenreAction implements BaseAction {
 				genreDao.create(genre);
 				break;
 			case CRUD_OPERATION_NAME_READ:
-				int roleId = getInt(req.getParameter(REQUEST_PARAM_GENRE_ID));
-				genre = genreDao.read(roleId);
+				String genreId=req.getParameter(REQUEST_PARAM_GENRE_ID);
+				validateRequestParamNotNull(genreId);
+				genre = genreDao.read(getInt(genreId));
 				req.setAttribute(REQUEST_PARAM_FOUND_GENRE, genre);
 				break;
 			case CRUD_OPERATION_NAME_UPDATE:

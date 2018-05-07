@@ -9,8 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -28,7 +26,7 @@ public class Genre implements Serializable {
 	@Column(name = "genreName")
 	private String genreName;
 
-	@ManyToMany(fetch = FetchType.LAZY,mappedBy = "genres")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "genres")
 	private Set<Film> films;
 
 	public Genre() {
@@ -65,8 +63,6 @@ public class Genre implements Serializable {
 	public void setFilms(Set<Film> films) {
 		this.films = films;
 	}
-
-	
 
 	@Override
 	public int hashCode() {
