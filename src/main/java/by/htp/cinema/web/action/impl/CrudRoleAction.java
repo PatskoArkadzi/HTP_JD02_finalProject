@@ -32,8 +32,9 @@ public class CrudRoleAction implements BaseAction {
 				roleDao.create(role);
 				break;
 			case CRUD_OPERATION_NAME_READ:
-				int roleId = getInt(req.getParameter(REQUEST_PARAM_ROLE_ID));
-				role = roleDao.read(roleId);
+				String roleId=req.getParameter(REQUEST_PARAM_ROLE_ID);
+				validateRequestParamNotNull(roleId);
+				role = roleDao.read(getInt(roleId));
 				req.setAttribute(REQUEST_PARAM_FOUND_ROLE, role);
 				break;
 			case CRUD_OPERATION_NAME_UPDATE:

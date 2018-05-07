@@ -12,7 +12,7 @@ import by.htp.cinema.dao.TicketsOrderDao;
 import by.htp.cinema.domain.TicketsOrder;
 
 public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
-	
+
 	@Override
 	public void create(TicketsOrder entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
@@ -20,9 +20,7 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		session.beginTransaction();
 		session.save(entity);
 		session.getTransaction().commit();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 	}
 
 	@Override
@@ -32,9 +30,7 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		Criteria criteria = session.createCriteria(TicketsOrder.class);
 		criteria.add(Restrictions.eq("id", id));
 		TicketsOrder ticketOrder = (TicketsOrder) criteria.uniqueResult();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 		return ticketOrder;
 	}
 
@@ -45,9 +41,7 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		session.beginTransaction();
 		session.update(entity);
 		session.getTransaction().commit();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 	}
 
 	@Override
@@ -57,9 +51,7 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		session.getTransaction().begin();
 		session.delete(entity);
 		session.getTransaction().commit();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 	}
 
 	@Override
@@ -70,9 +62,7 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		// delete duplicates in "left outer join" query
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<TicketsOrder> ticketOrders = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 		return ticketOrders;
 	}
 
@@ -85,9 +75,7 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc(sortingColumn));
 		List<TicketsOrder> ticketOrders = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.close();
 		return ticketOrders;
 	}
 

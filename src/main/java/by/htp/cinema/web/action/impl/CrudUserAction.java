@@ -39,8 +39,9 @@ public class CrudUserAction implements BaseAction {
 				userDao.create(user);
 				break;
 			case CRUD_OPERATION_NAME_READ:
-				int roleId = getInt(req.getParameter(REQUEST_PARAM_USER_ID));
-				user = userDao.read(roleId);
+				String userId = req.getParameter(REQUEST_PARAM_USER_ID);
+				validateRequestParamNotNull(userId);
+				user = userDao.read(getInt(userId));
 				req.setAttribute(REQUEST_PARAM_FOUND_USER, user);
 				break;
 			case CRUD_OPERATION_NAME_UPDATE:
@@ -64,7 +65,7 @@ public class CrudUserAction implements BaseAction {
 		String email = req.getParameter(REQUEST_PARAM_USER_EMAIL);
 		String password = req.getParameter(REQUEST_PARAM_USER_PASSWORD);
 		String roleId = req.getParameter(REQUEST_PARAM_ROLE_ID);
-		System.out.println(id+" "+login+" "+email+" "+password+" "+roleId);
+		System.out.println(id + " " + login + " " + email + " " + password + " " + roleId);
 		validateRequestParamNotNull(id, login, email, password, roleId);
 
 		User user = new User();

@@ -36,13 +36,10 @@
 							name="user_password" />
 					</div>
 
-
 					<div class=col-md-2>
 						<select id="role" class="form-control" name="role_id">
 							<c:forEach items="${rolelist}" var="role">
-								<option value="${role.id}" role="${role.id}"
-									${role.id==user.role.id?"selected":""}>
-									${role.roleName}</option>
+								<option value="${role.id}">${role.roleName}</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -102,8 +99,7 @@
 				<div class=col-md-2>
 					<select id="role" class="form-control" name="role_id">
 						<c:forEach items="${rolelist}" var="role">
-							<option value="${role.id}" role="${role.id}"
-								${role.id==user.role.id?"selected":""}>
+							<option value="${role.id}" ${role.id==user.role.id?"selected":""}>
 								${role.roleName}</option>
 						</c:forEach>
 					</select>
