@@ -4,6 +4,7 @@ import static by.htp.cinema.web.util.ConstantDeclaration.*;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import by.htp.cinema.web.action.ActionManager;
+import by.htp.cinema.web.action.ActionManagerContext;
 import by.htp.cinema.web.action.BaseAction;
 
 public class FrontController extends HttpServlet {
@@ -31,11 +34,22 @@ public class FrontController extends HttpServlet {
 	}
 
 	private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ServletContext servletContext = req.getServletContext();
+		WebApplicationContext webApplicationContext = WebApplicationContextUtils
+				.getWebApplicationContext(servletContext);
 		String action = req.getParameter(REQUEST_PARAM_ACTION);
-		System.out.println(action);
-		BaseAction baseAction = ActionManager.getAction(action);
-		String page = baseAction.executeAction(req);
+		BaseAction baseAction = ActionManagerContext.getAction(action, webApplicationContext);
+		String page;
+		if (action != null) {
+			page = baseAction.executeAction(req);
+		} else {
+			logger.error("Incorrect action");
+			page = PAGE_ERROR;
+			req.setAttribute(REQUEST_PARAM_ERROR_MESSAGE, "Incorrect action");
+		}
+//		resp.sendRedirect(page);
 		req.getRequestDispatcher(page).forward(req, resp);
 
 	}
+
 }
