@@ -4,12 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import by.htp.cinema.dao.RoleDao;
-import by.htp.cinema.dao.UserDao;
-import by.htp.cinema.dao.impl.RoleDaoHibernateImpl;
-import by.htp.cinema.dao.impl.UserDaoHibernateImpl;
 import by.htp.cinema.domain.Role;
 import by.htp.cinema.domain.User;
+import by.htp.cinema.service.RoleService;
+import by.htp.cinema.service.UserService;
 import by.htp.cinema.web.action.BaseAction;
 import static by.htp.cinema.web.util.ConstantDeclaration.*;
 import static by.htp.cinema.web.util.HttpRequestParamFormatter.*;
@@ -17,13 +15,32 @@ import static by.htp.cinema.web.util.HttpRequestParamValidator.*;
 
 public class CrudUserAction implements BaseAction {
 
-	UserDao userDao = new UserDaoHibernateImpl();
-	RoleDao roleDao = new RoleDaoHibernateImpl();
+	private RoleService roleService;
+	private UserService userService;
+
+	public CrudUserAction() {
+	}
+
+	public RoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 	@Override
 	public String executeAction(HttpServletRequest req) {
-		List<User> users = userDao.readAll();
-		List<Role> roles = roleDao.readAll();
+		List<User> users = userService.getUserList();
+		List<Role> roles = roleService.getRoleList();
 		req.setAttribute(REQUEST_PARAM_USER_LIST, users);
 		req.setAttribute(REQUEST_PARAM_ROLE_LIST, roles);
 		if (isPost(req)) {
@@ -36,21 +53,21 @@ public class CrudUserAction implements BaseAction {
 			switch (crudCommand) {
 			case CRUD_OPERATION_NAME_CREATE:
 				user = buildUser(req);
-				userDao.create(user);
+				userService.createUser(user);
 				break;
 			case CRUD_OPERATION_NAME_READ:
 				String userId = req.getParameter(REQUEST_PARAM_USER_ID);
 				validateRequestParamNotNull(userId);
-				user = userDao.read(getInt(userId));
+				user = userService.readUser(getInt(userId));
 				req.setAttribute(REQUEST_PARAM_FOUND_USER, user);
 				break;
 			case CRUD_OPERATION_NAME_UPDATE:
 				user = buildUser(req);
-				userDao.update(user);
+				userService.updateUser(user);
 				break;
 			case CRUD_OPERATION_NAME_DELETE:
 				user = buildUser(req);
-				userDao.delete(user);
+				userService.deleteUser(user);
 				break;
 			default:
 				return PAGE_ERROR;
@@ -69,7 +86,7 @@ public class CrudUserAction implements BaseAction {
 		validateRequestParamNotNull(id, login, email, password, roleId);
 
 		User user = new User();
-		Role role = roleDao.read(getInt(roleId));
+		Role role = roleService.readRole(getInt(roleId));
 		user.setId(getInt(id));
 		user.setLogin(login);
 		user.setEmail(email);

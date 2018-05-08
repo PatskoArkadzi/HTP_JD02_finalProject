@@ -8,18 +8,27 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import by.htp.cinema.dao.GenreDao;
-import by.htp.cinema.dao.impl.GenreDaoHibernateImpl;
 import by.htp.cinema.domain.Genre;
+import by.htp.cinema.service.GenreService;
 import by.htp.cinema.web.action.BaseAction;
 
 public class CrudGenreAction implements BaseAction {
+	GenreService genreService;
 
-	GenreDao genreDao = new GenreDaoHibernateImpl();
+	public CrudGenreAction() {
+	}
+
+	public GenreService getGenreService() {
+		return genreService;
+	}
+
+	public void setGenreService(GenreService genreService) {
+		this.genreService = genreService;
+	}
 
 	@Override
 	public String executeAction(HttpServletRequest req) {
-		List<Genre> genres = genreDao.readAll();
+		List<Genre> genres = genreService.getGenreList();
 		req.setAttribute(REQUEST_PARAM_GENRE_LIST, genres);
 		if (isPost(req)) {
 			String crudCommand = req.getParameter(REQUEST_PARAM_CRUD_COMMAND);
@@ -29,21 +38,21 @@ public class CrudGenreAction implements BaseAction {
 			switch (crudCommand) {
 			case CRUD_OPERATION_NAME_CREATE:
 				genre = buildGenre(req);
-				genreDao.create(genre);
+				genreService.createGenre(genre);
 				break;
 			case CRUD_OPERATION_NAME_READ:
-				String genreId=req.getParameter(REQUEST_PARAM_GENRE_ID);
+				String genreId = req.getParameter(REQUEST_PARAM_GENRE_ID);
 				validateRequestParamNotNull(genreId);
-				genre = genreDao.read(getInt(genreId));
+				genre = genreService.readGenre(getInt(genreId));
 				req.setAttribute(REQUEST_PARAM_FOUND_GENRE, genre);
 				break;
 			case CRUD_OPERATION_NAME_UPDATE:
 				genre = buildGenre(req);
-				genreDao.update(genre);
+				genreService.updateGenre(genre);
 				break;
 			case CRUD_OPERATION_NAME_DELETE:
 				genre = buildGenre(req);
-				genreDao.delete(genre);
+				genreService.deleteGenre(genre);
 				break;
 			default:
 				return PAGE_ERROR;

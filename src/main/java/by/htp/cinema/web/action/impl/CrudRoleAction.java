@@ -2,9 +2,8 @@ package by.htp.cinema.web.action.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
-import by.htp.cinema.dao.RoleDao;
-import by.htp.cinema.dao.impl.RoleDaoHibernateImpl;
 import by.htp.cinema.domain.Role;
+import by.htp.cinema.service.RoleService;
 import by.htp.cinema.web.action.BaseAction;
 
 import static by.htp.cinema.web.util.ConstantDeclaration.*;
@@ -15,11 +14,22 @@ import java.util.List;
 
 public class CrudRoleAction implements BaseAction {
 
-	RoleDao roleDao = new RoleDaoHibernateImpl();
+	private RoleService roleService;
+
+	public CrudRoleAction() {
+	}
+
+	public RoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
 
 	@Override
 	public String executeAction(HttpServletRequest req) {
-		List<Role> roles = roleDao.readAll();
+		List<Role> roles = roleService.getRoleList();
 		req.setAttribute(REQUEST_PARAM_ROLE_LIST, roles);
 		if (isPost(req)) {
 			String crudCommand = req.getParameter(REQUEST_PARAM_CRUD_COMMAND);
@@ -29,21 +39,21 @@ public class CrudRoleAction implements BaseAction {
 			switch (crudCommand) {
 			case CRUD_OPERATION_NAME_CREATE:
 				role = buildRole(req);
-				roleDao.create(role);
+				roleService.createRole(role);
 				break;
 			case CRUD_OPERATION_NAME_READ:
-				String roleId=req.getParameter(REQUEST_PARAM_ROLE_ID);
+				String roleId = req.getParameter(REQUEST_PARAM_ROLE_ID);
 				validateRequestParamNotNull(roleId);
-				role = roleDao.read(getInt(roleId));
+				role = roleService.readRole(getInt(roleId));
 				req.setAttribute(REQUEST_PARAM_FOUND_ROLE, role);
 				break;
 			case CRUD_OPERATION_NAME_UPDATE:
 				role = buildRole(req);
-				roleDao.update(role);
+				roleService.updateRole(role);
 				break;
 			case CRUD_OPERATION_NAME_DELETE:
 				role = buildRole(req);
-				roleDao.delete(role);
+				roleService.deleteRole(role);
 				break;
 			default:
 				return PAGE_ERROR;

@@ -4,6 +4,7 @@ public final class ConstantDeclaration {
 
 	public static final String REQUEST_PARAM_ACTION = "action";
 	public static final String REQUEST_PARAM_CRUD_COMMAND = "crud_command";
+	public static final String REQUEST_PARAM_ERROR_MESSAGE = "error_message";
 
 	public static final String REQUEST_PARAM_ROLE_LIST = "rolelist";
 	public static final String REQUEST_PARAM_ROLE_ID = "role_id";

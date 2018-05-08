@@ -11,23 +11,40 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import by.htp.cinema.dao.FilmDao;
-import by.htp.cinema.dao.GenreDao;
-import by.htp.cinema.dao.impl.FilmDaoHibernateImpl;
-import by.htp.cinema.dao.impl.GenreDaoHibernateImpl;
 import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.Genre;
+import by.htp.cinema.service.FilmService;
+import by.htp.cinema.service.GenreService;
 import by.htp.cinema.web.action.BaseAction;
 
 public class CrudFilmAction implements BaseAction {
 
-	FilmDao filmDao = new FilmDaoHibernateImpl();
-	GenreDao genreDao = new GenreDaoHibernateImpl();
+	FilmService filmService;
+	GenreService genreService;
+
+	public CrudFilmAction() {
+	}
+
+	public FilmService getFilmService() {
+		return filmService;
+	}
+
+	public void setFilmService(FilmService filmService) {
+		this.filmService = filmService;
+	}
+
+	public GenreService getGenreService() {
+		return genreService;
+	}
+
+	public void setGenreService(GenreService genreService) {
+		this.genreService = genreService;
+	}
 
 	@Override
 	public String executeAction(HttpServletRequest req) {
-		List<Film> films = filmDao.readAll();
-		List<Genre> genres = genreDao.readAll();
+		List<Film> films = filmService.getFilmList();
+		List<Genre> genres = genreService.getGenreList();
 		req.setAttribute(REQUEST_PARAM_FILM_LIST, films);
 		req.setAttribute(REQUEST_PARAM_GENRE_LIST, genres);
 		if (isPost(req)) {
@@ -38,21 +55,21 @@ public class CrudFilmAction implements BaseAction {
 			switch (crudCommand) {
 			case CRUD_OPERATION_NAME_CREATE:
 				film = buildFilm(req);
-				filmDao.create(film);
+				filmService.createFilm(film);
 				break;
 			case CRUD_OPERATION_NAME_READ:
 				String filmId = req.getParameter(REQUEST_PARAM_FILM_ID);
 				validateRequestParamNotNull(filmId);
-				film = filmDao.read(getInt(filmId));
+				film = filmService.readFilm(getInt(filmId));
 				req.setAttribute(REQUEST_PARAM_FOUND_FILM, film);
 				break;
 			case CRUD_OPERATION_NAME_UPDATE:
 				film = buildFilm(req);
-				filmDao.update(film);
+				filmService.updateFilm(film);
 				break;
 			case CRUD_OPERATION_NAME_DELETE:
 				film = buildFilm(req);
-				filmDao.delete(film);
+				filmService.deleteFilm(film);
 				break;
 			default:
 				return PAGE_ERROR;
@@ -79,7 +96,7 @@ public class CrudFilmAction implements BaseAction {
 
 		Set<Genre> genres = new HashSet<>();
 		for (String genreId : genresId) {
-			genres.add(genreDao.read(getInt(genreId)));
+			genres.add(genreService.readGenre(getInt(genreId)));
 		}
 		film.setGenres(genres);
 		return film;
