@@ -3,6 +3,7 @@ package by.htp.cinema.service.impl;
 import java.util.List;
 
 import by.htp.cinema.dao.FilmSessionDao;
+import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.service.FilmSessionService;
 
@@ -24,6 +25,11 @@ public class FilmSessionServiceImpl implements FilmSessionService {
 	@Override
 	public List<FilmSession> getFilmSessionList() {
 		return filmSessionDao.readAll();
+	}
+
+	@Override
+	public List<FilmSession> getChosenFilmFilmSessionList(Film film) {
+		return filmSessionDao.readAllWhereEq(new String[] { "film" }, new Object[] { film });
 	}
 
 	@Override

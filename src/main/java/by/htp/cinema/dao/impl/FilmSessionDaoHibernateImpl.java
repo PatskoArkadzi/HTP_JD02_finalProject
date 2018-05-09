@@ -88,7 +88,7 @@ public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(FilmSession.class);
 		for (int i = 0; i < parametres.length; i++)
-			criteria.add(Restrictions.gt(parametres[i], values[i]));
+			criteria.add(Restrictions.eq(parametres[i], values[i]));
 		// delete duplicates in "left outer join" query
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<FilmSession> filmSessions = criteria.list();

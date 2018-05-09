@@ -7,35 +7,35 @@
 
 	<bean name="filmService"
 		class="by.htp.cinema.service.impl.FilmServiceImpl">
-		<property name="filmDao" ref="filmDao"></property>
+		<property name="filmDao" ref="filmDao" />
 	</bean>
 	<bean name="filmSessionService"
 		class="by.htp.cinema.service.impl.FilmSessionServiceImpl">
-		<property name="filmSessionDao" ref="filmSessionDao"></property>
+		<property name="filmSessionDao" ref="filmSessionDao" />
 	</bean>
 	<bean name="genreService"
 		class="by.htp.cinema.service.impl.GenreServiceImpl">
-		<property name="genreDao" ref="genreDao"></property>
+		<property name="genreDao" ref="genreDao" />
 	</bean>
 	<bean name="roleService"
 		class="by.htp.cinema.service.impl.RoleServiceImpl">
-		<property name="roleDao" ref="roleDao"></property>
+		<property name="roleDao" ref="roleDao" />
 	</bean>
 	<bean name="seatService"
 		class="by.htp.cinema.service.impl.SeatServiceImpl">
-		<property name="seatDao" ref="seatDao"></property>
+		<property name="seatDao" ref="seatDao" />
 	</bean>
 	<bean name="ticketService"
 		class="by.htp.cinema.service.impl.TicketServiceImpl">
-		<property name="ticketDao" ref="ticketDao"></property>
+		<property name="ticketDao" ref="ticketDao" />
 	</bean>
 	<bean name="ticketOrderService"
 		class="by.htp.cinema.service.impl.TicketsOrderServiceImpl">
-		<property name="ticketsOrderDao" ref="ticketsOrderDao"></property>
+		<property name="ticketsOrderDao" ref="ticketsOrderDao" />
 	</bean>
 	<bean name="userService"
 		class="by.htp.cinema.service.impl.UserServiceImpl">
-		<property name="userDao" ref="userDao"></property>
+		<property name="userDao" ref="userDao" />
 	</bean>
 
 </beans>
