@@ -80,4 +80,20 @@ public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
 		return filmSessions;
 	}
 
+	@Override
+	public List<FilmSession> readAllWhereEq(String[] parametres, Object[] values) {
+		if (parametres.length != values.length)
+			throw new IllegalArgumentException();
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(FilmSession.class);
+		for (int i = 0; i < parametres.length; i++)
+			criteria.add(Restrictions.gt(parametres[i], values[i]));
+		// delete duplicates in "left outer join" query
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<FilmSession> filmSessions = criteria.list();
+		session.close();
+		return filmSessions;
+	}
+
 }

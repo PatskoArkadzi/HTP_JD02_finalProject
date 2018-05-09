@@ -1,7 +1,10 @@
 package by.htp.cinema.dao;
 
+import java.util.List;
+
 import by.htp.cinema.domain.FilmSession;
 
 public interface FilmSessionDao extends BaseDao<FilmSession> {
-	//TODO add specific methods
+
+	List<FilmSession> readAllWhereEq(String[] parametre, Object[] value);
 }
