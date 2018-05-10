@@ -112,7 +112,6 @@
 					</select>
 				</div>
 			</div>
-
 			<button id="update" value="update" name="crud_command"
 				class="btn btn-success">Обновить</button>
 

@@ -42,13 +42,22 @@ public class FrontController extends HttpServlet {
 		String page;
 		if (action != null) {
 			page = baseAction.executeAction(req);
+
+			String nextStep = (String) req.getAttribute(REQUEST_PARAM_ACTION);
+			System.out.println("action= " + action);
+			System.out.println("nextStep= " + nextStep);
+
+			if (nextStep == null || action.equals(nextStep)) {
+				req.getRequestDispatcher(page).forward(req, resp);
+			} else {
+				resp.sendRedirect("do?action=" + nextStep);
+			}
+
 		} else {
 			logger.error("Incorrect action");
-			page = PAGE_ERROR;
 			req.setAttribute(REQUEST_PARAM_ERROR_MESSAGE, "Incorrect action");
+			req.getRequestDispatcher(PAGE_ERROR).forward(req, resp);
 		}
-//		resp.sendRedirect(page);
-		req.getRequestDispatcher(page).forward(req, resp);
 
 	}
 
