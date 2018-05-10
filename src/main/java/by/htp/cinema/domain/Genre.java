@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "genres")
 public class Genre implements Serializable {
@@ -26,6 +29,7 @@ public class Genre implements Serializable {
 	@Column(name = "genreName")
 	private String genreName;
 
+	@Fetch(FetchMode.JOIN)
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "genres")
 	private Set<Film> films;
 

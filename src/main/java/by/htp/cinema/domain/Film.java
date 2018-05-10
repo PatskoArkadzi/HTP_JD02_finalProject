@@ -15,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "films")
 public class Film implements Serializable {
@@ -35,9 +38,11 @@ public class Film implements Serializable {
 	@Column(name = "posterUrl")
 	private String posterUrl;
 
+	@Fetch(FetchMode.JOIN)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "film")
 	private Set<FilmSession> filmSessions;
 
+	@Fetch(FetchMode.JOIN)
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "films_genres", joinColumns = @JoinColumn(name = "film_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private Set<Genre> genres;

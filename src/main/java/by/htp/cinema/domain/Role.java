@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "roles")
 public class Role implements Serializable {
@@ -25,7 +28,8 @@ public class Role implements Serializable {
 
 	@Column(name = "roleName")
 	private String roleName;
-
+	
+	@Fetch(FetchMode.JOIN)
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "role")
 	private Set<User> users;
 
@@ -96,7 +100,7 @@ public class Role implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", roleName=" + roleName + ", users=" + users + "]";
+		return "Role [id=" + id + ", roleName=" + roleName + "]";
 	}
 
 }

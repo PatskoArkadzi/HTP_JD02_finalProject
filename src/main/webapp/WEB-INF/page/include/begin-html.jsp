@@ -22,7 +22,7 @@
 			</button>
 
 			<%-- <c:if test="${user.roles_id==1}"> --%>
-			<div class="dropdown">
+			<!-- <div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle" type="button"
 					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">I/R DataBase</button>
@@ -30,7 +30,7 @@
 					<a class="dropdown-item" href="do?action=InitDB">InitDB</a> <a
 						class="dropdown-item" href="do?action=ResetDB">ResetDB</a>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle" type="button"

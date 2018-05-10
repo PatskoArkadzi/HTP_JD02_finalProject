@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -34,11 +37,13 @@ public class User implements Serializable {
 	@Column(name = "password")
 	private String password;
 
-	@ManyToOne()
+	@Fetch(FetchMode.JOIN)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+	@Fetch(FetchMode.JOIN)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<TicketsOrder> orders;
 
 	public User() {
@@ -151,8 +156,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", email=" + email + ", password=" + password + ", orders="
-				+ orders + "]";
+		return "User [id=" + id + ", login=" + login + ", email=" + email + ", password=" + password + "]";
 	}
 
 }

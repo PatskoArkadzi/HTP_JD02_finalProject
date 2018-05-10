@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "orders")
@@ -26,22 +30,26 @@ public class TicketsOrder implements Serializable {
 	private int id;
 
 	@Column(name = "orderNumber")
-	private int orderNumber;	//SQL trigger-generated column
+	private int orderNumber; // SQL trigger-generated column
 
 	@Column(name = "isPaid")
 	private boolean isPaid;
 
-	@ManyToOne()
+	@Fetch(FetchMode.JOIN)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "order")
+	@Fetch(FetchMode.JOIN)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
 	private Set<Ticket> tickets;
 
-	@ManyToMany(mappedBy = "ticketsOrders")
+	@Fetch(FetchMode.JOIN)
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "ticketsOrders")
 	private Set<FilmSession> filmSessions;
 
-	@ManyToMany(mappedBy = "ticketsOrders")
+	@Fetch(FetchMode.JOIN)
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "ticketsOrders")
 	private Set<Seat> seats;
 
 	public TicketsOrder() {

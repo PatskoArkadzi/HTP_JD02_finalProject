@@ -15,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "seats")
 public class Seat implements Serializable {
@@ -32,14 +35,17 @@ public class Seat implements Serializable {
 	@Column(name = "number")
 	int number;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "seat")
+	@Fetch(FetchMode.JOIN)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "seat")
 	private Set<Ticket> tickets;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.JOIN)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "seat_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
 	private Set<TicketsOrder> ticketsOrders;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.JOIN)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "seat_id"), inverseJoinColumns = @JoinColumn(name = "session_id"))
 	private Set<FilmSession> filmSessions;
 

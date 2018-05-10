@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "sessions")
@@ -36,14 +40,17 @@ public class FilmSession implements Serializable {
 	@JoinColumn(name = "film_id")
 	private Film film;
 
-	@OneToMany(mappedBy = "filmSession")
+	@Fetch(FetchMode.JOIN)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "filmSession")
 	private Set<Ticket> tickets;
 
-	@ManyToMany()
+	@Fetch(FetchMode.JOIN)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
 	private Set<TicketsOrder> ticketsOrders;
 
-	@ManyToMany()
+	@Fetch(FetchMode.JOIN)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "seat_id"))
 	private Set<Seat> seats;
 
