@@ -2,8 +2,6 @@ package by.htp.cinema.dao.impl;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,6 +12,7 @@ import by.htp.cinema.dao.RoleDao;
 import by.htp.cinema.domain.Role;
 
 public class RoleDaoHibernateImpl implements RoleDao {
+
 	@Override
 	public void create(Role entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();

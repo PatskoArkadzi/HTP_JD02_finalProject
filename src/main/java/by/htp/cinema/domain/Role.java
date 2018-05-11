@@ -28,8 +28,8 @@ public class Role implements Serializable {
 
 	@Column(name = "roleName")
 	private String roleName;
-	
-//	@Fetch(FetchMode.JOIN)
+
+	@Fetch(FetchMode.JOIN)
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "role")
 	private Set<User> users;
 
@@ -67,8 +67,6 @@ public class Role implements Serializable {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-
-	
 
 	@Override
 	public int hashCode() {
