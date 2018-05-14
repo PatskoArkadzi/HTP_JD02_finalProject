@@ -16,7 +16,7 @@
 				</div>
 			</div>
 
-			<form class="create-role" action="do?action=crud_role&role_id=0"
+			<form class="create-role" action="oldapp?action=crud_role&role_id=0"
 				method=POST>
 				<div class="row">
 					<div class=col-md-1>${role.id}</div>
@@ -35,7 +35,7 @@
 <hr>
 <div class="container">
 	<p>Введите id для поиска</p>
-	<form class="read-role" action="do?action=crud_role" method=POST>
+	<form class="read-role" action="oldapp?action=crud_role" method=POST>
 		<div class="row">
 			<div class=col-md-2>
 				<input id="role_id" class="form-control input-md" name="role_id" />
@@ -59,7 +59,7 @@
 	<c:forEach items="${rolelist}" var="role">
 
 		<form class="update-role"
-			action="do?action=crud_role&role_id=${role.id}" method=POST>
+			action="oldapp?action=crud_role&role_id=${role.id}" method=POST>
 			<div class="row">
 				<div class=col-md-1>${role.id}</div>
 				<div class=col-md-3>

@@ -16,7 +16,7 @@
 				</div>
 			</div>
 
-			<form class="create-genre" action="do?action=crud_genre&genre_id=0"
+			<form class="create-genre" action="oldapp?action=crud_genre&genre_id=0"
 				method=POST>
 				<div class="row">
 					<div class=col-md-0>${genre.id}</div>
@@ -35,7 +35,7 @@
 <hr>
 <div class="container">
 	<p>Введите id для поиска</p>
-	<form class="read-genre" action="do?action=crud_genre" method=POST>
+	<form class="read-genre" action="oldapp?action=crud_genre" method=POST>
 		<div class="row">
 			<div class=col-md-2>
 				<input id="genre_id" class="form-control input-md" name="genre_id" />
@@ -59,7 +59,7 @@
 	<c:forEach items="${genrelist}" var="genre">
 
 		<form class="update-genre"
-			action="do?action=crud_genre&genre_id=${genre.id}" method=POST>
+			action="oldapp?action=crud_genre&genre_id=${genre.id}" method=POST>
 			<div class="row">
 				<div class=col-md-1>${genre.id}</div>
 				<div class=col-md-3>

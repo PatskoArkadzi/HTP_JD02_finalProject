@@ -20,7 +20,7 @@
 				</div>
 			</div>
 
-			<form class="create-user" action="do?action=crud_user&user_id=0"
+			<form class="create-user" action="oldapp?action=crud_user&user_id=0"
 				method=POST>
 				<div class="row">
 					<div class=col-md-2>
@@ -54,7 +54,7 @@
 <hr>
 <div class="container">
 	<p>Введите id для поиска</p>
-	<form class="read-user" action="do?action=crud_user" method=POST>
+	<form class="read-user" action="oldapp?action=crud_user" method=POST>
 		<div class="row">
 			<div class=col-md-2>
 				<input id="user_id" class="form-control input-md" name="user_id" />
@@ -81,7 +81,7 @@
 	<c:forEach items="${userlist}" var="user">
 
 		<form class="update-user"
-			action="do?action=crud_user&user_id=${user.id}" method=POST>
+			action="oldapp?action=crud_user&user_id=${user.id}" method=POST>
 			<div class="row">
 				<div class=col-md-1>${user.id}</div>
 				<div class=col-md-2>

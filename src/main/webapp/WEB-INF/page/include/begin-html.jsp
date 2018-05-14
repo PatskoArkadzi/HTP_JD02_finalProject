@@ -37,28 +37,28 @@
 					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">DataBase actions</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="do?action=crud_role">CRUD
+					<a class="dropdown-item" href="oldapp?action=crud_role">CRUD
 						role</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="do?action=crud_user">CRUD
+					<a class="dropdown-item" href="oldapp?action=crud_user">CRUD
 						user</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="do?action=crud_order">CRUD
+					<a class="dropdown-item" href="oldapp?action=crud_order">CRUD
 						order</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="do?action=crud_ticket">CRUD
+					<a class="dropdown-item" href="oldapp?action=crud_ticket">CRUD
 						ticket</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="do?action=crud_seat">CRUD
+					<a class="dropdown-item" href="oldapp?action=crud_seat">CRUD
 						seat</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="do?action=crud_session">CRUD
+					<a class="dropdown-item" href="oldapp?action=crud_session">CRUD
 						session</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="do?action=crud_film">CRUD
+					<a class="dropdown-item" href="oldapp?action=crud_film">CRUD
 						film</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="do?action=crud_genre">CRUD
+					<a class="dropdown-item" href="oldapp?action=crud_genre">CRUD
 						genre</a>
 				</div>
 			</div>
@@ -81,18 +81,18 @@
 				<c:choose>
 					<c:when test="${user!=null}">
 						<li class="nav-item active"><a class="nav-link"
-							href="do?action=Profile" style="color: #FF0000"> <b>${user.login}</b>
+							href="oldapp?action=Profile" style="color: #FF0000"> <b>${user.login}</b>
 								<span class="sr-only">(current)</span></a></li>
 						<li class="nav-item active"><a class="nav-link"
-							href="do?action=Basket">Basket<span class="sr-only">(current)</span></a>
+							href="oldapp?action=Basket">Basket<span class="sr-only">(current)</span></a>
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item active"><a class="nav-link"
-							href="do?action=Login">Login <span class="sr-only">(current)</span></a>
+							href="oldapp?action=Login">Login <span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item active"><a class="nav-link"
-							href="do?action=SignUp">SignUp <span class="sr-only">(current)</span></a>
+							href="oldapp?action=SignUp">SignUp <span class="sr-only">(current)</span></a>
 						</li>
 					</c:otherwise>
 				</c:choose>

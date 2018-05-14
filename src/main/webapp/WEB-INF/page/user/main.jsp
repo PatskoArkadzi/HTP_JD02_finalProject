@@ -18,7 +18,7 @@
 		</div>
 		<div class="row">
 			<div class=col-md-3>
-				<a href="do?action=view_film_page&film_id=${film.id}"><img
+				<a href="oldapp?action=view_film_page&film_id=${film.id}"><img
 					src="${film.posterUrl}" /></a>
 			</div>
 			<div class="col-md-8 container">

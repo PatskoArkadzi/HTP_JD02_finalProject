@@ -20,7 +20,7 @@
 				</div>
 			</div>
 
-			<form class="create-film" action="do?action=crud_film&film_id=0"
+			<form class="create-film" action="oldapp?action=crud_film&film_id=0"
 				method=POST>
 				<div class="row">
 					<div class=col-md-2>
@@ -54,7 +54,7 @@
 <hr>
 <div class="container">
 	<p>Введите id для поиска</p>
-	<form class="read-film" action="do?action=crud_film" method=POST>
+	<form class="read-film" action="oldapp?action=crud_film" method=POST>
 		<div class="row">
 			<div class=col-md-2>
 				<input id="film_id" class="form-control input-md" name="film_id" />
@@ -72,7 +72,7 @@
 	<c:forEach items="${filmlist}" var="film">
 
 		<form class="update-user"
-			action="do?action=crud_film&film_id=${film.id}" method=POST>
+			action="oldapp?action=crud_film&film_id=${film.id}" method=POST>
 
 			<div class="row">
 				<div class=col-md-2>ID :</div>

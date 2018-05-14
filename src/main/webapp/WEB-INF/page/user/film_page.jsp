@@ -20,7 +20,7 @@
 			Описание : <br> ${user_chosen_film.description}
 		</p>
 		<form class="update-genre"
-			action="do?action=view_film_page&film_id=${user_chosen_film.id}"
+			action="oldapp?action=view_film_page&film_id=${user_chosen_film.id}"
 			method=POST>
 			<%-- <p>Выберите дату:</p>
 			<input type="date" name="user_chosen_date" min="${current_date}">
