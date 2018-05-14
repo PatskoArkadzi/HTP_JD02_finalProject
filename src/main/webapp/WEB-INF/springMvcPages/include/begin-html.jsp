@@ -4,11 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <!-- Required meta tags -->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/bootstrap.min.css"/>" >
 <title>Cinema</title>
 </head>
 <body>
