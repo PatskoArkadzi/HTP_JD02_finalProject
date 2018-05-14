@@ -1,4 +1,4 @@
-package by.htp.cinema.web;
+package by.htp.cinema.web.controllers;
 
 import static by.htp.cinema.web.util.ConstantDeclaration.*;
 
@@ -12,12 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import by.htp.cinema.web.action.ActionManagerContext;
 import by.htp.cinema.web.action.BaseAction;
 
+@Controller
+@RequestMapping(value = "/oldapp")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = -6886728390526627968L;
 
@@ -25,7 +30,9 @@ public class FrontController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		process(req, resp);
+	
 	}
 
 	@Override
