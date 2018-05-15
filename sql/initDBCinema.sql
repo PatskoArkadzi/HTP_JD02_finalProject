@@ -122,6 +122,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(50) NOT NULL,
   `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `login` (`login`),
   KEY `roles_id` (`role_id`),
   CONSTRAINT `FK_users_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

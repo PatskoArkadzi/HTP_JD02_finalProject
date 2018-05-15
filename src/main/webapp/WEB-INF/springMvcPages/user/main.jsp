@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="./include/begin-html.jsp"%>
+<%@ include file="../include/begin-html.jsp"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <div class="container">
@@ -31,4 +31,4 @@
 	</c:forEach>
 </div>
 
-<%@ include file="./include/end-html.jsp"%>
+<%@ include file="../include/end-html.jsp"%>

@@ -51,7 +51,7 @@ INSERT INTO `films_genres` (`film_id`, `genre_id`) VALUES
 	(8, 1);
 /*!40000 ALTER TABLE `films_genres` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.genres: ~8 rows (приблизительно)
+-- Дамп данных таблицы cinema.genres: ~9 rows (приблизительно)
 DELETE FROM `genres`;
 /*!40000 ALTER TABLE `genres` DISABLE KEYS */;
 INSERT INTO `genres` (`id`, `genreName`) VALUES
