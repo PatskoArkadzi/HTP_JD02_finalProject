@@ -11,8 +11,12 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>FrontControllerServlet</servlet-name>
-		<servlet-class>by.htp.cinema.web.controllers.FrontController</servlet-class>
+		<servlet-name>OldControllerServlet</servlet-name>
+		<servlet-class>by.htp.cinema.web.controllers.OldController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>NewUserControllerServlet</servlet-name>
+		<servlet-class>by.htp.cinema.web.controllers.NewUserController</servlet-class>
 	</servlet>
 
 
@@ -21,8 +25,12 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>FrontControllerServlet</servlet-name>
+		<servlet-name>OldControllerServlet</servlet-name>
 		<url-pattern>/oldapp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>NewUserControllerServlet</servlet-name>
+		<url-pattern>/newapp/user</url-pattern>
 	</servlet-mapping>
 
 	<context-param>
@@ -32,7 +40,6 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
 
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>

@@ -23,16 +23,14 @@ import by.htp.cinema.web.action.BaseAction;
 
 @Controller
 @RequestMapping(value = "/oldapp")
-public class FrontController extends HttpServlet {
+public class OldController extends HttpServlet {
 	private static final long serialVersionUID = -6886728390526627968L;
 
 	private static final Logger logger = LogManager.getLogger();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		process(req, resp);
-	
 	}
 
 	@Override

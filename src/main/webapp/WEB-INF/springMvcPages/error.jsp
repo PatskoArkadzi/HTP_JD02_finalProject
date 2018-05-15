@@ -2,7 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="include/begin-html.jsp"%>
 
+<div class="alert alert-danger" role="alert">
+	<p>${error_message}</p>
+</div>
 
-${error_message}
 
 <%@ include file="include/end-html.jsp"%>
