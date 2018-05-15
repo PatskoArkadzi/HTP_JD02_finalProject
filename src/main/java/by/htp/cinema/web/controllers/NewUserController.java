@@ -71,7 +71,7 @@ public class NewUserController {
 		if (foundUser != null) {
 			session.setAttribute(SESSION_PARAM_CURRENT_USER, foundUser);
 			session.setMaxInactiveInterval(60);
-			mav.setViewName("redirect:/");
+			mav.setViewName("redirect:/newapp/user/");
 			return mav;
 		} else {
 			mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, "Incorrect username or password");
