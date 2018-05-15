@@ -37,9 +37,8 @@ public class User implements Serializable {
 	@Column(name = "password")
 	private String password;
 
-	// @Fetch(FetchMode.JOIN)
-	// @ManyToOne(fetch = FetchType.LAZY)
-	@ManyToOne()
+//	 @Fetch(FetchMode.JOIN)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "role_id")
 	private Role role;
 

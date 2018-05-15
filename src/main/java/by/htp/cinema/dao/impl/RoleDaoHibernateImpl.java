@@ -2,7 +2,10 @@ package by.htp.cinema.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -28,6 +31,7 @@ public class RoleDaoHibernateImpl implements RoleDao {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(Role.class);
+		// criteria.setFetchMode("users", FetchMode.JOIN);
 		criteria.add(Restrictions.eq("id", id));
 		Role role = (Role) criteria.uniqueResult();
 		session.close();

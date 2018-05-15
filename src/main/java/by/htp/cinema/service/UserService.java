@@ -12,6 +12,8 @@ public interface UserService extends Service {
 
 	User readUser(int id);
 
+	User readUser(String login, String password);
+
 	void updateUser(User user);
 
 	void deleteUser(User user);

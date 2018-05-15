@@ -2,6 +2,8 @@ package by.htp.cinema.web.util;
 
 public final class ConstantDeclaration {
 
+	public static final String SESSION_PARAM_CURRENT_USER = "current_user";
+	
 	public static final String REQUEST_PARAM_ACTION = "action";
 	public static final String REQUEST_PARAM_CRUD_COMMAND = "crud_command";
 	public static final String REQUEST_PARAM_ERROR_MESSAGE = "error_message";
@@ -48,13 +50,13 @@ public final class ConstantDeclaration {
 	public static final String ACTION_NAME_CRUD_GENRE = "crud_genre";
 	public static final String ACTION_NAME_CRUD_FILM = "crud_film";
 
-	public static final String PAGE_USER_MAIN = "/WEB-INF/page/user/main.jsp";
-	public static final String PAGE_USER_FILM_PAGE = "/WEB-INF/page/user/film_page.jsp";
-	public static final String PAGE_ADMIN_CRUD_ROLE = "/WEB-INF/page/admin/crud_role.jsp";
-	public static final String PAGE_ADMIN_CRUD_USER = "/WEB-INF/page/admin/crud_user.jsp";
-	public static final String PAGE_ADMIN_CRUD_GENRE = "/WEB-INF/page/admin/crud_genre.jsp";
-	public static final String PAGE_ADMIN_CRUD_FILM = "/WEB-INF/page/admin/crud_film.jsp";
-	public static final String PAGE_ERROR = "/WEB-INF/page/error.jsp";
+	public static final String PAGE_USER_MAIN = "/WEB-INF/pages/user/main.jsp";
+	public static final String PAGE_USER_FILM_PAGE = "/WEB-INF/pages/user/film_page.jsp";
+	public static final String PAGE_ADMIN_CRUD_ROLE = "/WEB-INF/pages/admin/crud_role.jsp";
+	public static final String PAGE_ADMIN_CRUD_USER = "/WEB-INF/pages/admin/crud_user.jsp";
+	public static final String PAGE_ADMIN_CRUD_GENRE = "/WEB-INF/pages/admin/crud_genre.jsp";
+	public static final String PAGE_ADMIN_CRUD_FILM = "/WEB-INF/pages/admin/crud_film.jsp";
+	public static final String PAGE_ERROR = "/WEB-INF/pages/error.jsp";
 
 	public static final String CURRENT_DATE_FORMAT = "yyyy-MM-dd";
 }
