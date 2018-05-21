@@ -8,7 +8,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <title>Cinema</title>
 </head>
 <body>
@@ -21,8 +22,8 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<%-- <c:if test="${user.roles_id==1}"> --%>
-			<!-- <div class="dropdown">
+			<c:if test="${current_user.role.id==1}">
+				<!-- <div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle" type="button"
 					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">I/R DataBase</button>
@@ -32,37 +33,38 @@
 				</div>
 			</div> -->
 
-			<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button"
-					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">DataBase actions</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="oldapp?action=crud_role">CRUD
-						role</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="oldapp?action=crud_user">CRUD
-						user</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="oldapp?action=crud_order">CRUD
-						order</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="oldapp?action=crud_ticket">CRUD
-						ticket</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="oldapp?action=crud_seat">CRUD
-						seat</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="oldapp?action=crud_session">CRUD
-						session</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="oldapp?action=crud_film">CRUD
-						film</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="oldapp?action=crud_genre">CRUD
-						genre</a>
+				<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button"
+						id="dropdownMenuButton" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">DataBase
+						actions</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="oldapp?action=crud_role">CRUD
+							role</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="oldapp?action=crud_user">CRUD
+							user</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="oldapp?action=crud_order">CRUD
+							order</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="oldapp?action=crud_ticket">CRUD
+							ticket</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="oldapp?action=crud_seat">CRUD
+							seat</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="oldapp?action=crud_session">CRUD
+							session</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="oldapp?action=crud_film">CRUD
+							film</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="oldapp?action=crud_genre">CRUD
+							genre</a>
+					</div>
 				</div>
-			</div>
-			<%-- </c:if> --%>
+			</c:if>
 
 			<div class="collapse navbar-collapse" id="navbarNavDropdown">
 				<ul class="navbar-nav">
@@ -77,24 +79,24 @@
 			</div>
 
 
-			<%-- <ul class="navbar-nav navbar-right">
+			<ul class="navbar-nav navbar-right">
 				<c:choose>
-					<c:when test="${user!=null}">
+					<c:when test="${current_user!=null}">
 						<li class="nav-item active"><a class="nav-link"
-							href="oldapp?action=Profile" style="color: #FF0000"> <b>${user.login}</b>
+							href="profile" style="color: #FF0000"> <b>${current_user.login}</b>
 								<span class="sr-only">(current)</span></a></li>
-						<li class="nav-item active"><a class="nav-link"
-							href="oldapp?action=Basket">Basket<span class="sr-only">(current)</span></a>
-						</li>
+						<li class="nav-item active"><a class="nav-link" href="logout">Logout
+								<span class="sr-only">(current)</span>
+						</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="nav-item active"><a class="nav-link"
-							href="oldapp?action=Login">Login <span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item active"><a class="nav-link"
-							href="oldapp?action=SignUp">SignUp <span class="sr-only">(current)</span></a>
-						</li>
+						<li class="nav-item active"><a class="nav-link" href="login">Login
+								<span class="sr-only">(current)</span>
+						</a></li>
+						<li class="nav-item active"><a class="nav-link" href="signUp">SignUp
+								<span class="sr-only">(current)</span>
+						</a></li>
 					</c:otherwise>
 				</c:choose>
-			</ul> --%>
+			</ul>
 		</nav>

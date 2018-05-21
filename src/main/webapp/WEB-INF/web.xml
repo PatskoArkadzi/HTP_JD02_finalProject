@@ -11,12 +11,12 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>OldControllerServlet</servlet-name>
-		<servlet-class>by.htp.cinema.web.controllers.OldController</servlet-class>
-	</servlet>
-	<servlet>
 		<servlet-name>NewUserControllerServlet</servlet-name>
 		<servlet-class>by.htp.cinema.web.controllers.NewUserController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>OldControllerServlet</servlet-name>
+		<servlet-class>by.htp.cinema.web.controllers.OldController</servlet-class>
 	</servlet>
 
 
@@ -25,12 +25,12 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>OldControllerServlet</servlet-name>
-		<url-pattern>/oldapp</url-pattern>
+		<servlet-name>NewUserControllerServlet</servlet-name>
+		<url-pattern>/newapp</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>NewUserControllerServlet</servlet-name>
-		<url-pattern>/newapp/user</url-pattern>
+		<servlet-name>OldControllerServlet</servlet-name>
+		<url-pattern>/oldapp</url-pattern>
 	</servlet-mapping>
 
 	<context-param>

@@ -62,7 +62,7 @@ public class NewUserController {
 		HttpSession session = req.getSession();
 		if (session.getAttribute(SESSION_PARAM_CURRENT_USER) != null) {
 			mav.addObject("REQUEST_PARAM_ERROR_MESSAGE", "You are already logged in");
-			mav.setViewName("error");
+			mav.setViewName("redirect:/newapp/user/error");
 			return mav;
 		}
 		UserService userService = (UserService) ServiceManagerContext.getService(req, "userService");
@@ -84,13 +84,13 @@ public class NewUserController {
 	public ModelAndView logout(HttpServletRequest req) {
 		req.getSession().invalidate();
 		req.setAttribute(SESSION_PARAM_CURRENT_USER, null);
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/newapp/user/");
 	}
 
-	@RequestMapping(value = "/error", method = RequestMethod.GET)
-	public ModelAndView error(@ModelAttribute(REQUEST_PARAM_ERROR_MESSAGE) String message, ModelAndView mav) {
-		mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, message);
-		mav.setViewName("error");
-		return mav;
-	}
+	/*
+	 * @RequestMapping(value = "/error", method = RequestMethod.GET) public
+	 * ModelAndView error(@ModelAttribute(REQUEST_PARAM_ERROR_MESSAGE) String
+	 * message, ModelAndView mav) { mav.addObject(REQUEST_PARAM_ERROR_MESSAGE,
+	 * message); mav.setViewName("error"); return mav; }
+	 */
 }
