@@ -4,24 +4,22 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ include file="../include/begin-html.jsp"%>
 
-<form:form class="form-horizontal" method="post"
-	commandName="current_user" action="check_User">
+<br>
+<form:form method="post" commandName="current_user" action="check_User"
+	align="center">
 	<fieldset>
 		<!-- login input-->
+
 		<div class="form-group">
-			<form:label path="login">login</form:label>
-			<div class="col-md-4">
-				<form:input placeholder="login" path="login" required="true"
-					value="user1" />
-			</div>
+			<form:label class="col-md-2" path="login">login</form:label>
+			<form:input placeholder="login" path="login" required="true"
+				value="user1" />
+			<!-- Password input-->
 		</div>
-		<!-- Password input-->
 		<div class="form-group">
-			<form:label path="password">password</form:label>
-			<div class="col-md-4">
-				<form:password placeholder="password" path="password"
-					required="true" value="qwerty" />
-			</div>
+			<form:label class="col-md-2" path="password">password</form:label>
+			<form:password placeholder="password" path="password" required="true"
+				value="qwerty" />
 		</div>
 	</fieldset>
 	<div class="form-group">

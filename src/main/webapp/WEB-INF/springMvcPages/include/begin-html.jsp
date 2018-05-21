@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <!-- Required meta tags -->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,6 +11,10 @@
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <title>Cinema</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
+	
+</script>
 </head>
 <body>
 	<div class="container">
@@ -95,7 +98,7 @@
 							href="/cinema/newapp/user/login">Login <span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item active"><a class="nav-link"
-							href="/cinema/newapp/user/signUp">SignUp <span
+							href="/cinema/newapp/user/sign_up">SignUp <span
 								class="sr-only">(current)</span></a></li>
 					</c:otherwise>
 				</c:choose>
