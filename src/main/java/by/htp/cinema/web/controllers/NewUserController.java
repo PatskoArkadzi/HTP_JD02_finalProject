@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,18 +35,23 @@ import by.htp.cinema.service.UserService;
 @RequestMapping(value = "/newapp/user")
 public class NewUserController {
 
+	@Autowired
+	FilmService filmService;
+
 	private static final Logger logger = LogManager.getLogger();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView main(HttpServletRequest req) {
-		FilmService filmService = (FilmService) ServiceManagerContext.getService(req, "filmService");
+		// FilmService filmService = (FilmService) ServiceManagerContext.getService(req,
+		// "filmService");
 		List<Film> films = filmService.getFilmList();
 		return new ModelAndView("user/main", REQUEST_PARAM_FILM_LIST, films);
 	}
 
 	@RequestMapping(value = "/film_page", method = RequestMethod.GET)
 	public ModelAndView viewFilmPage(@RequestParam int film_id, HttpServletRequest req) {
-		FilmService filmService = (FilmService) ServiceManagerContext.getService(req, "filmService");
+		// FilmService filmService = (FilmService) ServiceManagerContext.getService(req,
+		// "filmService");
 		FilmSessionService filmSessionService = (FilmSessionService) ServiceManagerContext.getService(req,
 				"filmSessionService");
 		Film chosenFilm = filmService.readFilm(film_id);
@@ -76,8 +82,8 @@ public class NewUserController {
 			return mav;
 		}
 		UserService userService = (UserService) ServiceManagerContext.getService(req, "userService");
-		User foundUser = userService.readUser(user.getLogin(), user.getPassword());
-
+		User foundUser = userService.readUser(new String[] { "login", "password" },
+				new Object[] { user.getLogin(), user.getPassword() });
 		if (foundUser != null) {
 			session.setAttribute(SESSION_PARAM_CURRENT_USER, foundUser);
 			session.setMaxInactiveInterval(60);
