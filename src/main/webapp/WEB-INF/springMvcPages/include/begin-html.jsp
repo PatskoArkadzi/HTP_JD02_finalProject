@@ -11,10 +11,12 @@
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <title>Cinema</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
-	
-</script>
+<!-- <style>
+body{
+background-image: url(https://drive.google.com/uc?id=13CkZE_cDFG_oNT85vBjYBFNQq0WWoIAq) ;
+background-size: cover;
+}
+</style> -->
 </head>
 <body>
 	<div class="container">

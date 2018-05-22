@@ -14,8 +14,8 @@
 			<form:label class="col-md-2" path="login">login</form:label>
 			<form:input placeholder="login" path="login" required="true"
 				value="user1" />
-			<!-- Password input-->
 		</div>
+		<!-- Password input-->
 		<div class="form-group">
 			<form:label class="col-md-2" path="password">password</form:label>
 			<form:password placeholder="password" path="password" required="true"

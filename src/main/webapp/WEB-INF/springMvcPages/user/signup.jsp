@@ -5,6 +5,29 @@
 <%@ include file="../include/begin-html.jsp"%>
 
 
+<form:form method="post" action="register">
+	<fieldset>
+		<div class="form-group">
+			<form:label class="col-md-2" path="login">login</form:label>
+			<form:input placeholder="login" path="login" onkeyup="checkLogin()"
+				required="true" />
+		</div>
+		<div class="form-group">
+			<form:label class="col-md-2" path="email">email</form:label>
+			<form:input placeholder="email" path="email" onblur="checkEmail()"
+				required="true" />
+		</div>
+		<div class="form-group">
+			<form:label class="col-md-2" path="password">password</form:label>
+			<form:password placeholder="password" path="password"
+				onkeyup="checkPassword()" required="true" />
+		</div>
+	</fieldset>
+	<div id="resultValue"></div>
+	<input type="submit" value="sign up" />
+</form:form>
+
+
 <script type="text/javascript">
 	function checkLogin() {
 		var data = {
@@ -22,6 +45,17 @@
 			}
 		});
 	}
+	function checkEmail() {
+		$.ajax({
+			url : 'checkEmail',
+			data : ({
+				email : $('#email').val()
+			}),
+			success : function(data) {
+				$('#resultValue').html(data);
+			}
+		})
+	}
 	function checkPassword() {
 		$.ajax({
 			url : 'checkPass',
@@ -34,22 +68,6 @@
 		})
 	}
 </script>
-<br>
-<div id="resultValue"></div>
-<form:form method="post" action="register">
-	<fieldset>
-		<form:label path="login">login</form:label>
-		<form:input path="login" onkeyup="checkLogin()" />
-
-		<form:label path="password">password</form:label>
-		<form:password path="password" onkeyup="checkPassword()" />
-
-	</fieldset>
-	<input type="submit" value="sign up" />
-</form:form>
-
-
-
 
 <%@ include file="../include/end-html.jsp"%>
 
