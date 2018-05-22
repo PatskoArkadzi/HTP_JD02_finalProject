@@ -12,7 +12,9 @@ public interface UserService extends Service {
 
 	User readUser(int id);
 
-	User readUser(String login, String password);
+	User readUser(String parametre, Object value);
+
+	User readUser(String[] parametres, Object[] values);
 
 	void updateUser(User user);
 

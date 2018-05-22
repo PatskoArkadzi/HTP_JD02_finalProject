@@ -1,7 +1,5 @@
 package by.htp.cinema.web.util;
 
-import javax.servlet.http.HttpServletRequest;
-
 public class HttpRequestParamFormatter {
 
 	private HttpRequestParamFormatter() {
@@ -19,9 +17,5 @@ public class HttpRequestParamFormatter {
 		if (url.contains("/edit?usp=sharing"))
 			url = url.replace("/edit?usp=sharing", "");
 		return url;
-	}
-
-	public static boolean isPost(HttpServletRequest req) {
-		return req.getMethod().toUpperCase().equals("POST");
 	}
 }

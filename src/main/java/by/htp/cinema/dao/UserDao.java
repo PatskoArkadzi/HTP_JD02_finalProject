@@ -4,7 +4,13 @@ import by.htp.cinema.domain.User;
 
 public interface UserDao extends BaseDao<User> {
 
-	public User read(String login, String password);
+	/*
+	 * User read(String login);
+	 * 
+	 * User read(String email);
+	 */
+
+	User read(String[] parametres, Object[] values);
 
 	// TODO add specific methods
 }

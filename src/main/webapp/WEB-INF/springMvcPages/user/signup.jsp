@@ -9,24 +9,28 @@
 	<fieldset>
 		<div class="form-group">
 			<form:label class="col-md-2" path="login">login</form:label>
-			<form:input placeholder="login" path="login" onkeyup="checkLogin()"
-				required="true" />
+			<form:input class="col-md-3" placeholder="login" path="login"
+				onkeyup="checkLogin()" required="true" />
+			<span class="col-md-2" id="loginResultValue"></span>
 		</div>
 		<div class="form-group">
 			<form:label class="col-md-2" path="email">email</form:label>
-			<form:input placeholder="email" path="email" onblur="checkEmail()"
-				required="true" />
+			<form:input class="col-md-3" placeholder="email" path="email"
+				onblur="checkEmail()" required="true" />
+			<span class="col-md-2" id="emailResultValue"></span>
 		</div>
 		<div class="form-group">
 			<form:label class="col-md-2" path="password">password</form:label>
-			<form:password placeholder="password" path="password"
-				onkeyup="checkPassword()" required="true" />
+			<form:password class="col-md-3" placeholder="password"
+				path="password" onkeyup="checkPassword()" required="true" />
+			<span class="col-md-2" id="passwordResultValue"></span>
 		</div>
 	</fieldset>
-	<div id="resultValue"></div>
-	<input type="submit" value="sign up" />
+	<div class="col-md-4">
+		<button id="singlebutton" name="singlebutton" class="btn btn-primary">login</button>
+	</div>
+	<!-- <input type="submit" value="sign up" /> -->
 </form:form>
-
 
 <script type="text/javascript">
 	function checkLogin() {
@@ -41,7 +45,7 @@
 				jsonLogin : dataJson
 			}),
 			success : function(data) {
-				$('#resultValue').html(data);
+				$('#loginResultValue').html(data);
 			}
 		});
 	}
@@ -52,7 +56,7 @@
 				email : $('#email').val()
 			}),
 			success : function(data) {
-				$('#resultValue').html(data);
+				$('#emailResultValue').html(data);
 			}
 		})
 	}
@@ -63,7 +67,7 @@
 				password : $('#password').val()
 			}),
 			success : function(data) {
-				$('#resultValue').html(data);
+				$('#passwordResultValue').html(data);
 			}
 		})
 	}

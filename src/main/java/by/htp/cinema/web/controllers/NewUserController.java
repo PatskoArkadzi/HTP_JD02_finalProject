@@ -1,6 +1,7 @@
 package by.htp.cinema.web.controllers;
 
 import static by.htp.cinema.web.util.ConstantDeclaration.*;
+import static by.htp.cinema.web.util.HttpRequestParamValidator.*;
 
 import java.util.List;
 
@@ -115,14 +116,46 @@ public class NewUserController {
 			obj = (JSONObject) parser.parse(jsonLogin);
 			String login = (String) obj.get("login");
 			UserService userService = (UserService) ServiceManagerContext.getService(req, "userService");
-			if (userService.readUser(login) != null) {
-				return "This login is already taken";
+			if (userService.readUser("login", login) == null) {
+				return String.format(SIGN_UP_CHECK_LOGIN_RESULT_STRING, SIGN_UP_CHECK_LOGIN_SUCCESS_COLOR,
+						"This login is free");
 			} else {
-				return "This login is free";
+				return String.format(SIGN_UP_CHECK_LOGIN_RESULT_STRING, SIGN_UP_CHECK_LOGIN_FAIL_COLOR,
+						"This login is already taken");
 			}
 		} catch (ParseException e) {
 			logger.error("jsonLogin parsing error");
 		}
 		return "error";
+	}
+
+	@RequestMapping(value = "/checkEmail", method = RequestMethod.GET)
+	public @ResponseBody String checkEmail(@RequestParam String email, HttpServletRequest req) {
+		UserService userService = (UserService) ServiceManagerContext.getService(req, "userService");
+		if (email.length() == 0)
+			return String.format(SIGN_UP_CHECK_EMAIL_RESULT_STRING, "Email address is required");
+		else if (!checkEmailInput(email))
+			return String.format(SIGN_UP_CHECK_EMAIL_RESULT_STRING, "Email must be in the format: xxxxxx@yyyy.zz");
+		else if (userService.readUser("email", email) != null)
+			return String.format(SIGN_UP_CHECK_EMAIL_RESULT_STRING, "This email is already taken");
+		else
+			return "";
+	}
+
+	@RequestMapping(value = "/checkPass", method = RequestMethod.GET)
+	public @ResponseBody String checkPassword(@RequestParam String password) {
+		if (password.length() >= SIGN_UP_CHECK_PASSWORD_WEAK_STRENGTH
+				&& password.length() < SIGN_UP_CHECK_PASSWORD_MIDDLE_STRENGTH)
+			return String.format(SIGN_UP_CHECK_PASSWORD_RESULT_STRING, SIGN_UP_CHECK_PASSWORD_WEAK_STRENGTH_COLOR,
+					"Easy password");
+		else if (password.length() >= SIGN_UP_CHECK_PASSWORD_MIDDLE_STRENGTH
+				&& password.length() < SIGN_UP_CHECK_PASSWORD_STRONG_STRENGTH)
+			return String.format(SIGN_UP_CHECK_PASSWORD_RESULT_STRING, SIGN_UP_CHECK_PASSWORD_MIDDLE_STRENGTH_COLOR,
+					"Middle password");
+		else if (password.length() >= SIGN_UP_CHECK_PASSWORD_STRONG_STRENGTH)
+			return String.format(SIGN_UP_CHECK_PASSWORD_RESULT_STRING, SIGN_UP_CHECK_PASSWORD_STRONG_STRENGTH_COLOR,
+					"Strong password");
+		else
+			return "";
 	}
 }

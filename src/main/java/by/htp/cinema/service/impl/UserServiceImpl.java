@@ -34,12 +34,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User readUser(int id) {
 		return userDao.read(id);
-
 	}
 
 	@Override
-	public User readUser(String login, String password) {
-		return userDao.read(login, password);
+	public User readUser(String parametre, Object value) {
+		return userDao.read(new String[] { parametre }, new Object[] { value });
+	}
+
+	@Override
+	public User readUser(String[] parametres, Object[] values) {
+		return userDao.read(parametres, values);
+		// return userDao.read(new String[] { "login", "password" }, new Object[] {
+		// login, password });
 	}
 
 	@Override

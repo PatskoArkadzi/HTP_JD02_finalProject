@@ -9,6 +9,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import by.htp.cinema.dao.UserDao;
+import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.domain.User;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -36,16 +37,34 @@ public class UserDaoHibernateImpl implements UserDao {
 	}
 
 	@Override
-	public User read(String login, String password) {
+	public User read(String[] parametres, Object[] values) {
+		if (parametres.length != values.length)
+			throw new IllegalArgumentException();
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(User.class);
-		criteria.add(Restrictions.eq("login", login));
-		criteria.add(Restrictions.eq("password", password));
+		for (int i = 0; i < parametres.length; i++)
+			criteria.add(Restrictions.eq(parametres[i], values[i]));
 		User user = (User) criteria.uniqueResult();
 		session.close();
 		return user;
 	}
+
+	/*
+	 * public User read(String login) { SessionFactory factory =
+	 * SessionFactoryManager.getSessionFactory(); Session session =
+	 * factory.openSession(); Criteria criteria =
+	 * session.createCriteria(User.class); criteria.add(Restrictions.eq("login",
+	 * login)); User user = (User) criteria.uniqueResult(); session.close(); return
+	 * user; }
+	 * 
+	 * @Override public User read(String login, String password) { SessionFactory
+	 * factory = SessionFactoryManager.getSessionFactory(); Session session =
+	 * factory.openSession(); Criteria criteria =
+	 * session.createCriteria(User.class); criteria.add(Restrictions.eq("login",
+	 * login)); criteria.add(Restrictions.eq("password", password)); User user =
+	 * (User) criteria.uniqueResult(); session.close(); return user; }
+	 */
 
 	@Override
 	public void update(User entity) {
@@ -90,5 +109,4 @@ public class UserDaoHibernateImpl implements UserDao {
 		session.close();
 		return users;
 	}
-
 }

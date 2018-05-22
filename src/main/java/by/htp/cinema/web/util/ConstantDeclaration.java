@@ -3,7 +3,7 @@ package by.htp.cinema.web.util;
 public final class ConstantDeclaration {
 
 	public static final String SESSION_PARAM_CURRENT_USER = "current_user";
-	
+
 	public static final String REQUEST_PARAM_ACTION = "action";
 	public static final String REQUEST_PARAM_CRUD_COMMAND = "crud_command";
 	public static final String REQUEST_PARAM_ERROR_MESSAGE = "error_message";
@@ -59,4 +59,19 @@ public final class ConstantDeclaration {
 	public static final String PAGE_ERROR = "/WEB-INF/pages/error.jsp";
 
 	public static final String CURRENT_DATE_FORMAT = "yyyy-MM-dd";
+	public static final String EMAIL_INPUT_VALIDATION_REGEX = "(\\w{5,})@(\\w+\\.)([a-z]{2,4})";
+
+	public static final String SIGN_UP_CHECK_LOGIN_RESULT_STRING = "<span style=\"color:%s;\">%s</span>";
+	public static final String SIGN_UP_CHECK_LOGIN_FAIL_COLOR = "#FF0000";
+	public static final String SIGN_UP_CHECK_LOGIN_SUCCESS_COLOR = "#008B00";
+	
+	public static final String SIGN_UP_CHECK_EMAIL_RESULT_STRING = "<span style=\"color:#FF0000;\">%s</span>";
+
+	public static final String SIGN_UP_CHECK_PASSWORD_RESULT_STRING = "<span style=\"color:%s;\">%s</span>";
+	public static final String SIGN_UP_CHECK_PASSWORD_WEAK_STRENGTH_COLOR = "#FF0000";
+	public static final String SIGN_UP_CHECK_PASSWORD_MIDDLE_STRENGTH_COLOR = "#FFFF00";
+	public static final String SIGN_UP_CHECK_PASSWORD_STRONG_STRENGTH_COLOR = "#008B00";
+	public static final int SIGN_UP_CHECK_PASSWORD_WEAK_STRENGTH = 1;
+	public static final int SIGN_UP_CHECK_PASSWORD_MIDDLE_STRENGTH = 5;
+	public static final int SIGN_UP_CHECK_PASSWORD_STRONG_STRENGTH = 7;
 }

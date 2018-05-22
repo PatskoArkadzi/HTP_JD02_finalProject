@@ -5,11 +5,9 @@
 <%@ include file="../include/begin-html.jsp"%>
 
 <br>
-<form:form method="post" commandName="current_user" action="check_User"
-	align="center">
+<form:form method="post" commandName="current_user" action="check_User">
 	<fieldset>
 		<!-- login input-->
-
 		<div class="form-group">
 			<form:label class="col-md-2" path="login">login</form:label>
 			<form:input placeholder="login" path="login" required="true"
@@ -22,11 +20,8 @@
 				value="qwerty" />
 		</div>
 	</fieldset>
-	<div class="form-group">
-		<label class="col-md-4 control-label" for="singlebutton"></label>
-		<div class="col-md-4">
-			<button id="singlebutton" name="singlebutton" class="btn btn-primary">login</button>
-		</div>
+	<div class="col-md-4">
+		<button id="singlebutton" name="singlebutton" class="btn btn-primary">login</button>
 	</div>
 </form:form>
 
