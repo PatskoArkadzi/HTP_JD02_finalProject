@@ -2,12 +2,17 @@ package by.htp.cinema.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import by.htp.cinema.dao.SeatDao;
 import by.htp.cinema.domain.Seat;
 import by.htp.cinema.service.SeatService;
 
+@Service
 public class SeatServiceImpl implements SeatService {
-
+	
+	@Autowired
 	SeatDao seatDao;
 
 	public SeatServiceImpl() {

@@ -28,7 +28,6 @@ import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.domain.User;
 import by.htp.cinema.service.FilmService;
 import by.htp.cinema.service.FilmSessionService;
-import by.htp.cinema.service.ServiceManagerContext;
 import by.htp.cinema.service.UserService;
 
 @Controller
@@ -38,22 +37,22 @@ public class NewUserController {
 	@Autowired
 	FilmService filmService;
 
+	@Autowired
+	FilmSessionService filmSessionService;
+
+	@Autowired
+	UserService userService;
+
 	private static final Logger logger = LogManager.getLogger();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView main(HttpServletRequest req) {
-		// FilmService filmService = (FilmService) ServiceManagerContext.getService(req,
-		// "filmService");
 		List<Film> films = filmService.getFilmList();
 		return new ModelAndView("user/main", REQUEST_PARAM_FILM_LIST, films);
 	}
 
 	@RequestMapping(value = "/film_page", method = RequestMethod.GET)
 	public ModelAndView viewFilmPage(@RequestParam int film_id, HttpServletRequest req) {
-		// FilmService filmService = (FilmService) ServiceManagerContext.getService(req,
-		// "filmService");
-		FilmSessionService filmSessionService = (FilmSessionService) ServiceManagerContext.getService(req,
-				"filmSessionService");
 		Film chosenFilm = filmService.readFilm(film_id);
 		List<FilmSession> chosenFilmFilmSessions = filmSessionService.getChosenFilmFilmSessionList(chosenFilm);
 
@@ -81,7 +80,6 @@ public class NewUserController {
 			mav.setViewName("redirect:/newapp/user/error");
 			return mav;
 		}
-		UserService userService = (UserService) ServiceManagerContext.getService(req, "userService");
 		User foundUser = userService.readUser(new String[] { "login", "password" },
 				new Object[] { user.getLogin(), user.getPassword() });
 		if (foundUser != null) {
@@ -121,7 +119,6 @@ public class NewUserController {
 		try {
 			obj = (JSONObject) parser.parse(jsonLogin);
 			String login = (String) obj.get("login");
-			UserService userService = (UserService) ServiceManagerContext.getService(req, "userService");
 			if (userService.readUser("login", login) == null) {
 				return String.format(SIGN_UP_CHECK_LOGIN_RESULT_STRING, SIGN_UP_CHECK_LOGIN_SUCCESS_COLOR,
 						"This login is free");
@@ -137,7 +134,6 @@ public class NewUserController {
 
 	@RequestMapping(value = "/checkEmail", method = RequestMethod.GET)
 	public @ResponseBody String checkEmail(@RequestParam String email, HttpServletRequest req) {
-		UserService userService = (UserService) ServiceManagerContext.getService(req, "userService");
 		if (email.length() == 0)
 			return String.format(SIGN_UP_CHECK_EMAIL_RESULT_STRING, "Email address is required");
 		else if (!checkEmailInput(email))

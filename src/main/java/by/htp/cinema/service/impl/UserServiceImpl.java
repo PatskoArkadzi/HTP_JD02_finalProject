@@ -2,12 +2,17 @@ package by.htp.cinema.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import by.htp.cinema.dao.UserDao;
 import by.htp.cinema.domain.User;
 import by.htp.cinema.service.UserService;
 
+@Service
 public class UserServiceImpl implements UserService {
 
+	@Autowired
 	UserDao userDao;
 
 	public UserServiceImpl() {

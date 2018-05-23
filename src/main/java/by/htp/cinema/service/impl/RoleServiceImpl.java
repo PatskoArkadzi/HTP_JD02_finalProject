@@ -2,11 +2,17 @@ package by.htp.cinema.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import by.htp.cinema.dao.RoleDao;
 import by.htp.cinema.domain.Role;
 import by.htp.cinema.service.RoleService;
 
+@Service
 public class RoleServiceImpl implements RoleService {
+	
+	@Autowired
 	RoleDao roleDao;
 
 	public RoleServiceImpl() {

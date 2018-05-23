@@ -7,10 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
 
 import by.htp.cinema.dao.TicketsOrderDao;
 import by.htp.cinema.domain.TicketsOrder;
 
+@Component
 public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 
 	@Override

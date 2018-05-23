@@ -2,11 +2,17 @@ package by.htp.cinema.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import by.htp.cinema.dao.GenreDao;
 import by.htp.cinema.domain.Genre;
 import by.htp.cinema.service.GenreService;
 
+@Service
 public class GenreServiceImpl implements GenreService {
+	
+	@Autowired
 	GenreDao genreDao;
 
 	public GenreServiceImpl() {

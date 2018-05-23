@@ -7,11 +7,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
 
 import by.htp.cinema.dao.FilmSessionDao;
 import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.domain.Role;
 
+@Component
 public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
 
 	@Override

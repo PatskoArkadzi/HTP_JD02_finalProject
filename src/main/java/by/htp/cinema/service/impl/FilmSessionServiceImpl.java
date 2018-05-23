@@ -2,13 +2,18 @@ package by.htp.cinema.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import by.htp.cinema.dao.FilmSessionDao;
 import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.service.FilmSessionService;
 
+@Service
 public class FilmSessionServiceImpl implements FilmSessionService {
 
+	@Autowired
 	FilmSessionDao filmSessionDao;
 
 	public FilmSessionServiceImpl() {
