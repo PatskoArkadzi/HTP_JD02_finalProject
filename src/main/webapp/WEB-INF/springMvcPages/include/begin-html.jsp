@@ -27,51 +27,38 @@ background-size: cover;
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-
-
-
-
+			
 			<div class="collapse navbar-collapse" id="navbarNavDropdown">
 				<ul class="nav navbar-nav">
 					<c:if test="${current_user.role.id==1}">
-						<!-- <div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button"
-					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">I/R DataBase</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="do?action=InitDB">InitDB</a> <a
-						class="dropdown-item" href="do?action=ResetDB">ResetDB</a>
-				</div>
-			</div> -->
-
 						<div class="dropdown">
 							<button class="btn btn-secondary dropdown-toggle" type="button"
 								id="dropdownMenuButton" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">DataBase
 								actions</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="newapp/admin/crud/role">CRUD
+								<a class="dropdown-item" href="/cinema/newapp/admin/crud/role/">CRUD
 									role</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="newapp/admin/crud/user">CRUD
+								<a class="dropdown-item" href="/cinema/newapp/admin/crud/user/">CRUD
 									user</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="newapp/admin/crud/order">CRUD
+								<a class="dropdown-item" href="/cinema/newapp/admin/crud/order/">CRUD
 									order</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="newapp/admin/crud/ticket">CRUD
+								<a class="dropdown-item" href="/cinema/newapp/admin/crud/ticket/">CRUD
 									ticket</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="newapp/admin/crud/seat">CRUD
+								<a class="dropdown-item" href="/cinema/newapp/admin/crud/seat/">CRUD
 									seat</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="newapp/admin/crud/session">CRUD
+								<a class="dropdown-item" href="/cinema/newapp/admin/crud/session/">CRUD
 									session</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="newapp/admin/crud/film">CRUD
+								<a class="dropdown-item" href="/cinema/newapp/admin/crud/film/">CRUD
 									film</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="newapp/admin/crud/genre">CRUD
+								<a class="dropdown-item" href="/cinema/newapp/admin/crud/genre/">CRUD
 									genre</a>
 							</div>
 						</div>

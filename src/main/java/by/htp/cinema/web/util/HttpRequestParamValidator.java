@@ -11,6 +11,14 @@ public final class HttpRequestParamValidator {
 
 	}
 
+	public static void validateRequestParamNotNull(Integer... num) {
+		for (Integer n : num) {
+			if (n == null) {
+				throw new ValidateNullParamException("Empty param recieved");
+			}
+		}
+	}
+
 	public static void validateRequestParamNotNull(String... str) {
 		for (String s : str) {
 			if (s == null) {
@@ -22,6 +30,14 @@ public final class HttpRequestParamValidator {
 	public static void validateRequestParamNotNull(String[]... str) {
 		for (String[] s : str) {
 			if (s == null) {
+				throw new ValidateNullParamException("Empty param recieved");
+			}
+		}
+	}
+
+	public static void validateRequestParamNotNull(Object... obj) {
+		for (Object o : obj) {
+			if (o == null) {
 				throw new ValidateNullParamException("Empty param recieved");
 			}
 		}

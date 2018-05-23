@@ -15,6 +15,10 @@
 		<servlet-class>by.htp.cinema.web.controllers.NewUserController</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>CrudFilmController</servlet-name>
+		<servlet-class>by.htp.cinema.web.controllers.crudControllers.CrudFilmController</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>OldControllerServlet</servlet-name>
 		<servlet-class>by.htp.cinema.web.controllers.OldController</servlet-class>
 	</servlet>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ include file="../include/begin-html.jsp"%>
 
 <!-- CRUD Roles -->
@@ -11,43 +13,37 @@
 
 	<div class="collapse" id="collapseExample">
 		<div class="card card-body">
-			<div class="container">
-				<div class="row">
-					<div class=col-md-2>FilmName</div>
-					<div class=col-md-6>Description</div>
-					<div class=col-md-1>PosterUrl</div>
-					<div class=col-md-2>Genres</div>
-				</div>
-			</div>
+			<div class="container"></div>
 
-			<form class="create-film" action="oldapp?action=crud_film&film_id=0"
-				method=POST>
+			<form:form commandName="crud_film" action="create?film_id=0"
+				method="post">
 				<div class="row">
-					<div class=col-md-2>
-						<input id="film_name" class="form-control input-md"
-							name="film_name" />
-					</div>
-					<div class=col-md-6>
-						<input id="film_description" class="form-control input-md"
-							name="film_description" />
-					</div>
-					<div class=col-md-1>
-						<input id="film_poster_url" class="form-control input-md"
-							name="film_poster_url" />
-					</div>
-					<div class=col-md-2>
-						<select id="genre" class="form-control" name="film_genres"
-							multiple="multiple" size="5" required>
-							<option disabled>Выберите жанр</option>
-							<c:forEach items="${genrelist}" var="genre">
-								<option value="${genre.id}">${genre.genreName}</option>
-							</c:forEach>
-						</select>
+					<div class=col-md-2>FilmName :</div>
+					<form:input class="col-md-9" placeholder="filmName" path="filmName"
+						required="true" />
+				</div>
+				<div class="row">
+					<div class="col-md-2">PosterUrl :</div>
+					<form:input class="col-md-9" placeholder="posterUrl"
+						path="posterUrl" required="true" />
+				</div>
+				<div class="row">
+					<div class="col-md-2">Description :</div>
+					<form:textarea class="col-md-8" placeholder="description"
+						path="description" required="true" cols="100" rows="7" />
+					<div class="col-md-2 ml-auto">
+						<p>Genres :</p>
+						<form:select path="genres" multiple="true" size="5"
+							required="true">
+							<form:option disabled="true" value="Выберите жанр" />
+							<form:options items="${genrelist}" itemValue="id"
+								itemLabel="genreName" />
+						</form:select>
 					</div>
 				</div>
 				<button id="create" value="create" name="crud_command"
 					class="btn btn-success">ok</button>
-			</form>
+			</form:form>
 		</div>
 	</div>
 </div>

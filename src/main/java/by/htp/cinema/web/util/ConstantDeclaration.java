@@ -37,6 +37,7 @@ public final class ConstantDeclaration {
 	public static final String REQUEST_PARAM_FILM_GENRES = "film_genres";
 	public static final String REQUEST_PARAM_FOUND_FILM = "found_film";
 	public static final String REQUEST_PARAM_USER_CHOSEN_FILM = "user_chosen_film";
+	public static final String REQUEST_PARAM_CRUD_FILM = "crud_film";
 
 	public static final String CRUD_OPERATION_NAME_CREATE = "create";
 	public static final String CRUD_OPERATION_NAME_READ = "read";
