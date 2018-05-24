@@ -5,8 +5,8 @@
 <html>
 <head>
 <!-- Required meta tags -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="Content-Type"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no, text/html" charset="UTF-8">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.min.css"/>">
@@ -27,7 +27,7 @@ background-size: cover;
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			
+
 			<div class="collapse navbar-collapse" id="navbarNavDropdown">
 				<ul class="nav navbar-nav">
 					<c:if test="${current_user.role.id==1}">
@@ -46,14 +46,14 @@ background-size: cover;
 								<a class="dropdown-item" href="/cinema/newapp/admin/crud/order/">CRUD
 									order</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="/cinema/newapp/admin/crud/ticket/">CRUD
-									ticket</a>
+								<a class="dropdown-item"
+									href="/cinema/newapp/admin/crud/ticket/">CRUD ticket</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="/cinema/newapp/admin/crud/seat/">CRUD
 									seat</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="/cinema/newapp/admin/crud/session/">CRUD
-									session</a>
+								<a class="dropdown-item"
+									href="/cinema/newapp/admin/crud/session/">CRUD session</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="/cinema/newapp/admin/crud/film/">CRUD
 									film</a>

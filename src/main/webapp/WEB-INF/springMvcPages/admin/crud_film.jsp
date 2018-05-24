@@ -50,54 +50,79 @@
 <hr>
 <div class="container">
 	<p>Введите id для поиска</p>
-	<form class="read-film" action="oldapp?action=crud_film" method=POST>
-		<div class="row">
-			<div class=col-md-2>
-				<input id="film_id" class="form-control input-md" name="film_id" />
-			</div>
-			<button id="read" value="read" name="crud_command"
-				class="btn btn-success">search</button>
-		</div>
-		<p>Результат поиска:</p>
-		<p>${found_film}</p>
-	</form>
+	<div class="row">
+		<form:form commandName="crud_film" action="read" method="get">
+			<fieldset>
+				<form:input class="form-control input-md" path="id" />
+			</fieldset>
+		</form:form>
+		<button class="btn btn-success" onclick="read()">search</button>
+	</div>
+	<%-- <p>Результат поиска:</p>
+	<p>${found_film}</p> --%>
+	<div id="found_film"></div>
 </div>
+<script type="text/javascript">
+	function read() {
+		$.ajax({
+			url : 'read',
+			data : ({
+				id : $('#id').val()
+			}),
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			success : function(data) {
+				$('#found_film').html(data.foundFilm);
+			}
+		})
+	}
+</script>
 <hr>
 <br>
 <div class="container">
 	<c:forEach items="${filmlist}" var="film">
 
-		<form class="update-user"
-			action="oldapp?action=crud_film&film_id=${film.id}" method=POST>
-
+		<form:form commandName="crud_film" method="post">
 			<div class="row">
 				<div class=col-md-2>ID :</div>
-				<div class=col-md-10>${film.id}</div>
+				<form:input class="form-control input-md col-md-10" path="id"
+					value="${film.id}" readonly="true" />
+				<%-- <div class=col-md-10>${film.id}</div> --%>
 			</div>
 			<div class="row">
 				<div class=col-md-2>FilmName :</div>
-				<div class=col-md-10>
-					<input id="film_name" class="form-control input-md"
-						name="film_name" value="${film.filmName}" />
-				</div>
+				<form:input class="form-control input-md col-md-10"
+					placeholder="filmName" path="filmName" required="true"
+					value="${film.filmName}" />
 			</div>
 			<div class="row">
 				<div class=col-md-2>PosterUrl :</div>
-				<div class=col-md-10>
-					<input id="film_poster_url" class="form-control input-md"
-						name="film_poster_url" value="${film.posterUrl}" />
-				</div>
+				<form:input class="form-control input-md col-md-10"
+					placeholder="posterUrl" path="posterUrl" required="true"
+					value="${film.posterUrl}" />
 			</div>
 
 			<div class="row">
 				<div class=col-md-2>Description :</div>
-				<div class=col-md-8>
-					<textarea id="film_description" name="film_description" cols="100"
-						rows="7">${film.description} </textarea>
-				</div>
-				<div class=col-md-1.5>
+				<%-- <form:textarea placeholder="description" path="description"
+					required="true" cols="100" rows="7" /> --%>
+				<textarea class="col-md-8" placeholder="description" required
+					cols="100" rows="7">${film.description}</textarea>
+				<div class=col-md-2>
 					<p>Genres :</p>
-					<select id="genre" class="form-control" name="film_genres"
+					<form:select path="genres" multiple="true" size="5" required="true">
+						<form:option disabled="true" value="Выберите жанр" />
+						<c:forEach items="${genrelist}" var="genre">
+							<option value="${genre.id}"
+								${film.genres.contains(genre)?"selected":""}>
+								${genre.genreName}</option>
+						</c:forEach>
+						<%-- <form:options  items="${genrelist}" itemValue="id"
+							itemLabel="genreName"
+							selected='${film.genres.contains(itemValue)?"true":"false"}' /> --%>
+					</form:select>
+
+					<%-- <select id="genre" class="form-control" name="film_genres"
 						multiple="multiple" size="5" required>
 						<option disabled>Выберите жанр</option>
 						<c:forEach items="${genrelist}" var="genre">
@@ -105,17 +130,15 @@
 								${film.genres.contains(genre)?"selected":""}>
 								${genre.genreName}</option>
 						</c:forEach>
-					</select>
+					</select> --%>
 				</div>
 			</div>
-			<button id="update" value="update" name="crud_command"
-				class="btn btn-success">Обновить</button>
-
-			<button id="delete" value="delete" name="crud_command"
-				class="btn btn-danger">Удалить</button>
-		</form>
+			<form:button formaction="update" class="btn btn-success">Обновить</form:button>
+			<form:button formaction="delete" class="btn btn-danger">Удалить</form:button>
+		</form:form>
 		<br>
 	</c:forEach>
+
 </div>
 
 

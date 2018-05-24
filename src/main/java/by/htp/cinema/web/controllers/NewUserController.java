@@ -84,7 +84,7 @@ public class NewUserController {
 				new Object[] { user.getLogin(), user.getPassword() });
 		if (foundUser != null) {
 			session.setAttribute(SESSION_PARAM_CURRENT_USER, foundUser);
-			session.setMaxInactiveInterval(60);
+			session.setMaxInactiveInterval(600);
 			mav.setViewName("redirect:/newapp/user/");
 			return mav;
 		} else {

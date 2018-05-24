@@ -4,6 +4,7 @@ import static by.htp.cinema.web.util.ConstantDeclaration.*;
 import static by.htp.cinema.web.util.HttpRequestParamValidator.*;
 import static by.htp.cinema.web.util.HttpRequestParamFormatter.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.Genre;
@@ -55,10 +59,32 @@ public class CrudFilmController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@ModelAttribute(REQUEST_PARAM_CRUD_FILM) Film film, BindingResult result) {
-		validateRequestParamNotNull(film.getId());
 		validateRequestParamNotNull(film.getFilmName(), film.getDescription(), film.getPosterUrl());
 		validateRequestParamNotNull(film.getGenres());
 		filmService.createFilm(film);
+		return "redirect:/newapp/admin/crud/film/";
+	}
+
+	@RequestMapping(value = "/read", method = RequestMethod.GET, produces = { "application/json; charset=UTF-8" })
+	public @ResponseBody String read(@RequestParam String id) throws UnsupportedEncodingException {
+		validateRequestParamNotNull(id);
+		Film foundFilm = filmService.readFilm(getInt(id));
+		return "{\"foundFilm\" : \"" + foundFilm.toString() + "\"}";
+	}
+
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(@ModelAttribute(REQUEST_PARAM_CRUD_FILM) Film film) {
+		System.out.println(film);
+		validateRequestParamNotNull(film.getFilmName(), film.getDescription(), film.getPosterUrl());
+		validateRequestParamNotNull(film.getGenres());
+		filmService.updateFilm(film);
+		return "redirect:/newapp/admin/crud/film/";
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String delete(@ModelAttribute(REQUEST_PARAM_CRUD_FILM) Film film) {
+		validateRequestParamIdnotNull(film.getId());
+		filmService.deleteFilm(film);
 		return "redirect:/newapp/admin/crud/film/";
 	}
 

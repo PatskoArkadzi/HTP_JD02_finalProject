@@ -1,6 +1,6 @@
 package by.htp.cinema.web.util;
 
-import static by.htp.cinema.web.util.ConstantDeclaration.EMAIL_INPUT_VALIDATION_REGEX;
+import static by.htp.cinema.web.util.ConstantDeclaration.*;
 
 import java.util.regex.Pattern;
 
@@ -11,11 +11,9 @@ public final class HttpRequestParamValidator {
 
 	}
 
-	public static void validateRequestParamNotNull(Integer... num) {
-		for (Integer n : num) {
-			if (n == null) {
-				throw new ValidateNullParamException("Empty param recieved");
-			}
+	public static void validateRequestParamIdnotNull(int id) {
+		if (id == 0) {
+			throw new ValidateNullParamException("Empty param recieved");
 		}
 	}
 
