@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.htp.cinema.domain.Genre;
+import by.htp.cinema.service.FilmService;
 import by.htp.cinema.service.GenreService;
 
 @Controller
@@ -27,6 +28,8 @@ public class CrudGenreController {
 
 	@Autowired
 	GenreService genreService;
+	@Autowired
+	FilmService filmService;
 
 	private static final Logger logger = LogManager.getLogger();
 
@@ -50,7 +53,7 @@ public class CrudGenreController {
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET, produces = { "application/json; charset=UTF-8" })
 	public @ResponseBody String read(@RequestParam String id) throws UnsupportedEncodingException {
-		validateRequestParamNotNull(id);
+		validateRequestParamIdnotNull(getInt(id));
 		Genre foundGenre = genreService.readGenre(getInt(id));
 		return "{\"foundGenre\" : \"" + foundGenre + "\"}";
 	}
@@ -64,9 +67,18 @@ public class CrudGenreController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@ModelAttribute(REQUEST_PARAM_CRUD_GENRE) Genre genre) {
+	public ModelAndView delete(@ModelAttribute(REQUEST_PARAM_CRUD_GENRE) Genre genre) {
+		ModelAndView mav = new ModelAndView();
 		validateRequestParamIdnotNull(genre.getId());
+
+		if (genreService.isAnyFilmContainGenre(genre.getId())) {
+			mav.addObject(REQUEST_PARAM_ERROR_MESSAGE,
+					"You can't delete genre.<br>Some films are marked by this genre");
+			mav.setViewName("error");
+			return mav;
+		}
 		genreService.deleteGenre(genre);
-		return "redirect:/newapp/admin/crud/genre/";
+		mav.setViewName("redirect:/newapp/admin/crud/genre/");
+		return mav;
 	}
 }

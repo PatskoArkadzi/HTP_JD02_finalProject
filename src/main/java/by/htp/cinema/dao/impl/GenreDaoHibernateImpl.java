@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
 import by.htp.cinema.dao.GenreDao;
+import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.domain.Genre;
 
 @Component
@@ -81,5 +82,4 @@ public class GenreDaoHibernateImpl implements GenreDao {
 		session.close();
 		return genres;
 	}
-
 }

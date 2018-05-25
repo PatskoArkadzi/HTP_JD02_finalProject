@@ -15,4 +15,6 @@ public interface GenreService extends Service {
 	void updateGenre(Genre genre);
 
 	void deleteGenre(Genre genre);
+
+	public boolean isAnyFilmContainGenre(int id);
 }

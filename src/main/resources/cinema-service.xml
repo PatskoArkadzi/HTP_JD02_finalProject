@@ -16,6 +16,7 @@
 	<bean name="genreService"
 		class="by.htp.cinema.service.impl.GenreServiceImpl">
 		<property name="genreDao" ref="genreDao" />
+		<property name="filmDao" ref="filmDao" />
 	</bean>
 	<bean name="roleService"
 		class="by.htp.cinema.service.impl.RoleServiceImpl">

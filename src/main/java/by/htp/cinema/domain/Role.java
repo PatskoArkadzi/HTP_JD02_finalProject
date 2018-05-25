@@ -33,7 +33,7 @@ public class Role implements Serializable {
 	@Column(name = "roleName")
 	private String roleName;
 
-	// @Fetch(FetchMode.JOIN)
+	 @Fetch(FetchMode.JOIN)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
 	private Set<User> users;
 
