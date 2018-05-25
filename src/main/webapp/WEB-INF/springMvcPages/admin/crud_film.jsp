@@ -2,20 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
 <%@ include file="../include/begin-html.jsp"%>
 
-<!-- CRUD Roles -->
+<!-- CRUD films -->
 
 <div class="container">
 	<button class="btn btn-success btn-lg" type="button"
 		data-toggle="collapse" data-target="#collapseExample"
-		aria-expanded="false" aria-controls="collapseExample">Create</button>
-
+		aria-expanded="false" aria-controls="collapseExample">Create film</button>
 	<div class="collapse" id="collapseExample">
 		<div class="card card-body">
 			<div class="container"></div>
-
 			<form:form commandName="crud_film" action="create?film_id=0"
 				method="post">
 				<div class="row">
@@ -59,8 +56,7 @@
 		</form:form>
 		<button class="btn btn-success" onclick="read()">search</button>
 	</div>
-	<%-- <p>Результат поиска:</p>
-	<p>${found_film}</p> --%>
+	<p>Результат поиска:</p>
 	<div id="found_film"></div>
 </div>
 <script type="text/javascript">
@@ -82,13 +78,11 @@
 <br>
 <div class="container">
 	<c:forEach items="${filmlist}" var="film">
-
 		<form:form commandName="crud_film" method="post">
 			<div class="row">
 				<div class=col-md-2>ID :</div>
 				<form:input class="form-control input-md col-md-10" path="id"
 					value="${film.id}" readonly="true" />
-				<%-- <div class=col-md-10>${film.id}</div> --%>
 			</div>
 			<div class="row">
 				<div class=col-md-2>FilmName :</div>
@@ -102,7 +96,6 @@
 					placeholder="posterUrl" path="posterUrl" required="true"
 					value="${film.posterUrl}" />
 			</div>
-
 			<div class="row">
 				<div class=col-md-2>Description :</div>
 				<form:textarea cols="100" rows="7" path="description"
@@ -119,13 +112,12 @@
 					</form:select>
 				</div>
 			</div>
+			<br>
 			<form:button formaction="update" class="btn btn-success">Обновить</form:button>
 			<form:button formaction="delete" class="btn btn-danger">Удалить</form:button>
 		</form:form>
 		<br>
 	</c:forEach>
-
 </div>
-
 
 <%@ include file="../include/end-html.jsp"%>

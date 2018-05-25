@@ -5,17 +5,13 @@ import static by.htp.cinema.web.util.HttpRequestParamValidator.*;
 import static by.htp.cinema.web.util.HttpRequestParamFormatter.*;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -26,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.Genre;
@@ -69,11 +64,12 @@ public class CrudFilmController {
 	public @ResponseBody String read(@RequestParam String id) throws UnsupportedEncodingException {
 		validateRequestParamNotNull(id);
 		Film foundFilm = filmService.readFilm(getInt(id));
-		return "{\"foundFilm\" : \"" + foundFilm.toString() + "\"}";
+		return "{\"foundFilm\" : \"" + foundFilm + "\"}";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@ModelAttribute(REQUEST_PARAM_CRUD_FILM) Film film) {
+		validateRequestParamIdnotNull(film.getId());
 		validateRequestParamNotNull(film.getFilmName(), film.getDescription(), film.getPosterUrl());
 		validateRequestParamNotNull(film.getGenres());
 		filmService.updateFilm(film);

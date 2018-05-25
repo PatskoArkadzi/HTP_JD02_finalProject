@@ -28,6 +28,7 @@ public final class ConstantDeclaration {
 	public static final String REQUEST_PARAM_GENRE_ID = "genre_id";
 	public static final String REQUEST_PARAM_GENRE_NAME = "genre_name";
 	public static final String REQUEST_PARAM_FOUND_GENRE = "found_genre";
+	public static final String REQUEST_PARAM_CRUD_GENRE = "crud_genre";
 
 	public static final String REQUEST_PARAM_FILM_LIST = "filmlist";
 	public static final String REQUEST_PARAM_FILM_ID = "film_id";
@@ -65,7 +66,7 @@ public final class ConstantDeclaration {
 	public static final String SIGN_UP_CHECK_LOGIN_RESULT_STRING = "<span style=\"color:%s;\">%s</span>";
 	public static final String SIGN_UP_CHECK_LOGIN_FAIL_COLOR = "#FF0000";
 	public static final String SIGN_UP_CHECK_LOGIN_SUCCESS_COLOR = "#008B00";
-	
+
 	public static final String SIGN_UP_CHECK_EMAIL_RESULT_STRING = "<span style=\"color:#FF0000;\">%s</span>";
 
 	public static final String SIGN_UP_CHECK_PASSWORD_RESULT_STRING = "<span style=\"color:%s;\">%s</span>";
