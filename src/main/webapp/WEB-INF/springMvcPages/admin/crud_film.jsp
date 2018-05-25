@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <%@ include file="../include/begin-html.jsp"%>
 
 <!-- CRUD Roles -->
@@ -104,10 +105,8 @@
 
 			<div class="row">
 				<div class=col-md-2>Description :</div>
-				<%-- <form:textarea placeholder="description" path="description"
-					required="true" cols="100" rows="7" /> --%>
-				<textarea class="col-md-8" placeholder="description" required
-					cols="100" rows="7">${film.description}</textarea>
+				<form:textarea cols="100" rows="7" path="description"
+					placeholder="${film.description}" />
 				<div class=col-md-2>
 					<p>Genres :</p>
 					<form:select path="genres" multiple="true" size="5" required="true">
@@ -117,20 +116,7 @@
 								${film.genres.contains(genre)?"selected":""}>
 								${genre.genreName}</option>
 						</c:forEach>
-						<%-- <form:options  items="${genrelist}" itemValue="id"
-							itemLabel="genreName"
-							selected='${film.genres.contains(itemValue)?"true":"false"}' /> --%>
 					</form:select>
-
-					<%-- <select id="genre" class="form-control" name="film_genres"
-						multiple="multiple" size="5" required>
-						<option disabled>Выберите жанр</option>
-						<c:forEach items="${genrelist}" var="genre">
-							<option value="${genre.id}"
-								${film.genres.contains(genre)?"selected":""}>
-								${genre.genreName}</option>
-						</c:forEach>
-					</select> --%>
 				</div>
 			</div>
 			<form:button formaction="update" class="btn btn-success">Обновить</form:button>

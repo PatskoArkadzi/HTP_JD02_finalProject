@@ -74,7 +74,6 @@ public class CrudFilmController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@ModelAttribute(REQUEST_PARAM_CRUD_FILM) Film film) {
-		System.out.println(film);
 		validateRequestParamNotNull(film.getFilmName(), film.getDescription(), film.getPosterUrl());
 		validateRequestParamNotNull(film.getGenres());
 		filmService.updateFilm(film);
