@@ -62,7 +62,7 @@ public class CrudFilmController {
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET, produces = { "application/json; charset=UTF-8" })
 	public @ResponseBody String read(@RequestParam String id) throws UnsupportedEncodingException {
-		validateRequestParamNotNull(id);
+		validateRequestParamIdnotNull(getInt(id));
 		Film foundFilm = filmService.readFilm(getInt(id));
 		return "{\"foundFilm\" : \"" + foundFilm + "\"}";
 	}

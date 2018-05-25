@@ -48,7 +48,6 @@ public class Film implements Serializable {
 	private Set<Genre> genres;
 
 	public Film() {
-		super();
 	}
 
 	public Film(int id, String filmName, String description, String posterUrl, Set<FilmSession> filmSessions,

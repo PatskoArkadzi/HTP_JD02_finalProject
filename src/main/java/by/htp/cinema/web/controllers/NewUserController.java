@@ -77,7 +77,7 @@ public class NewUserController {
 		HttpSession session = req.getSession();
 		if (session.getAttribute(SESSION_PARAM_CURRENT_USER) != null) {
 			mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, "You are already logged in");
-			mav.setViewName("redirect:/newapp/user/error");
+			mav.setViewName("error");
 			return mav;
 		}
 		User foundUser = userService.readUser(new String[] { "login", "password" },
@@ -89,7 +89,7 @@ public class NewUserController {
 			return mav;
 		} else {
 			mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, "Incorrect username or password");
-			mav.setViewName("redirect:/newapp/user/error");
+			mav.setViewName("error");
 			return mav;
 		}
 	}

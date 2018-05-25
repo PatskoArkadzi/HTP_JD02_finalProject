@@ -67,7 +67,7 @@ public class GenreServiceImpl implements GenreService {
 
 	public boolean isAnyFilmContainGenre(int id) {
 		List<Film> films = filmDao.readAllFilmsWhereGenreIdPresent(id);
-		System.out.println(films);
-		return films != null;
+		
+		return films.size() != 0;
 	}
 }

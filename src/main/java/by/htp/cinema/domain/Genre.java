@@ -35,7 +35,6 @@ public class Genre implements Serializable {
 	private Set<Film> films;
 
 	public Genre() {
-		super();
 	}
 
 	public Genre(int id, String genreName, Set<Film> films) {
