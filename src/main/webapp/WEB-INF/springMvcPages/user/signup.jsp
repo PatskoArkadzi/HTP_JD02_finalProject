@@ -8,6 +8,9 @@
 <form:form method="post" action="register">
 	<fieldset>
 		<div class="form-group">
+			<form:input class="col-md-1" path="id" hidden="true" value="0" />
+		</div>
+		<div class="form-group">
 			<form:label class="col-md-2" path="login">login</form:label>
 			<form:input class="col-md-3" placeholder="login" path="login"
 				onkeyup="checkLogin()" required="true" />
@@ -27,7 +30,7 @@
 		</div>
 	</fieldset>
 	<div class="col-md-4">
-		<button id="singlebutton" name="singlebutton" class="btn btn-primary">login</button>
+		<button class="btn btn-primary">sign up</button>
 	</div>
 	<!-- <input type="submit" value="sign up" /> -->
 </form:form>

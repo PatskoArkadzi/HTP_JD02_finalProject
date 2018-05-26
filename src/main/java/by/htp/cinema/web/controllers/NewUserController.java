@@ -28,6 +28,7 @@ import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.domain.User;
 import by.htp.cinema.service.FilmService;
 import by.htp.cinema.service.FilmSessionService;
+import by.htp.cinema.service.RoleService;
 import by.htp.cinema.service.UserService;
 
 @Controller
@@ -42,6 +43,8 @@ public class NewUserController {
 
 	@Autowired
 	UserService userService;
+	@Autowired
+	RoleService roleService;
 
 	private static final Logger logger = LogManager.getLogger();
 
@@ -73,24 +76,18 @@ public class NewUserController {
 
 	@RequestMapping(value = "/check_User", method = RequestMethod.POST)
 	public ModelAndView checkUser(@ModelAttribute("user") User user, HttpServletRequest req) {
-		ModelAndView mav = new ModelAndView();
 		HttpSession session = req.getSession();
 		if (session.getAttribute(SESSION_PARAM_CURRENT_USER) != null) {
-			mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, "You are already logged in");
-			mav.setViewName("error");
-			return mav;
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "You are already logged in");
 		}
 		User foundUser = userService.readUser(new String[] { "login", "password" },
 				new Object[] { user.getLogin(), user.getPassword() });
 		if (foundUser != null) {
 			session.setAttribute(SESSION_PARAM_CURRENT_USER, foundUser);
 			session.setMaxInactiveInterval(600);
-			mav.setViewName("redirect:/newapp/user/");
-			return mav;
+			return new ModelAndView("redirect:/newapp/user/");
 		} else {
-			mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, "Incorrect username or password");
-			mav.setViewName("error");
-			return mav;
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Incorrect username or password");
 		}
 	}
 
@@ -101,12 +98,6 @@ public class NewUserController {
 		return new ModelAndView("redirect:/newapp/user/");
 	}
 
-	/*
-	 * @RequestMapping(value = "/error", method = RequestMethod.GET) public
-	 * ModelAndView error(@ModelAttribute(REQUEST_PARAM_ERROR_MESSAGE) String
-	 * message, ModelAndView mav) { mav.addObject(REQUEST_PARAM_ERROR_MESSAGE,
-	 * message); mav.setViewName("error"); return mav; }
-	 */
 	@RequestMapping(value = "/sign_up", method = RequestMethod.GET)
 	public ModelAndView newUser(ModelMap model) {
 		return new ModelAndView("user/signup", "command", new User());
@@ -159,5 +150,26 @@ public class NewUserController {
 					"Strong password");
 		else
 			return "";
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ModelAndView register(@ModelAttribute("user") User user, HttpServletRequest req) {
+		String userLogin = user.getLogin();
+		String userEmail = user.getEmail();
+		String userPassword = user.getPassword();
+		validateRequestParamNotNull(userLogin, userEmail, userPassword);
+
+		if (userService.readUser("login", userLogin) != null) {
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "This login is already taken");
+		} else if (userService.readUser("email", userEmail) != null) {
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "This email is already taken");
+		} else if (userPassword.length() < 5) {
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "This password is too short");
+		}
+		user.setRole(roleService.readRole(DEFAULT_ROLE_ID));
+		userService.createUser(user);
+		return new ModelAndView("success", REQUEST_PARAM_SUCCESS_MESSAGE,
+				"You are successfully signed up.<br>Now, you can log in.");
+
 	}
 }
