@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ include file="../include/begin-html.jsp"%>
 
@@ -9,7 +8,9 @@
 <div class="container">
 	<button class="btn btn-success btn-lg" type="button"
 		data-toggle="collapse" data-target="#collapseExample"
-		aria-expanded="false" aria-controls="collapseExample">Create film</button>
+		aria-expanded="false" aria-controls="collapseExample">Create
+		film</button>
+
 	<div class="collapse" id="collapseExample">
 		<div class="card card-body">
 			<div class="container"></div>
@@ -33,14 +34,13 @@
 						<p>Genres :</p>
 						<form:select path="genres" multiple="true" size="5"
 							required="true">
-							<form:option disabled="true" value="Выберите жанр" />
+							<form:option disabled="true" value="choose genre" />
 							<form:options items="${genrelist}" itemValue="id"
 								itemLabel="genreName" />
 						</form:select>
 					</div>
 				</div>
-				<button id="create" value="create" name="crud_command"
-					class="btn btn-success">ok</button>
+				<button class="btn btn-success">ok</button>
 			</form:form>
 		</div>
 	</div>
@@ -103,7 +103,7 @@
 				<div class=col-md-2>
 					<p>Genres :</p>
 					<form:select path="genres" multiple="true" size="5" required="true">
-						<form:option disabled="true" value="Выберите жанр" />
+						<form:option disabled="true" value="choose genre" />
 						<c:forEach items="${genrelist}" var="genre">
 							<option value="${genre.id}"
 								${film.genres.contains(genre)?"selected":""}>
