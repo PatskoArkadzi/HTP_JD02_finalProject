@@ -47,13 +47,13 @@ public class CrudFilmController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(REQUEST_PARAM_FILM_LIST, films);
 		mav.addObject(REQUEST_PARAM_GENRE_LIST, genres);
-		mav.addObject(REQUEST_PARAM_CRUD_FILM, new Film());
+		mav.addObject(REQUEST_PARAM_COMMAND_NAME_CRUD_FILM, new Film());
 		mav.setViewName("admin/crud_film");
 		return mav;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(@ModelAttribute(REQUEST_PARAM_CRUD_FILM) Film film, BindingResult result) {
+	public String create(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_FILM) Film film, BindingResult result) {
 		validateRequestParamNotNull(film.getFilmName(), film.getDescription(), film.getPosterUrl());
 		validateRequestParamNotNull(film.getGenres());
 		filmService.createFilm(film);
@@ -68,7 +68,7 @@ public class CrudFilmController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(@ModelAttribute(REQUEST_PARAM_CRUD_FILM) Film film) {
+	public String update(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_FILM) Film film) {
 		validateRequestParamIdnotNull(film.getId());
 		validateRequestParamNotNull(film.getFilmName(), film.getDescription(), film.getPosterUrl());
 		validateRequestParamNotNull(film.getGenres());
@@ -77,7 +77,7 @@ public class CrudFilmController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@ModelAttribute(REQUEST_PARAM_CRUD_FILM) Film film) {
+	public String delete(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_FILM) Film film) {
 		validateRequestParamIdnotNull(film.getId());
 		filmService.deleteFilm(film);
 		return "redirect:/newapp/admin/crud/film/";

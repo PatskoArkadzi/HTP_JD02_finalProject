@@ -6,14 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import by.htp.cinema.dao.RoleDao;
+import by.htp.cinema.dao.UserDao;
+import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.Role;
+import by.htp.cinema.domain.User;
 import by.htp.cinema.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-	
+
 	@Autowired
 	RoleDao roleDao;
+
+	@Autowired
+	UserDao userDao;
 
 	public RoleServiceImpl() {
 	}
@@ -24,6 +30,14 @@ public class RoleServiceImpl implements RoleService {
 
 	public void setRoleDao(RoleDao roleDao) {
 		this.roleDao = roleDao;
+	}
+
+	public UserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
 	}
 
 	@Override
@@ -53,4 +67,9 @@ public class RoleServiceImpl implements RoleService {
 		roleDao.delete(role);
 	}
 
+	@Override
+	public boolean isAnyFilmContainGenre(int id) {
+		List<User> users = userDao.readAllUsersWhereRoleIdPresent(id);
+		return users.size() != 0;
+	}
 }

@@ -65,6 +65,7 @@ public class GenreServiceImpl implements GenreService {
 		genreDao.delete(genre);
 	}
 
+	@Override
 	public boolean isAnyFilmContainGenre(int id) {
 		List<Film> films = filmDao.readAllFilmsWhereGenreIdPresent(id);
 		return films.size() != 0;

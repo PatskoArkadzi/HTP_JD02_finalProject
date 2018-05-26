@@ -15,4 +15,6 @@ public interface RoleService extends Service {
 	void updateRole(Role role);
 
 	void deleteRole(Role role);
+
+	public boolean isAnyFilmContainGenre(int id);
 }

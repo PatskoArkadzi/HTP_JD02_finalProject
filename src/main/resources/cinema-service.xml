@@ -21,6 +21,7 @@
 	<bean name="roleService"
 		class="by.htp.cinema.service.impl.RoleServiceImpl">
 		<property name="roleDao" ref="roleDao" />
+		<property name="userDao" ref="userDao" />
 	</bean>
 	<bean name="seatService"
 		class="by.htp.cinema.service.impl.SeatServiceImpl">

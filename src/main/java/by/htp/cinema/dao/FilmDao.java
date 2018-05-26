@@ -7,7 +7,8 @@ import by.htp.cinema.domain.Film;
 public interface FilmDao extends BaseDao<Film> {
 
 	List<Film> readAllWhereEq(String[] parametres, Object[] values);
-	//TODO add specific methods
 
 	List<Film> readAllFilmsWhereGenreIdPresent(int genreId);
+
+	// TODO add specific methods
 }

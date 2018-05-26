@@ -105,7 +105,8 @@ public class FilmDaoHibernateImpl implements FilmDao {
 	public List<Film> readAllFilmsWhereGenreIdPresent(int genreId) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Query query = session.createQuery("select f from Film f inner join f.genres g where g.id=:idGenre")
+		Query query = session
+				.createQuery("select f from Film f inner join f.genres g where g.id=:idGenre")
 				.setParameter("idGenre", genreId);
 		List<Film> films = query.list();
 		session.close();

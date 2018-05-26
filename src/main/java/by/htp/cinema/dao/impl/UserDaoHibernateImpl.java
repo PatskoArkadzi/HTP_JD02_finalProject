@@ -3,6 +3,7 @@ package by.htp.cinema.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -10,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
 import by.htp.cinema.dao.UserDao;
+import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.domain.User;
 
@@ -108,6 +110,17 @@ public class UserDaoHibernateImpl implements UserDao {
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc(sortingColumn));
 		List<User> users = criteria.list();
+		session.close();
+		return users;
+	}
+
+	@Override
+	public List<User> readAllUsersWhereRoleIdPresent(int roleId) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Query query = session.createQuery("select u from User u inner join u.role r where r.id=:idRole")
+				.setParameter("idRole", roleId);
+		List<User> users = query.list();
 		session.close();
 		return users;
 	}
