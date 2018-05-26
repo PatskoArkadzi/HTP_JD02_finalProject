@@ -29,7 +29,7 @@ public class FilmSessionServiceImpl implements FilmSessionService {
 
 	@Override
 	public List<FilmSession> getFilmSessionList() {
-		return filmSessionDao.readAll();
+		return filmSessionDao.readAll("id");
 	}
 
 	@Override

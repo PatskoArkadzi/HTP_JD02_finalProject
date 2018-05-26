@@ -40,7 +40,7 @@ public class GenreServiceImpl implements GenreService {
 
 	@Override
 	public List<Genre> getGenreList() {
-		return genreDao.readAll();
+		return genreDao.readAll("id");
 	}
 
 	@Override
@@ -67,7 +67,6 @@ public class GenreServiceImpl implements GenreService {
 
 	public boolean isAnyFilmContainGenre(int id) {
 		List<Film> films = filmDao.readAllFilmsWhereGenreIdPresent(id);
-		
 		return films.size() != 0;
 	}
 }

@@ -28,7 +28,7 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public List<Ticket> getTicketList() {
-		return ticketDao.readAll();
+		return ticketDao.readAll("id");
 	}
 
 	@Override

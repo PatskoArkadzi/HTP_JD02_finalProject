@@ -28,7 +28,7 @@ public class FilmServiceImpl implements FilmService {
 
 	@Override
 	public List<Film> getFilmList() {
-		return filmDao.readAll();
+		return filmDao.readAll("id");
 	}
 
 	@Override
