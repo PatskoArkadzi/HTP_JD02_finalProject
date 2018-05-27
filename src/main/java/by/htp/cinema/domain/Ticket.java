@@ -26,9 +26,6 @@ public class Ticket implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(name = "price")
-	private int price;
-
 	@Fetch(FetchMode.JOIN)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "session_id")
@@ -48,10 +45,9 @@ public class Ticket implements Serializable {
 		super();
 	}
 
-	public Ticket(int id, int price, FilmSession filmSession, Seat seat, TicketsOrder order) {
+	public Ticket(int id, FilmSession filmSession, Seat seat, TicketsOrder order) {
 		super();
 		this.id = id;
-		this.price = price;
 		this.filmSession = filmSession;
 		this.seat = seat;
 		this.order = order;
@@ -63,14 +59,6 @@ public class Ticket implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
 	}
 
 	public FilmSession getFilmSession() {
@@ -104,7 +92,6 @@ public class Ticket implements Serializable {
 		result = prime * result + ((filmSession == null) ? 0 : filmSession.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
-		result = prime * result + price;
 		result = prime * result + ((seat == null) ? 0 : seat.hashCode());
 		return result;
 	}
@@ -130,8 +117,7 @@ public class Ticket implements Serializable {
 				return false;
 		} else if (!order.equals(other.order))
 			return false;
-		if (price != other.price)
-			return false;
+
 		if (seat == null) {
 			if (other.seat != null)
 				return false;
@@ -142,9 +128,9 @@ public class Ticket implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", price=" + price + ", filmSession=date:" + filmSession.getDate() + "|time:"
-				+ filmSession.getTime() + ", seat=row:" + seat.getRow() + "|number:" + seat.getNumber()
-				+ ", orderNumber=" + order.getOrderNumber() + "]";
+		return "Ticket [id=" + id + ", filmSession=date:" + filmSession.getDate() + "|time:" + filmSession.getTime()
+				+ ", seat=row:" + seat.getRow() + "|number:" + seat.getNumber() + ", orderNumber="
+				+ order.getOrderNumber() + "]";
 	}
 
 }

@@ -36,6 +36,9 @@ public class FilmSession implements Serializable {
 	@Column(name = "time")
 	private String time;
 
+	@Column(name = "ticketPrice")
+	private int ticketPrice;
+
 	@ManyToOne
 	@JoinColumn(name = "film_id")
 	private Film film;
@@ -58,15 +61,16 @@ public class FilmSession implements Serializable {
 		super();
 	}
 
-	public FilmSession(int id, String date, String time, Set<Ticket> tickets, Film film, Set<TicketsOrder> orders,
-			Set<Seat> seats) {
+	public FilmSession(int id, String date, String time, int ticketPrice, Film film, Set<Ticket> tickets,
+			Set<TicketsOrder> ticketsOrders, Set<Seat> seats) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.time = time;
-		this.tickets = tickets;
+		this.ticketPrice = ticketPrice;
 		this.film = film;
-		this.ticketsOrders = orders;
+		this.tickets = tickets;
+		this.ticketsOrders = ticketsOrders;
 		this.seats = seats;
 	}
 
@@ -94,12 +98,12 @@ public class FilmSession implements Serializable {
 		this.time = time;
 	}
 
-	public Set<Ticket> getTickets() {
-		return tickets;
+	public int getTicketPrice() {
+		return ticketPrice;
 	}
 
-	public void setTickets(Set<Ticket> tickets) {
-		this.tickets = tickets;
+	public void setTicketPrice(int ticketPrice) {
+		this.ticketPrice = ticketPrice;
 	}
 
 	public Film getFilm() {
@@ -110,12 +114,20 @@ public class FilmSession implements Serializable {
 		this.film = film;
 	}
 
-	public Set<TicketsOrder> getOrders() {
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public Set<TicketsOrder> getTicketsOrders() {
 		return ticketsOrders;
 	}
 
-	public void setOrders(Set<TicketsOrder> orders) {
-		this.ticketsOrders = orders;
+	public void setTicketsOrders(Set<TicketsOrder> ticketsOrders) {
+		this.ticketsOrders = ticketsOrders;
 	}
 
 	public Set<Seat> getSeats() {
@@ -133,6 +145,7 @@ public class FilmSession implements Serializable {
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((film == null) ? 0 : film.hashCode());
 		result = prime * result + id;
+		result = prime * result + ticketPrice;
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		return result;
 	}
@@ -158,6 +171,8 @@ public class FilmSession implements Serializable {
 			return false;
 		if (id != other.id)
 			return false;
+		if (ticketPrice != other.ticketPrice)
+			return false;
 		if (time == null) {
 			if (other.time != null)
 				return false;
@@ -168,7 +183,7 @@ public class FilmSession implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FilmSession [id=" + id + ", date=" + date + ", time=" + time + ", film=" + film.getFilmName() + "]";
+		return "FilmSession [id=" + id + ", date=" + date + ", time=" + time + ", ticketPrice=" + ticketPrice
+				+ ", film=" + film.getFilmName() + "]";
 	}
-
 }

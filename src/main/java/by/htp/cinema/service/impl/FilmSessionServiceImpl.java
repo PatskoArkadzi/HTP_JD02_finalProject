@@ -1,5 +1,6 @@
 package by.htp.cinema.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,11 @@ public class FilmSessionServiceImpl implements FilmSessionService {
 
 	@Override
 	public List<FilmSession> getChosenFilmFilmSessionList(Film film) {
-		return filmSessionDao.readAllWhereEq(new String[] { "film" }, new Object[] { film });
+		return filmSessionDao.readAllWhereEq(new HashMap<String, Object>() {
+			{
+				put("film", film);
+			}
+		});
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package by.htp.cinema.dao.impl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -83,15 +85,12 @@ public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
 	}
 
 	@Override
-	public List<FilmSession> readAllWhereEq(String[] parametres, Object[] values) {
-		if (parametres.length != values.length)
-			throw new IllegalArgumentException();
+	public List<FilmSession> readAllWhereEq(Map<String, Object> map) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(FilmSession.class);
-		for (int i = 0; i < parametres.length; i++)
-			criteria.add(Restrictions.eq(parametres[i], values[i]));
-		// delete duplicates in "left outer join" query
+		for (Entry<String, Object> m : map.entrySet())
+			criteria.add(Restrictions.eq(m.getKey(), m.getValue()));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<FilmSession> filmSessions = criteria.list();
 		session.close();
