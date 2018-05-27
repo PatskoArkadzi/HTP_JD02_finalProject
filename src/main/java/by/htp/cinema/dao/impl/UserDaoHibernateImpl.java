@@ -1,6 +1,8 @@
 package by.htp.cinema.dao.impl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -39,36 +41,6 @@ public class UserDaoHibernateImpl implements UserDao {
 		session.close();
 		return user;
 	}
-
-	@Override
-	public User read(String[] parametres, Object[] values) {
-		if (parametres.length != values.length)
-			throw new IllegalArgumentException();
-		SessionFactory factory = SessionFactoryManager.getSessionFactory();
-		Session session = factory.openSession();
-		Criteria criteria = session.createCriteria(User.class);
-		for (int i = 0; i < parametres.length; i++)
-			criteria.add(Restrictions.eq(parametres[i], values[i]));
-		User user = (User) criteria.uniqueResult();
-		session.close();
-		return user;
-	}
-
-	/*
-	 * public User read(String login) { SessionFactory factory =
-	 * SessionFactoryManager.getSessionFactory(); Session session =
-	 * factory.openSession(); Criteria criteria =
-	 * session.createCriteria(User.class); criteria.add(Restrictions.eq("login",
-	 * login)); User user = (User) criteria.uniqueResult(); session.close(); return
-	 * user; }
-	 * 
-	 * @Override public User read(String login, String password) { SessionFactory
-	 * factory = SessionFactoryManager.getSessionFactory(); Session session =
-	 * factory.openSession(); Criteria criteria =
-	 * session.createCriteria(User.class); criteria.add(Restrictions.eq("login",
-	 * login)); criteria.add(Restrictions.eq("password", password)); User user =
-	 * (User) criteria.uniqueResult(); session.close(); return user; }
-	 */
 
 	@Override
 	public void update(User entity) {
@@ -112,6 +84,18 @@ public class UserDaoHibernateImpl implements UserDao {
 		List<User> users = criteria.list();
 		session.close();
 		return users;
+	}
+
+	@Override
+	public User readAllWhereEq(Map<String, Object> map) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(User.class);
+		for (Entry<String, Object> m : map.entrySet())
+			criteria.add(Restrictions.eq(m.getKey(), m.getValue()));
+		User user = (User) criteria.uniqueResult();
+		session.close();
+		return user;
 	}
 
 	@Override

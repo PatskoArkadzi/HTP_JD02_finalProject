@@ -1,6 +1,7 @@
 package by.htp.cinema.service;
 
 import java.util.List;
+import java.util.Map;
 
 import by.htp.cinema.domain.User;
 
@@ -14,7 +15,7 @@ public interface UserService extends Service {
 
 	User readUser(String parametre, Object value);
 
-	User readUser(String[] parametres, Object[] values);
+	User readUser(Map<String,Object> map);
 
 	void updateUser(User user);
 
