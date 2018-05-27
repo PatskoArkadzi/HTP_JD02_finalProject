@@ -32,7 +32,7 @@
 						<div class=col-md-3>Время</div>
 					</div>
 					<hr>
-					<c:forEach items="${chosen_film_film_sessions}" var="session">
+					<c:forEach items="${user_chosen_film.filmSessions}" var="session">
 						<div class="row">
 							<div class=col-md-3>${session.date}</div>
 							<div class=col-md-3>${session.time}</div>
