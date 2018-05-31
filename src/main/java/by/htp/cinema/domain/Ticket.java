@@ -129,8 +129,7 @@ public class Ticket implements Serializable {
 	@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", filmSession=date:" + filmSession.getDate() + "|time:" + filmSession.getTime()
-				+ ", seat=row:" + seat.getRow() + "|number:" + seat.getNumber() + ", orderNumber="
-				+ order.getOrderNumber() + "]";
+				+ ", seat=row:" + seat.getRow() + "|number:" + seat.getNumber()  + "]";
 	}
 
 }

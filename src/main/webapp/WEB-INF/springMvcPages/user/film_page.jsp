@@ -20,28 +20,18 @@
 		<p>
 			Описание : <br> ${user_chosen_film.description}
 		</p>
-		<%-- <form class="update-genre"
-			action="oldapp?action=view_film_page&film_id=${user_chosen_film.id}"
-			method=POST>
-			<p>Выберите дату:</p>
-			<input type="date" name="user_chosen_date" min="${current_date}">
-			<button>ok</button> 
-		<c:if test="${not empty chosen_film_film_sessions}">--%>
 		<div class="container">
 			<div class="row">
-				<div class=col-md-3>Дата</div>
-				<div class=col-md-3>Время</div>
+				<div class=col-md-4>Выберите дату и время:</div>
 			</div>
-			<hr>
-			<c:forEach items="${chosen_film_film_sessions}" var="session">
-				<div class="row">
-					<div class=col-md-3>${session.date}</div>
-					<div class=col-md-3>${session.time}</div>
-				</div>
+			<br>
+			<c:forEach items="${user_chosen_film.filmSessions}" var="session">
+				<a
+					href="/cinema/newapp/user/chooseSeat?user_chosen_filmSession_id=${session.id}"><button
+						class="btn btn-success">${session.date} ${session.time}</button></a>
+				<br>
 			</c:forEach>
 		</div>
-		<%-- </c:if>
-		</form> --%>
 	</div>
 </div>
 

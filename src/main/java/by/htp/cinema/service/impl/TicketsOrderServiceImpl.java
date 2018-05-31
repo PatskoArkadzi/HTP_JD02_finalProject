@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import by.htp.cinema.dao.TicketsOrderDao;
 import by.htp.cinema.domain.TicketsOrder;
+import by.htp.cinema.domain.User;
 import by.htp.cinema.service.TicketsOrderService;
 
 @Service
@@ -49,5 +50,13 @@ public class TicketsOrderServiceImpl implements TicketsOrderService {
 	@Override
 	public void deleteTicketsOrder(TicketsOrder ticketsOrder) {
 		ticketsOrderDao.delete(ticketsOrder);
+	}
+
+	@Override
+	public TicketsOrder readUserNonPaidOrder(User user) {
+		for (TicketsOrder order : ticketsOrderDao.readAll("user", user))
+			if (!order.isPaid())
+				return order;
+		return null;
 	}
 }

@@ -56,7 +56,7 @@ public class TicketsOrder implements Serializable {
 		super();
 	}
 
-	public TicketsOrder(int id, int orderNumber, boolean isPaid, Set<Ticket> tickets, User user,
+	public TicketsOrder(int id, int orderNumber, User user, boolean isPaid, Set<Ticket> tickets,
 			Set<FilmSession> filmSessions, Set<Seat> seats) {
 		super();
 		this.id = id;
@@ -156,8 +156,8 @@ public class TicketsOrder implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", orderNumber=" + orderNumber + ", isPaid=" + isPaid + ", tickets=" + tickets
-				+ ", user=" + user.getLogin() + ", filmSessions=" + filmSessions + ", seats=" + seats + "]";
+		return "Order [id=" + id + ", orderNumber=" + orderNumber + ", isPaid=" + isPaid + ", user=" + user.getLogin()
+				+ "]";
 	}
 
 }

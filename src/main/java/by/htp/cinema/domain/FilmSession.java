@@ -37,7 +37,7 @@ public class FilmSession implements Serializable {
 	private String time;
 
 	@Column(name = "ticketPrice")
-	private int ticketPrice;
+	private double ticketPrice;
 
 	@ManyToOne
 	@JoinColumn(name = "film_id")
@@ -61,7 +61,7 @@ public class FilmSession implements Serializable {
 		super();
 	}
 
-	public FilmSession(int id, String date, String time, int ticketPrice, Film film, Set<Ticket> tickets,
+	public FilmSession(int id, String date, String time, double ticketPrice, Film film, Set<Ticket> tickets,
 			Set<TicketsOrder> ticketsOrders, Set<Seat> seats) {
 		super();
 		this.id = id;
@@ -98,11 +98,11 @@ public class FilmSession implements Serializable {
 		this.time = time;
 	}
 
-	public int getTicketPrice() {
+	public double getTicketPrice() {
 		return ticketPrice;
 	}
 
-	public void setTicketPrice(int ticketPrice) {
+	public void setTicketPrice(double ticketPrice) {
 		this.ticketPrice = ticketPrice;
 	}
 
@@ -145,7 +145,9 @@ public class FilmSession implements Serializable {
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((film == null) ? 0 : film.hashCode());
 		result = prime * result + id;
-		result = prime * result + ticketPrice;
+		long temp;
+		temp = Double.doubleToLongBits(ticketPrice);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		return result;
 	}
@@ -171,7 +173,7 @@ public class FilmSession implements Serializable {
 			return false;
 		if (id != other.id)
 			return false;
-		if (ticketPrice != other.ticketPrice)
+		if (Double.doubleToLongBits(ticketPrice) != Double.doubleToLongBits(other.ticketPrice))
 			return false;
 		if (time == null) {
 			if (other.time != null)
@@ -183,7 +185,6 @@ public class FilmSession implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FilmSession [id=" + id + ", date=" + date + ", time=" + time + ", ticketPrice=" + ticketPrice
-				+ ", film=" + film.getFilmName() + "]";
+		return "FilmSession [id=" + id + ", date=" + date + ", time=" + time + ", ticketPrice=" + ticketPrice + "]";
 	}
 }

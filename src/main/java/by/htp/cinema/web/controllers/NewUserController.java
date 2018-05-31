@@ -3,6 +3,7 @@ package by.htp.cinema.web.controllers;
 import static by.htp.cinema.web.util.ConstantDeclaration.*;
 import static by.htp.cinema.web.util.HttpRequestParamValidator.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,10 +26,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
+import by.htp.cinema.domain.Seat;
+import by.htp.cinema.domain.Ticket;
+import by.htp.cinema.domain.TicketsOrder;
 import by.htp.cinema.domain.User;
 import by.htp.cinema.service.FilmService;
 import by.htp.cinema.service.FilmSessionService;
 import by.htp.cinema.service.RoleService;
+import by.htp.cinema.service.SeatService;
+import by.htp.cinema.service.TicketService;
+import by.htp.cinema.service.TicketsOrderService;
 import by.htp.cinema.service.UserService;
 
 @Controller
@@ -43,8 +50,17 @@ public class NewUserController {
 
 	@Autowired
 	UserService userService;
+
 	@Autowired
 	RoleService roleService;
+
+	@Autowired
+	SeatService seatService;
+
+	@Autowired
+	TicketService ticketService;
+	@Autowired
+	TicketsOrderService ticketsOrderService;
 
 	private static final Logger logger = LogManager.getLogger();
 
@@ -57,16 +73,38 @@ public class NewUserController {
 	@RequestMapping(value = "/film_page", method = RequestMethod.GET)
 	public ModelAndView viewFilmPage(@RequestParam int film_id, HttpServletRequest req) {
 		Film chosenFilm = filmService.readFilm(film_id);
-		List<FilmSession> chosenFilmFilmSessions = filmSessionService.getChosenFilmFilmSessionList(chosenFilm);
+		return new ModelAndView("user/film_page", REQUEST_PARAM_USER_CHOSEN_FILM, chosenFilm);
+	}
 
-		req.setAttribute(REQUEST_PARAM_USER_CHOSEN_FILM, chosenFilm);
-		req.setAttribute(REQUEST_PARAM_CHOSEN_FILM_FILM_SESSIONS, chosenFilmFilmSessions);
+	@RequestMapping(value = "/chooseSeat", method = RequestMethod.GET)
+	public ModelAndView chooseSeat(@RequestParam(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID) int filmSession_Id) {
+		List<Seat> seats = seatService.getSeatList();
+		return new ModelAndView("user/seatChoice").addAllObjects(new HashMap<String, Object>() {
+			{
+				put(REQUEST_PARAM_USER_CHOSEN_SEAT, new Seat());
+				put(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION, filmSessionService.readFilmSession(filmSession_Id));
+			}
+		});
+	}
 
-		ModelAndView mav = new ModelAndView();
-		mav.addObject(REQUEST_PARAM_USER_CHOSEN_FILM, chosenFilm);
-		mav.addObject(REQUEST_PARAM_CHOSEN_FILM_FILM_SESSIONS, chosenFilmFilmSessions);
-		mav.setViewName("user/film_page");
-		return mav;
+	@RequestMapping(value = "/toBasket", method = RequestMethod.POST)
+	public ModelAndView order(@ModelAttribute(REQUEST_PARAM_USER_CHOSEN_SEAT) Seat seat,
+			@RequestParam(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID) int filmSession_Id, HttpSession session) {
+
+		User user = (User) session.getAttribute(SESSION_PARAM_CURRENT_USER);
+		if (user != null) {
+			FilmSession filmSession = filmSessionService.readFilmSession(filmSession_Id);
+			TicketsOrder ticketsOrder;
+			if ((ticketsOrder = ticketsOrderService.readUserNonPaidOrder(user)) == null) {
+				ticketsOrder = new TicketsOrder();
+				ticketsOrder.setUser(user);
+				ticketsOrderService.createTicketsOrder(ticketsOrder);
+			}
+			ticketService.createTicket(new Ticket(0, filmSession, seat, ticketsOrder));
+			return new ModelAndView("redirect:/newapp/user/chooseSeat", REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID,
+					filmSession_Id);
+		} else
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "You have to be logged in");
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -80,8 +118,12 @@ public class NewUserController {
 		if (session.getAttribute(SESSION_PARAM_CURRENT_USER) != null) {
 			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "You are already logged in");
 		}
-		User foundUser = userService.readUser(new String[] { "login", "password" },
-				new Object[] { user.getLogin(), user.getPassword() });
+		User foundUser = userService.readUser(new HashMap<String, Object>() {
+			{
+				put("login", user.getLogin());
+				put("password", user.getPassword());
+			}
+		});
 		if (foundUser != null) {
 			session.setAttribute(SESSION_PARAM_CURRENT_USER, foundUser);
 			session.setMaxInactiveInterval(600);
@@ -170,6 +212,6 @@ public class NewUserController {
 		userService.createUser(user);
 		return new ModelAndView("success", REQUEST_PARAM_SUCCESS_MESSAGE,
 				"You are successfully signed up.<br>Now, you can log in.");
-
 	}
+
 }

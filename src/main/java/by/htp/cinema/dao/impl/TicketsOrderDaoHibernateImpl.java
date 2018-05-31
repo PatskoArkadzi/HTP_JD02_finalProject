@@ -3,6 +3,7 @@ package by.htp.cinema.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -10,6 +11,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
 import by.htp.cinema.dao.TicketsOrderDao;
+import by.htp.cinema.domain.Film;
+import by.htp.cinema.domain.FilmSession;
+import by.htp.cinema.domain.Seat;
 import by.htp.cinema.domain.TicketsOrder;
 
 @Component
@@ -73,7 +77,6 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(TicketsOrder.class);
-		// delete duplicates in "left outer join" query
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc(sortingColumn));
 		List<TicketsOrder> ticketOrders = criteria.list();
@@ -81,4 +84,27 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		return ticketOrders;
 	}
 
+	@Override
+	public List<TicketsOrder> readAll(String string, Object object) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(TicketsOrder.class);
+		criteria.add(Restrictions.eq(string, object));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<TicketsOrder> ticketOrders = criteria.list();
+		session.close();
+		return ticketOrders;
+	}
+
+	@Override
+	public TicketsOrder readOrderWhereSeatPresent(Seat seat, FilmSession filmSession) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Query query = session.createQuery(
+				"select t from TicketsOrder as t inner join t.seats as s inner join t.filmSessions as f where s.id = :idSeat and f.id = :idFilmSession")
+				.setParameter("idSeat", seat.getId()).setParameter("idFilmSession", filmSession.getId());
+		TicketsOrder ticketOrder = (TicketsOrder) query.uniqueResult();
+		session.close();
+		return ticketOrder;
+	}
 }

@@ -26,6 +26,7 @@
 	<bean name="seatService"
 		class="by.htp.cinema.service.impl.SeatServiceImpl">
 		<property name="seatDao" ref="seatDao" />
+		<property name="ticketsOrderDao" ref="ticketsOrderDao" />
 	</bean>
 	<bean name="ticketService"
 		class="by.htp.cinema.service.impl.TicketServiceImpl">
