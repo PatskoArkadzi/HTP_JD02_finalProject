@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -49,12 +50,29 @@ public class Seat implements Serializable {
 	@JoinTable(name = "tickets", joinColumns = @JoinColumn(name = "seat_id"), inverseJoinColumns = @JoinColumn(name = "session_id"))
 	private Set<FilmSession> filmSessions;
 
+	@Transient
+	private State state;
+
+	public enum State {
+		FREE("green"), BOOKED("yellow"), OCCUPIED("red");
+
+		String buttonColor;
+
+		State(String buttonColor) {
+			this.buttonColor = buttonColor;
+		}
+
+		public String getButtonColor() {
+			return buttonColor;
+		}
+	}
+
 	public Seat() {
 		super();
 	}
 
 	public Seat(int id, int row, int number, Set<Ticket> tickets, Set<TicketsOrder> ticketsOrders,
-			Set<FilmSession> filmSessions) {
+			Set<FilmSession> filmSessions, State state) {
 		super();
 		this.id = id;
 		this.row = row;
@@ -62,6 +80,7 @@ public class Seat implements Serializable {
 		this.tickets = tickets;
 		this.ticketsOrders = ticketsOrders;
 		this.filmSessions = filmSessions;
+		this.state = state;
 	}
 
 	public int getId() {
@@ -112,6 +131,14 @@ public class Seat implements Serializable {
 		this.filmSessions = filmSessions;
 	}
 
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -119,6 +146,7 @@ public class Seat implements Serializable {
 		result = prime * result + id;
 		result = prime * result + number;
 		result = prime * result + row;
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		return result;
 	}
 
@@ -137,13 +165,13 @@ public class Seat implements Serializable {
 			return false;
 		if (row != other.row)
 			return false;
+		if (state != other.state)
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Seat [id=" + id + ", row=" + row + ", number=" + number + ", tickets=" + tickets + ", ticketsOrders="
-				+ ticketsOrders + ", filmSessions=" + filmSessions + "]";
+		return "Seat [id=" + id + ", row=" + row + ", number=" + number + "]";
 	}
-
 }

@@ -38,6 +38,18 @@ public class SeatDaoHibernateImpl implements SeatDao {
 	}
 
 	@Override
+	public Seat read(int row, int number) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(Seat.class);
+		criteria.add(Restrictions.eq("row", row));
+		criteria.add(Restrictions.eq("number", number));
+		Seat seat = (Seat) criteria.uniqueResult();
+		session.close();
+		return seat;
+	}
+
+	@Override
 	public void update(Seat entity) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
