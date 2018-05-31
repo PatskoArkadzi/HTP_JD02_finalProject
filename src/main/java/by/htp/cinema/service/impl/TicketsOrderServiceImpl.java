@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import by.htp.cinema.dao.TicketsOrderDao;
+import by.htp.cinema.domain.FilmSession;
+import by.htp.cinema.domain.Seat;
 import by.htp.cinema.domain.TicketsOrder;
 import by.htp.cinema.domain.User;
 import by.htp.cinema.service.TicketsOrderService;
@@ -58,5 +60,15 @@ public class TicketsOrderServiceImpl implements TicketsOrderService {
 			if (!order.isPaid())
 				return order;
 		return null;
+	}
+
+	@Override
+	public TicketsOrder readOrderWhereSeatPresent(Seat seat, FilmSession filmSession) {
+		return ticketsOrderDao.read(seat, filmSession);
+	}
+
+	@Override
+	public TicketsOrder readCurrentUserNonPaidOrder(User user) {
+		return ticketsOrderDao.read(user);
 	}
 }

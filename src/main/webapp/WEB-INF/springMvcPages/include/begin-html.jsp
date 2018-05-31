@@ -6,7 +6,8 @@
 <head>
 <!-- Required meta tags -->
 <meta http-equiv="Content-Type"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no, text/html" charset="UTF-8">
+	content="width=device-width, initial-scale=1, shrink-to-fit=no, text/html"
+	charset="UTF-8">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.min.css"/>">
@@ -68,19 +69,15 @@ background-size: cover;
 					<c:choose>
 						<c:when test="${current_user!=null && current_user.id!=0}">
 							<li class="nav-item active"><a class="nav-link"
-								href="profile" style="color: #FF0000"> <b>${current_user.login}</b>
-									<span class="sr-only">(current)</span></a></li>
+								href="/cinema/newapp/user/profile" style="color: #FF0000"><b>${current_user.login}</b></a></li>
 							<li class="nav-item active"><a class="nav-link"
-								href="logout">Logout <span class="sr-only">(current)</span>
-							</a></li>
+								href="logout">Logout</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="nav-item active"><a class="nav-link"
-								href="/cinema/newapp/user/login">Login <span class="sr-only">(current)</span></a>
-							</li>
+								href="/cinema/newapp/user/login">Login</a></li>
 							<li class="nav-item active"><a class="nav-link"
-								href="/cinema/newapp/user/sign_up">SignUp <span
-									class="sr-only">(current)</span></a></li>
+								href="/cinema/newapp/user/sign_up">SignUp</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

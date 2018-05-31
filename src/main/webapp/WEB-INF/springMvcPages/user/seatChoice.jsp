@@ -26,8 +26,7 @@
 								Integer.valueOf("" + pageContext.findAttribute("loopColumn")));
 						FilmSession filmSession = (FilmSession) pageContext.findAttribute("user_chosen_filmSession");
 						if (seat != null) {
-							TicketsOrder ticketsOrder = new TicketsOrderDaoHibernateImpl().readOrderWhereSeatPresent(seat,
-									filmSession);
+							TicketsOrder ticketsOrder = new TicketsOrderDaoHibernateImpl().read(seat, filmSession);
 							if (ticketsOrder == null)
 								seat.setState(Seat.State.FREE);
 							else if (ticketsOrder.isPaid()) {

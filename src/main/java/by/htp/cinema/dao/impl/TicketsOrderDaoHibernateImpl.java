@@ -15,6 +15,7 @@ import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.domain.Seat;
 import by.htp.cinema.domain.TicketsOrder;
+import by.htp.cinema.domain.User;
 
 @Component
 public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
@@ -35,6 +36,30 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(TicketsOrder.class);
 		criteria.add(Restrictions.eq("id", id));
+		TicketsOrder ticketOrder = (TicketsOrder) criteria.uniqueResult();
+		session.close();
+		return ticketOrder;
+	}
+
+	@Override
+	public TicketsOrder read(Seat seat, FilmSession filmSession) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Query query = session.createQuery(
+				"select t from TicketsOrder as t inner join t.seats as s inner join t.filmSessions as f where s.id = :idSeat and f.id = :idFilmSession")
+				.setParameter("idSeat", seat.getId()).setParameter("idFilmSession", filmSession.getId());
+		TicketsOrder ticketOrder = (TicketsOrder) query.uniqueResult();
+		session.close();
+		return ticketOrder;
+	}
+
+	@Override
+	public TicketsOrder read(User user) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(TicketsOrder.class);
+		criteria.add(Restrictions.eq("user", user));
+		criteria.add(Restrictions.eq("isPaid", false));
 		TicketsOrder ticketOrder = (TicketsOrder) criteria.uniqueResult();
 		session.close();
 		return ticketOrder;
@@ -96,15 +121,4 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 		return ticketOrders;
 	}
 
-	@Override
-	public TicketsOrder readOrderWhereSeatPresent(Seat seat, FilmSession filmSession) {
-		SessionFactory factory = SessionFactoryManager.getSessionFactory();
-		Session session = factory.openSession();
-		Query query = session.createQuery(
-				"select t from TicketsOrder as t inner join t.seats as s inner join t.filmSessions as f where s.id = :idSeat and f.id = :idFilmSession")
-				.setParameter("idSeat", seat.getId()).setParameter("idFilmSession", filmSession.getId());
-		TicketsOrder ticketOrder = (TicketsOrder) query.uniqueResult();
-		session.close();
-		return ticketOrder;
-	}
 }

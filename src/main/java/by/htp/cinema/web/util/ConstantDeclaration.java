@@ -10,7 +10,8 @@ public final class ConstantDeclaration {
 	public static final String REQUEST_PARAM_SUCCESS_MESSAGE = "success_message";
 	public static final String REQUEST_PARAM_CURRENT_DATE = "current_date";
 	public static final String REQUEST_PARAM_USER_CHOSEN_DATE = "user_chosen_date";
-	public static final String REQUEST_PARAM_CHOSEN_FILM_FILM_SESSIONS = "chosen_film_film_sessions";
+	public static final String REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID = "user_chosen_filmSession_id";
+	public static final String REQUEST_PARAM_USER_CHOSEN_FILM_SESSION = "user_chosen_filmSession";
 	public static final String REQUEST_PARAM_COMMAND_NAME_CRUD_FILM_SESSIONS = "crud_film_sessions";
 
 	public static final String REQUEST_PARAM_ROLE_LIST = "rolelist";
@@ -43,6 +44,12 @@ public final class ConstantDeclaration {
 	public static final String REQUEST_PARAM_FOUND_FILM = "found_film";
 	public static final String REQUEST_PARAM_USER_CHOSEN_FILM = "user_chosen_film";
 	public static final String REQUEST_PARAM_COMMAND_NAME_CRUD_FILM = "crud_film";
+
+	public static final String REQUEST_PARAM_SEAT_LIST = "seatlist";
+	public static final String REQUEST_PARAM_USER_CHOSEN_SEAT = "user_chosen_seat";
+
+	public static final String REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER = "current_user_current_order";
+	public static final String REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER_ID = "current_user_current_order_id";
 
 	public static final String CRUD_OPERATION_NAME_CREATE = "create";
 	public static final String CRUD_OPERATION_NAME_READ = "read";
@@ -80,6 +87,6 @@ public final class ConstantDeclaration {
 	public static final int SIGN_UP_CHECK_PASSWORD_WEAK_STRENGTH = 1;
 	public static final int SIGN_UP_CHECK_PASSWORD_MIDDLE_STRENGTH = 5;
 	public static final int SIGN_UP_CHECK_PASSWORD_STRONG_STRENGTH = 7;
-	
+
 	public static final int DEFAULT_ROLE_ID = 2;
 }

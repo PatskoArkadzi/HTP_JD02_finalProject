@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import by.htp.cinema.dao.TicketDao;
 import by.htp.cinema.domain.Ticket;
+import by.htp.cinema.domain.User;
 import by.htp.cinema.service.TicketService;
 
 @Service
@@ -50,4 +51,6 @@ public class TicketServiceImpl implements TicketService {
 	public void deleteTicket(Ticket ticket) {
 		ticketDao.delete(ticket);
 	}
+
+	
 }

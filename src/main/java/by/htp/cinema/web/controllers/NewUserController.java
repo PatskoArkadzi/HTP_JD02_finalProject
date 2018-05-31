@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.htp.cinema.domain.Film;
@@ -212,6 +213,20 @@ public class NewUserController {
 		userService.createUser(user);
 		return new ModelAndView("success", REQUEST_PARAM_SUCCESS_MESSAGE,
 				"You are successfully signed up.<br>Now, you can log in.");
+	}
+
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public ModelAndView enterToProgile(@SessionAttribute(SESSION_PARAM_CURRENT_USER) User user) {
+		return new ModelAndView("user/profile", REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER,
+				ticketsOrderService.readCurrentUserNonPaidOrder(user));
+	}
+
+	@RequestMapping(value = "/pay", method = RequestMethod.GET)
+	public ModelAndView buyTickets(@RequestParam(REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER_ID) int ticketsOrderid) {
+		TicketsOrder ticketsOrder = ticketsOrderService.readTicketsOrder(ticketsOrderid);
+		ticketsOrder.setPaid(true);
+		ticketsOrderService.updateTicketsOrder(ticketsOrder);
+		return new ModelAndView("success", REQUEST_PARAM_SUCCESS_MESSAGE, "You successfully buy tickets.");
 	}
 
 }

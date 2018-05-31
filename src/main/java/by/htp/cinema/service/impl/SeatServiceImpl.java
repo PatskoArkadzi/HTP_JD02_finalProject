@@ -72,7 +72,7 @@ public class SeatServiceImpl implements SeatService {
 
 	@Override
 	public Seat setSeatState(Seat seat, FilmSession filmSession) {
-		TicketsOrder ticketsOrder = ticketsOrderDao.readOrderWhereSeatPresent(seat, filmSession);
+		TicketsOrder ticketsOrder = ticketsOrderDao.read(seat, filmSession);
 		if (ticketsOrder == null)
 			seat.setState(Seat.State.FREE);
 		else if (ticketsOrder.isPaid())
