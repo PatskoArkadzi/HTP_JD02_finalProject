@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -12,8 +13,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
 import by.htp.cinema.dao.FilmSessionDao;
+import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
 import by.htp.cinema.domain.Role;
+import by.htp.cinema.domain.Seat;
 
 @Component
 public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
@@ -85,7 +88,19 @@ public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
 	}
 
 	@Override
-	public List<FilmSession> readAllWhereEq(Map<String, Object> map) {
+	public List<FilmSession> readAll(String property, Object value) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(FilmSession.class);
+		criteria.add(Restrictions.eq(property, value));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<FilmSession> filmSessions = criteria.list();
+		session.close();
+		return filmSessions;
+	}
+
+	@Override
+	public List<FilmSession> readAll(Map<String, Object> map) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(FilmSession.class);
@@ -95,6 +110,18 @@ public class FilmSessionDaoHibernateImpl implements FilmSessionDao {
 		List<FilmSession> filmSessions = criteria.list();
 		session.close();
 		return filmSessions;
+	}
+
+	@Override
+	public List<FilmSession> readAllWhereSeatNotFree(Seat seat) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Query query = session
+				.createQuery("select fs from FilmSession as fs inner join fs.tickets as t where t.seat.id = :idSeat")
+				.setParameter("idSeat", seat.getId());
+		List<FilmSession> FilmSessions = query.list();
+		session.close();
+		return FilmSessions;
 	}
 
 }

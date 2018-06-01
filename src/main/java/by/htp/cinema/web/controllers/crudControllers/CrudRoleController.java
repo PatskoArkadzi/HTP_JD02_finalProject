@@ -66,7 +66,6 @@ public class CrudRoleController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public ModelAndView delete(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_ROLE) Role role) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(role.getId());
 		validateRequestParamIdnotNull(role.getId());
 		if (roleService.isAnyFilmContainGenre(role.getId())) {
 			mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, "You can't delete role.<br>Some users are marked by this role");

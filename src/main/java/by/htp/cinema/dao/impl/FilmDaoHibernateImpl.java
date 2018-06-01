@@ -1,21 +1,19 @@
 package by.htp.cinema.dao.impl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.AliasToBeanResultTransformer;
-import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Component;
 
 import by.htp.cinema.dao.FilmDao;
 import by.htp.cinema.domain.Film;
-import by.htp.cinema.domain.Genre;
 import by.htp.cinema.domain.Role;
 
 @Component
@@ -87,14 +85,12 @@ public class FilmDaoHibernateImpl implements FilmDao {
 	}
 
 	@Override
-	public List<Film> readAllWhereEq(String[] parametres, Object[] values) {
-		if (parametres.length != values.length)
-			throw new IllegalArgumentException();
+	public List<Film> readAll(Map<String, Object> map) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(Film.class);
-		for (int i = 0; i < parametres.length; i++)
-			criteria.add(Restrictions.eq(parametres[i], values[i]));
+		for (Entry<String, Object> m : map.entrySet())
+			criteria.add(Restrictions.eq(m.getKey(), m.getValue()));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<Film> films = criteria.list();
 		session.close();
@@ -105,8 +101,7 @@ public class FilmDaoHibernateImpl implements FilmDao {
 	public List<Film> readAllFilmsWhereGenreIdPresent(int genreId) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Query query = session
-				.createQuery("select f from Film f inner join f.genres g where g.id=:idGenre")
+		Query query = session.createQuery("select f from Film f inner join f.genres g where g.id=:idGenre")
 				.setParameter("idGenre", genreId);
 		List<Film> films = query.list();
 		session.close();

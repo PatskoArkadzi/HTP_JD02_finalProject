@@ -81,4 +81,14 @@ public class SeatServiceImpl implements SeatService {
 			seat.setState(Seat.State.BOOKED);
 		return seat;
 	}
+
+	@Override
+	public boolean isSeatExist(Seat seat) {
+		return seatDao.read(seat.getRow(), seat.getNumber()) != null;
+	}
+
+	@Override
+	public boolean isSeatExist(int id) {
+		return seatDao.read(id) != null;
+	}
 }

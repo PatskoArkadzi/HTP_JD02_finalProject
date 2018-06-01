@@ -15,7 +15,7 @@
 
 <p>Выберите место:</p>
 <div class="container" align="center">
-	<c:forEach begin="0" end="30" step="1" varStatus="row">
+	<c:forEach begin="0" end="20" step="1" varStatus="row">
 		<c:forEach begin="0" end="25" step="1" varStatus="column">
 			<c:set var="loopRow">${row.index}</c:set>
 			<c:set var="loopColumn">${column.index}</c:set>

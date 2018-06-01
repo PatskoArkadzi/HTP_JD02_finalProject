@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import by.htp.cinema.dao.FilmSessionDao;
 import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
+import by.htp.cinema.domain.Seat;
 import by.htp.cinema.service.FilmSessionService;
 
 @Service
@@ -35,11 +36,12 @@ public class FilmSessionServiceImpl implements FilmSessionService {
 
 	@Override
 	public List<FilmSession> getChosenFilmFilmSessionList(Film film) {
-		return filmSessionDao.readAllWhereEq(new HashMap<String, Object>() {
-			{
-				put("film", film);
-			}
-		});
+		return filmSessionDao.readAll("film", film);
+	}
+
+	@Override
+	public List<FilmSession> getFilmSessionListWhereSeatNotFree(Seat seat) {
+		return filmSessionDao.readAllWhereSeatNotFree(seat);
 	}
 
 	@Override
@@ -61,4 +63,5 @@ public class FilmSessionServiceImpl implements FilmSessionService {
 	public void deleteFilmSession(FilmSession filmSession) {
 		filmSessionDao.delete(filmSession);
 	}
+
 }

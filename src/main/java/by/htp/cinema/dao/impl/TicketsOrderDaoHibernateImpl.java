@@ -110,11 +110,11 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 	}
 
 	@Override
-	public List<TicketsOrder> readAll(String string, Object object) {
+	public List<TicketsOrder> readAll(String property, Object value) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(TicketsOrder.class);
-		criteria.add(Restrictions.eq(string, object));
+		criteria.add(Restrictions.eq(property, value));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<TicketsOrder> ticketOrders = criteria.list();
 		session.close();

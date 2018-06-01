@@ -20,4 +20,8 @@ public interface SeatService extends Service {
 	Seat readSeat(int row, int number);
 
 	Seat setSeatState(Seat seat, FilmSession filmSession);
+
+	boolean isSeatExist(Seat seat);
+
+	boolean isSeatExist(int id);
 }

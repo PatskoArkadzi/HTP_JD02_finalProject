@@ -1,0 +1,108 @@
+package by.htp.cinema.web.controllers.crudControllers;
+
+import static by.htp.cinema.web.util.ConstantDeclaration.*;
+import static by.htp.cinema.web.util.HttpRequestParamValidator.*;
+import static by.htp.cinema.web.util.HttpRequestParamFormatter.*;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import by.htp.cinema.domain.Genre;
+import by.htp.cinema.domain.Role;
+import by.htp.cinema.domain.Seat;
+import by.htp.cinema.service.RoleService;
+import by.htp.cinema.service.SeatService;
+
+@Controller
+@RequestMapping(value = "/newapp/admin/crud/seat")
+public class CrudSeatController {
+
+	@Autowired
+	SeatService seatService;
+
+	private static final Logger logger = LogManager.getLogger();
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView main() {
+		return new ModelAndView("admin/crud_seat").addAllObjects(new HashMap<String, Object>() {
+			{
+				put(REQUEST_PARAM_SEAT_LIST, seatService.getSeatList());
+				put(REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT, new Seat());
+			}
+		});
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public ModelAndView mainUpdateDelete() {
+		return new ModelAndView("admin/crud_seat").addAllObjects(new HashMap<String, Object>() {
+			{
+				put(REQUEST_PARAM_SEAT_LIST, seatService.getSeatList());
+				put(REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT, new Seat());
+			}
+		});
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public ModelAndView create(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT) Seat seat) {
+		int row = seat.getRow();
+		int number = seat.getNumber();
+		validateRequestParamNotNull(row, number);
+		if (row <= 0 || number <= 0 || row > MAX_COUNT_SEAT_ROW_IN_HALL || number > MAX_COUNT_SEAT_NUMBER_IN_ROW) {
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Sorry. The seat can't be out of the hall.");
+		} else if (!seatService.isSeatExist(seat)) {
+			seatService.createSeat(seat);
+			return new ModelAndView("redirect:/newapp/admin/crud/seat/");
+		} else
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Sorry. The seat is already exist.");
+	}
+
+	@RequestMapping(value = "/read", method = RequestMethod.GET, produces = { "application/json; charset=UTF-8" })
+	public @ResponseBody String read(@RequestParam String id) throws UnsupportedEncodingException {
+		validateRequestParamIdnotNull(getInt(id));
+		Seat foundSeat = seatService.readSeat(getInt(id));
+		return "{\"foundSeat\" : \"" + foundSeat + "\"}";
+	}
+
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public ModelAndView update(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT) Seat seat) {
+		System.out.println(seat);
+		int row = seat.getRow();
+		int number = seat.getNumber();
+		validateRequestParamNotNull(row, number);
+		if (row <= 0 || number <= 0 || row > MAX_COUNT_SEAT_ROW_IN_HALL || number > MAX_COUNT_SEAT_NUMBER_IN_ROW) {
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Sorry. The seat can't be out of the hall.");
+		} else if (seatService.isSeatExist(seat.getId())) {
+			seatService.updateSeat(seat);
+			return new ModelAndView("redirect:/newapp/admin/crud/seat/");
+		} else
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Sorry. The seat isn't exist.");
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ModelAndView delete(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT) Seat seat) {
+		ModelAndView mav = new ModelAndView();
+		// validateRequestParamIdnotNull(role.getId());
+		// if (roleService.isAnyFilmContainGenre(role.getId())) {
+		// mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, "You can't delete role.<br>Some
+		// users are marked by this role");
+		// mav.setViewName("error");
+		// return mav;
+		// }
+		// roleService.deleteRole(role);
+		// mav.setViewName("redirect:/newapp/admin/crud/role/");
+		return mav;
+	}
+
+}

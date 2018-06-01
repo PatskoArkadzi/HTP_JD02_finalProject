@@ -4,10 +4,13 @@ import java.util.List;
 
 import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
+import by.htp.cinema.domain.Seat;
 
 public interface FilmSessionService extends Service {
 
 	List<FilmSession> getFilmSessionList();
+
+	List<FilmSession> getFilmSessionListWhereSeatNotFree(Seat seat);
 
 	List<FilmSession> getChosenFilmFilmSessionList(Film film);
 

@@ -1,12 +1,13 @@
 package by.htp.cinema.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import by.htp.cinema.domain.Film;
 
 public interface FilmDao extends BaseDao<Film> {
 
-	List<Film> readAllWhereEq(String[] parametres, Object[] values);
+	List<Film> readAll(Map<String, Object> map);
 
 	List<Film> readAllFilmsWhereGenreIdPresent(int genreId);
 

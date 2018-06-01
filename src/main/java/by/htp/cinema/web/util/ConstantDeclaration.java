@@ -48,7 +48,9 @@ public final class ConstantDeclaration {
 	public static final String REQUEST_PARAM_COMMAND_NAME_CRUD_FILM = "crud_film";
 
 	public static final String REQUEST_PARAM_SEAT_LIST = "seatlist";
+	public static final String REQUEST_PARAM_FOUND_SEAT = "found_seat";
 	public static final String REQUEST_PARAM_USER_CHOSEN_SEAT = "user_chosen_seat";
+	public static final String REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT = "crud_seat";
 
 	public static final String REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER = "current_user_current_order";
 	public static final String REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER_ID = "current_user_current_order_id";
@@ -91,4 +93,6 @@ public final class ConstantDeclaration {
 	public static final int SIGN_UP_CHECK_PASSWORD_STRONG_STRENGTH = 7;
 
 	public static final int DEFAULT_ROLE_ID = 2;
+	public static final int MAX_COUNT_SEAT_ROW_IN_HALL = 20;
+	public static final int MAX_COUNT_SEAT_NUMBER_IN_ROW = 25;
 }
