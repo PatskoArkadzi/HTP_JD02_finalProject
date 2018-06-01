@@ -45,10 +45,12 @@ public class TicketsOrderDaoHibernateImpl implements TicketsOrderDao {
 	public TicketsOrder read(Seat seat, FilmSession filmSession) {
 		SessionFactory factory = SessionFactoryManager.getSessionFactory();
 		Session session = factory.openSession();
-		Query query = session.createQuery(
-				"select t from TicketsOrder as t inner join t.seats as s inner join t.filmSessions as f where s.id = :idSeat and f.id = :idFilmSession")
-				.setParameter("idSeat", seat.getId()).setParameter("idFilmSession", filmSession.getId());
-		TicketsOrder ticketOrder = (TicketsOrder) query.uniqueResult();
+		Criteria criteria = session.createCriteria(TicketsOrder.class);
+		criteria.createAlias("tickets", "t");
+		criteria.add(Restrictions.eq("t.seat", seat));
+		criteria.add(Restrictions.eq("t.filmSession", filmSession));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		TicketsOrder ticketOrder = (TicketsOrder) criteria.uniqueResult();
 		session.close();
 		return ticketOrder;
 	}

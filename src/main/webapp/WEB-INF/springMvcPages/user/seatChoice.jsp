@@ -19,7 +19,6 @@
 		<c:forEach begin="0" end="25" step="1" varStatus="column">
 			<c:set var="loopRow">${row.index}</c:set>
 			<c:set var="loopColumn">${column.index}</c:set>
-			<c:set var="filmSession">${user_chosen_filmSession}</c:set>
 			<%
 				Seat seat = new SeatDaoHibernateImpl().read(
 								Integer.valueOf("" + pageContext.findAttribute("loopRow")),

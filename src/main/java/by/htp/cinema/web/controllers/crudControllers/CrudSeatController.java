@@ -24,6 +24,7 @@ import by.htp.cinema.domain.Role;
 import by.htp.cinema.domain.Seat;
 import by.htp.cinema.service.RoleService;
 import by.htp.cinema.service.SeatService;
+import by.htp.cinema.service.TicketService;
 
 @Controller
 @RequestMapping(value = "/newapp/admin/crud/seat")
@@ -31,6 +32,9 @@ public class CrudSeatController {
 
 	@Autowired
 	SeatService seatService;
+
+	@Autowired
+	TicketService ticketService;
 
 	private static final Logger logger = LogManager.getLogger();
 
@@ -60,12 +64,14 @@ public class CrudSeatController {
 		int number = seat.getNumber();
 		validateRequestParamNotNull(row, number);
 		if (row <= 0 || number <= 0 || row > MAX_COUNT_SEAT_ROW_IN_HALL || number > MAX_COUNT_SEAT_NUMBER_IN_ROW) {
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Sorry. The seat can't be out of the hall.");
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+					"Sorry. You can't create seat.<br> The seat can't be out of the hall.");
 		} else if (!seatService.isSeatExist(seat)) {
 			seatService.createSeat(seat);
 			return new ModelAndView("redirect:/newapp/admin/crud/seat/");
 		} else
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Sorry. The seat is already exist.");
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+					"Sorry. You can't create seat.<br> The seat is already exist.");
 	}
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET, produces = { "application/json; charset=UTF-8" })
@@ -77,32 +83,32 @@ public class CrudSeatController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView update(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT) Seat seat) {
-		System.out.println(seat);
-		int row = seat.getRow();
-		int number = seat.getNumber();
-		validateRequestParamNotNull(row, number);
-		if (row <= 0 || number <= 0 || row > MAX_COUNT_SEAT_ROW_IN_HALL || number > MAX_COUNT_SEAT_NUMBER_IN_ROW) {
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Sorry. The seat can't be out of the hall.");
-		} else if (seatService.isSeatExist(seat.getId())) {
-			seatService.updateSeat(seat);
-			return new ModelAndView("redirect:/newapp/admin/crud/seat/");
+		if (!ticketService.isAnyTicketContainsSeat(seat)) {
+			int row = seat.getRow();
+			int number = seat.getNumber();
+			validateRequestParamNotNull(row, number);
+			if (row <= 0 || number <= 0 || row > MAX_COUNT_SEAT_ROW_IN_HALL || number > MAX_COUNT_SEAT_NUMBER_IN_ROW) {
+				return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+						"Sorry. The seat can't be out of the hall.");
+			} else if (seatService.isSeatExist(seat.getId())) {
+				seatService.updateSeat(seat);
+				return new ModelAndView("redirect:/newapp/admin/crud/seat/");
+			} else
+				return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+						"Sorry. You can't update seat.<br> The seat isn't exist.");
 		} else
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Sorry. The seat isn't exist.");
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+					"Sorry. You can't update seat.<br> Some tickets contain this seat");
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public ModelAndView delete(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT) Seat seat) {
-		ModelAndView mav = new ModelAndView();
-		// validateRequestParamIdnotNull(role.getId());
-		// if (roleService.isAnyFilmContainGenre(role.getId())) {
-		// mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, "You can't delete role.<br>Some
-		// users are marked by this role");
-		// mav.setViewName("error");
-		// return mav;
-		// }
-		// roleService.deleteRole(role);
-		// mav.setViewName("redirect:/newapp/admin/crud/role/");
-		return mav;
+		validateRequestParamIdnotNull(seat.getId());
+		if (!ticketService.isAnyTicketContainsSeat(seat)) {
+			seatService.deleteSeat(seat);
+			return new ModelAndView("redirect:/newapp/admin/crud/seat/");
+		} else
+			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+					"Sorry. You can't delete seat.<br> Some tickets contain this seat");
 	}
-
 }

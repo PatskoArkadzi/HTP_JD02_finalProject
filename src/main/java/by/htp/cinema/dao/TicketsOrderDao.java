@@ -15,5 +15,6 @@ public interface TicketsOrderDao extends BaseDao<TicketsOrder> {
 
 	TicketsOrder read(User user);
 
+
 	// TODO add specific methods
 }

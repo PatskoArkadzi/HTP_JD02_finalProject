@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import by.htp.cinema.dao.TicketDao;
+import by.htp.cinema.domain.Seat;
 import by.htp.cinema.domain.Ticket;
 import by.htp.cinema.domain.User;
 import by.htp.cinema.service.TicketService;
@@ -52,5 +53,9 @@ public class TicketServiceImpl implements TicketService {
 		ticketDao.delete(ticket);
 	}
 
-	
+	@Override
+	public boolean isAnyTicketContainsSeat(Seat seat) {
+		return ticketDao.readAll("seat", seat).size() != 0;
+	}
+
 }

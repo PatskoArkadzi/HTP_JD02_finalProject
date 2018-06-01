@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
 import by.htp.cinema.dao.TicketDao;
+import by.htp.cinema.domain.Seat;
 import by.htp.cinema.domain.Ticket;
 
 @Component
@@ -77,6 +78,18 @@ public class TicketDaoHibernateImpl implements TicketDao {
 		// delete duplicates in "left outer join" query
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc(sortingColumn));
+		List<Ticket> tickets = criteria.list();
+		session.close();
+		return tickets;
+	}
+
+	@Override
+	public List<Ticket> readAll(String property, Object value) {
+		SessionFactory factory = SessionFactoryManager.getSessionFactory();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(Ticket.class);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		criteria.add(Restrictions.eq(property, value));
 		List<Ticket> tickets = criteria.list();
 		session.close();
 		return tickets;

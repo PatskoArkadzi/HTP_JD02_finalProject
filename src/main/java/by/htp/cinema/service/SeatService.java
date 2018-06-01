@@ -13,11 +13,11 @@ public interface SeatService extends Service {
 
 	Seat readSeat(int id);
 
+	Seat readSeat(int row, int number);
+
 	void updateSeat(Seat seat);
 
 	void deleteSeat(Seat seat);
-
-	Seat readSeat(int row, int number);
 
 	Seat setSeatState(Seat seat, FilmSession filmSession);
 
