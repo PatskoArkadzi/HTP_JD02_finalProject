@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   UNIQUE KEY `orderNumber` (`orderNumber`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `FK_orders_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Экспортируемые данные не выделены.
 -- Дамп структуры для таблица cinema.roles
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `seats` (
   `row` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=256 DEFAULT CHARSET=utf8;
 
 -- Экспортируемые данные не выделены.
 -- Дамп структуры для таблица cinema.sessions
@@ -89,10 +89,11 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `film_id` int(11) NOT NULL,
   `date` varchar(50) NOT NULL,
   `time` varchar(50) NOT NULL,
+  `ticketPrice` double NOT NULL,
   PRIMARY KEY (`id`),
   KEY `film_id` (`film_id`),
   CONSTRAINT `FK_film_sessions_films` FOREIGN KEY (`film_id`) REFERENCES `films` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='киносеансы';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='киносеансы';
 
 -- Экспортируемые данные не выделены.
 -- Дамп структуры для таблица cinema.tickets
@@ -101,16 +102,15 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `session_id` int(11) NOT NULL,
   `seat_id` int(11) NOT NULL,
-  `order_id` int(11) DEFAULT NULL,
-  `price` double NOT NULL,
+  `order_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `seat_id` (`seat_id`),
   KEY `session_id` (`session_id`),
   KEY `order_id` (`order_id`),
-  CONSTRAINT `FK_tickets_film_sessions` FOREIGN KEY (`session_id`) REFERENCES `sessions` (`id`),
   CONSTRAINT `FK_tickets_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  CONSTRAINT `FK_tickets_seats` FOREIGN KEY (`seat_id`) REFERENCES `seats` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_tickets_seats` FOREIGN KEY (`seat_id`) REFERENCES `seats` (`id`),
+  CONSTRAINT `FK_tickets_sessions` FOREIGN KEY (`session_id`) REFERENCES `sessions` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- Экспортируемые данные не выделены.
 -- Дамп структуры для таблица cinema.users
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `login` (`login`),
   KEY `roles_id` (`role_id`),
   CONSTRAINT `FK_users_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Экспортируемые данные не выделены.
 -- Дамп структуры для триггер cinema.generate orderNumber
