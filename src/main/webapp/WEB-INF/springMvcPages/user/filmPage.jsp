@@ -4,7 +4,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <div class="row">
-	<h2>${user_chosen_film.filmName}</h2>
+	<h4>${user_chosen_film.filmName}</h4>
 </div>
 <div class="row">
 	<div class=col-md-3>
@@ -12,18 +12,18 @@
 	</div>
 	<div class="col-md-8 container">
 		<div>
-			<b>Genres :</b><br>
+			<b>Жанры :</b><br>
 			<c:forEach items="${user_chosen_film.genres}" var="genre">
 								${genre.genreName}
 						</c:forEach>
 		</div>
 		<br>
 		<div>
-			<b>Description :</b> <br> ${user_chosen_film.description}
+			<b>Описание :</b> <br> ${user_chosen_film.description}
 		</div>
 		<br>
 		<div>
-			<b>Choose date and time:</b> <br>
+			<b>Выберите дату и время:</b> <br>
 			<c:forEach items="${user_chosen_film.filmSessions}" var="session">
 				<a
 					href="/cinema/newapp/user/chooseSeat?user_chosen_filmSession_id=${session.id}"

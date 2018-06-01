@@ -91,8 +91,9 @@ background-size: cover;
 				<c:forEach
 					items='<%=new GenreDaoHibernateImpl().readAll("genreName")%>'
 					var="genre">
-					<a href="/cinema/newapp/user/">${genre.genreName}</a>
 					<hr>
+					<a
+						href="/cinema/newapp/user/chosenGenreFilms?user_chosen_genre_id=${genre.id}">${genre.genreName}</a>
 				</c:forEach>
 			</div>
 			<div class="col-md-10">

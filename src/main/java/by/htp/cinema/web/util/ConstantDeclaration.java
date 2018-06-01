@@ -33,6 +33,8 @@ public final class ConstantDeclaration {
 	public static final String REQUEST_PARAM_GENRE_ID = "genre_id";
 	public static final String REQUEST_PARAM_GENRE_NAME = "genre_name";
 	public static final String REQUEST_PARAM_FOUND_GENRE = "found_genre";
+	public static final String REQUEST_PARAM_USER_CHOSEN_GENRE_ID = "user_chosen_genre_id";
+	public static final String REQUEST_PARAM_USER_CHOSEN_GENRE = "user_chosen_genre";
 	public static final String REQUEST_PARAM_COMMAND_NAME_CRUD_GENRE = "crud_genre";
 
 	public static final String REQUEST_PARAM_FILM_LIST = "filmlist";

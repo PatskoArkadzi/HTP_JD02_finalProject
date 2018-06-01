@@ -27,12 +27,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
+import by.htp.cinema.domain.Genre;
 import by.htp.cinema.domain.Seat;
 import by.htp.cinema.domain.Ticket;
 import by.htp.cinema.domain.TicketsOrder;
 import by.htp.cinema.domain.User;
 import by.htp.cinema.service.FilmService;
 import by.htp.cinema.service.FilmSessionService;
+import by.htp.cinema.service.GenreService;
 import by.htp.cinema.service.RoleService;
 import by.htp.cinema.service.SeatService;
 import by.htp.cinema.service.TicketService;
@@ -45,6 +47,9 @@ public class NewUserController {
 
 	@Autowired
 	FilmService filmService;
+
+	@Autowired
+	GenreService genreService;
 
 	@Autowired
 	FilmSessionService filmSessionService;
@@ -60,26 +65,31 @@ public class NewUserController {
 
 	@Autowired
 	TicketService ticketService;
+
 	@Autowired
 	TicketsOrderService ticketsOrderService;
 
 	private static final Logger logger = LogManager.getLogger();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest req) {
+	public ModelAndView main() {
 		List<Film> films = filmService.getFilmList();
 		return new ModelAndView("user/main", REQUEST_PARAM_FILM_LIST, films);
 	}
 
-	@RequestMapping(value = "/film_page", method = RequestMethod.GET)
+	@RequestMapping(value = "/chosenGenreFilms", method = RequestMethod.GET)
+	public ModelAndView viewChosenGenreFilms(@RequestParam(REQUEST_PARAM_USER_CHOSEN_GENRE_ID) int genre_id) {
+		return new ModelAndView("user/chosenGenreFilms", REQUEST_PARAM_USER_CHOSEN_GENRE, genreService.readGenre(genre_id));
+	}
+
+	@RequestMapping(value = "/filmPage", method = RequestMethod.GET)
 	public ModelAndView viewFilmPage(@RequestParam int film_id, HttpServletRequest req) {
 		Film chosenFilm = filmService.readFilm(film_id);
-		return new ModelAndView("user/film_page", REQUEST_PARAM_USER_CHOSEN_FILM, chosenFilm);
+		return new ModelAndView("user/filmPage", REQUEST_PARAM_USER_CHOSEN_FILM, chosenFilm);
 	}
 
 	@RequestMapping(value = "/chooseSeat", method = RequestMethod.GET)
 	public ModelAndView chooseSeat(@RequestParam(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID) int filmSession_Id) {
-		List<Seat> seats = seatService.getSeatList();
 		return new ModelAndView("user/seatChoice").addAllObjects(new HashMap<String, Object>() {
 			{
 				put(REQUEST_PARAM_USER_CHOSEN_SEAT, new Seat());
@@ -143,7 +153,7 @@ public class NewUserController {
 
 	@RequestMapping(value = "/sign_up", method = RequestMethod.GET)
 	public ModelAndView newUser(ModelMap model) {
-		return new ModelAndView("user/signup", "command", new User());
+		return new ModelAndView("user/signUp", "command", new User());
 	}
 
 	@RequestMapping(value = "/checkLog", method = RequestMethod.GET)
@@ -226,7 +236,6 @@ public class NewUserController {
 		TicketsOrder ticketsOrder = ticketsOrderService.readTicketsOrder(ticketsOrderid);
 		ticketsOrder.setPaid(true);
 		ticketsOrderService.updateTicketsOrder(ticketsOrder);
-		return new ModelAndView("success", REQUEST_PARAM_SUCCESS_MESSAGE, "You successfully buy tickets.");
+		return new ModelAndView("success", REQUEST_PARAM_SUCCESS_MESSAGE, "You have successfully bought tickets.");
 	}
-
 }
