@@ -12,19 +12,25 @@
 		<div class="row">
 			<div class=col-md-3>
 				<a href="/cinema/newapp/user/film_page?film_id=${film.id}"><img
-					src="${film.posterUrl}" /></a>
+					src="${film.posterUrl}" width="250" height="400" /></a>
 			</div>
 			<div class="col-md-8 container">
-				<p>
-					Жанры :
+				<div>
+					<b>Genres :</b><br>
 					<c:forEach items="${film.genres}" var="genre">
 								${genre.genreName}
 						</c:forEach>
-				</p>
-				<p>
-					Описание : <br> ${film.description}
-				</p>
+				</div>
+				<br>
+				<div>
+					<b>Description :</b> <br> ${film.description}
+				</div>
 			</div>
+		</div>
+		<div align="right">
+			<a href="/cinema/newapp/user/film_page?film_id=${film.id}"
+				class="btn btn-success btn-lg active" role="button"
+				aria-pressed="true">Details</a>
 		</div>
 		<hr>
 		<br>

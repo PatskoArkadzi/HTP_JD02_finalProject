@@ -13,7 +13,7 @@
 	by.htp.cinema.domain.Seat.State
 	"%>
 
-<p>Выберите место:</p>
+<p>Choose seat:</p>
 <div class="container" align="center">
 	<c:forEach begin="0" end="30" step="1" varStatus="row">
 		<c:forEach begin="0" end="25" step="1" varStatus="column">

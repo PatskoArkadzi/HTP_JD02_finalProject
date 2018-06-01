@@ -8,27 +8,27 @@
 </div>
 <div class="row">
 	<div class=col-md-3>
-		<img src="${user_chosen_film.posterUrl}" />
+		<img src="${user_chosen_film.posterUrl}" width="250" height="400" />
 	</div>
 	<div class="col-md-8 container">
-		<p>
-			Жанры :
+		<div>
+			<b>Genres :</b><br>
 			<c:forEach items="${user_chosen_film.genres}" var="genre">
 								${genre.genreName}
 						</c:forEach>
-		</p>
-		<p>
-			Описание : <br> ${user_chosen_film.description}
-		</p>
-		<div class="container">
-			<div class="row">
-				<div class=col-md-4>Выберите дату и время:</div>
-			</div>
-			<br>
+		</div>
+		<br>
+		<div>
+			<b>Description :</b> <br> ${user_chosen_film.description}
+		</div>
+		<br>
+		<div>
+			<b>Choose date and time:</b> <br>
 			<c:forEach items="${user_chosen_film.filmSessions}" var="session">
 				<a
-					href="/cinema/newapp/user/chooseSeat?user_chosen_filmSession_id=${session.id}"><button
-						class="btn btn-success">${session.date} ${session.time}</button></a>
+					href="/cinema/newapp/user/chooseSeat?user_chosen_filmSession_id=${session.id}"
+					class="btn btn-success btn-lg active" role="button"
+					aria-pressed="true">${session.date} ${session.time}</a>
 				<br>
 			</c:forEach>
 		</div>
