@@ -25,6 +25,7 @@ public class SeatTag extends TagSupport {
 	private int row;
 	private int column;
 	private FilmSession filmSession;
+	private boolean isStateRequired;
 
 	public void setRow(int row) {
 		this.row = row;
@@ -38,12 +39,16 @@ public class SeatTag extends TagSupport {
 		this.filmSession = filmSession;
 	}
 
+	public void setIsStateRequired(boolean isStateRequired) {
+		this.isStateRequired = isStateRequired;
+	}
+
 	@Override
 	public int doStartTag() throws JspException {
 		// SeatService seatService = new SeatServiceImpl();
 		// Seat seat = seatService.readSeat(row, column);
 		Seat seat = new SeatDaoHibernateImpl().read(row, column);
-		if (seat != null) {
+		if (seat != null && isStateRequired) {
 			// TicketsOrderService ticketsOrderService = new TicketsOrderServiceImpl();
 			// TicketsOrder ticketsOrder =
 			// ticketsOrderService.readOrderWhereSeatPresent(seat, filmSession);
@@ -56,7 +61,7 @@ public class SeatTag extends TagSupport {
 				seat.setState(Seat.State.BOOKED);
 			}
 		}
-		pageContext.setAttribute("chosen_seat", seat);
+		pageContext.setAttribute("seat", seat);
 		return SKIP_BODY;
 	}
 }
