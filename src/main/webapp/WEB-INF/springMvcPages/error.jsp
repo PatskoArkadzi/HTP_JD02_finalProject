@@ -3,7 +3,16 @@
 <%@ include file="include/begin-html.jsp"%>
 
 <div class="alert alert-danger" role="alert">
-	<p>${error_message}</p>
+	<c:choose>
+		<c:when test="${not empty param.error}">
+			<font color="red"> Login error. <br /> Reason :
+				${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+			</font>
+		</c:when>
+		<c:otherwise>
+			<p>${error_message}</p>
+		</c:otherwise>
+	</c:choose>
 </div>
 
 

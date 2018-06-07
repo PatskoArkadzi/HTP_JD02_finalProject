@@ -18,5 +18,7 @@ public interface UserDao extends BaseDao<User> {
 
 	List<User> readAllUsersWhereRoleIdPresent(int genreId);
 
+	User read(String login);
+
 	// TODO add specific methods
 }

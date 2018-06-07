@@ -35,11 +35,12 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:cinema-main.xml</param-value>
+		<param-value>
+		classpath:cinema-main.xml
+		classpath:cinema-security.xml
+		classpath:sql-datasource.xml
+		</param-value>
 	</context-param>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
 
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -49,10 +50,22 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
 	<jsp-config>
 		<taglib>
@@ -60,4 +73,8 @@
 			<taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
 		</taglib>
 	</jsp-config>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>

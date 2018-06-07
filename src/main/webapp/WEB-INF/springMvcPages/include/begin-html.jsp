@@ -32,7 +32,7 @@ background-size: cover;
 
 			<div class="collapse navbar-collapse" id="navbarNavDropdown">
 				<ul class="nav navbar-nav">
-					<c:if test="${current_user.role.id==1}">
+					<%-- <c:if test="${current_user.role.id==1}"> --%>
 						<div class="dropdown">
 							<button class="btn btn-secondary dropdown-toggle" type="button"
 								id="dropdownMenuButton" data-toggle="dropdown"
@@ -64,15 +64,16 @@ background-size: cover;
 									genre</a>
 							</div>
 						</div>
-					</c:if>
+					<%-- </c:if> --%>
 				</ul>
 				<ul class="nav navbar-nav ml-auto">
 					<c:choose>
-						<c:when test="${current_user!=null && current_user.id!=0}">
+						<c:when test="${pageContext.request.userPrincipal != null}">
 							<li class="nav-item active"><a class="nav-link"
-								href="/cinema/newapp/user/profile" style="color: #FF0000"><b>${current_user.login}</b></a></li>
-							<li class="nav-item active"><a class="nav-link"
-								href="logout">Logout</a></li>
+								href="/cinema/newapp/user/profile" style="color: #FF0000"><b>${pageContext.request.userPrincipal.name}</b></a></li>
+							<li class="nav-item active"><a class="nav-link"	href="<c:url value='/j_spring_security_logout' />">Logout</a></li>
+<!-- 							<li class="nav-item active"><a class="nav-link"
+								href="logout">Logout</a></li> -->
 						</c:when>
 						<c:otherwise>
 							<li class="nav-item active"><a class="nav-link"

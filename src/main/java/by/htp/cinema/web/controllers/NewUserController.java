@@ -3,6 +3,7 @@ package by.htp.cinema.web.controllers;
 import static by.htp.cinema.web.util.ConstantDeclaration.*;
 import static by.htp.cinema.web.util.HttpRequestParamValidator.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,26 +72,29 @@ public class NewUserController {
 
 	private static final Logger logger = LogManager.getLogger();
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView main() {
+	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView main(HttpSession session, Principal user) {
+		System.out.println("user " + user);
+
 		List<Film> films = filmService.getFilmList();
-		return new ModelAndView("user/main", REQUEST_PARAM_FILM_LIST, films);
+		return new ModelAndView("springMvcPages/user/main", REQUEST_PARAM_FILM_LIST, films);
 	}
 
 	@RequestMapping(value = "/chosenGenreFilms", method = RequestMethod.GET)
 	public ModelAndView viewChosenGenreFilms(@RequestParam(REQUEST_PARAM_USER_CHOSEN_GENRE_ID) int genre_id) {
-		return new ModelAndView("user/chosenGenreFilms", REQUEST_PARAM_USER_CHOSEN_GENRE, genreService.readGenre(genre_id));
+		return new ModelAndView("springMvcPages/user/chosenGenreFilms", REQUEST_PARAM_USER_CHOSEN_GENRE,
+				genreService.readGenre(genre_id));
 	}
 
 	@RequestMapping(value = "/filmPage", method = RequestMethod.GET)
 	public ModelAndView viewFilmPage(@RequestParam int film_id, HttpServletRequest req) {
 		Film chosenFilm = filmService.readFilm(film_id);
-		return new ModelAndView("user/filmPage", REQUEST_PARAM_USER_CHOSEN_FILM, chosenFilm);
+		return new ModelAndView("springMvcPages/user/filmPage", REQUEST_PARAM_USER_CHOSEN_FILM, chosenFilm);
 	}
 
 	@RequestMapping(value = "/chooseSeat", method = RequestMethod.GET)
 	public ModelAndView chooseSeat(@RequestParam(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID) int filmSession_Id) {
-		return new ModelAndView("user/seatChoice").addAllObjects(new HashMap<String, Object>() {
+		return new ModelAndView("springMvcPages/user/seatChoice").addAllObjects(new HashMap<String, Object>() {
 			{
 				put(REQUEST_PARAM_USER_CHOSEN_SEAT, new Seat());
 				put(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION, filmSessionService.readFilmSession(filmSession_Id));
@@ -115,45 +119,39 @@ public class NewUserController {
 			return new ModelAndView("redirect:/newapp/user/chooseSeat", REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID,
 					filmSession_Id);
 		} else
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "You have to be logged in");
+			return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE, "You have to be logged in");
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
-		return new ModelAndView("user/login", SESSION_PARAM_CURRENT_USER, new User());
+		System.out.println("in login");
+		return new ModelAndView("springMvcPages/user/login", SESSION_PARAM_CURRENT_USER, new User());
 	}
 
-	@RequestMapping(value = "/check_User", method = RequestMethod.POST)
-	public ModelAndView checkUser(@ModelAttribute("user") User user, HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		if (session.getAttribute(SESSION_PARAM_CURRENT_USER) != null) {
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "You are already logged in");
-		}
-		User foundUser = userService.readUser(new HashMap<String, Object>() {
-			{
-				put("login", user.getLogin());
-				put("password", user.getPassword());
-			}
-		});
-		if (foundUser != null) {
-			session.setAttribute(SESSION_PARAM_CURRENT_USER, foundUser);
-			session.setMaxInactiveInterval(600);
-			return new ModelAndView("redirect:/newapp/user/");
-		} else {
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "Incorrect username or password");
-		}
-	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public ModelAndView logout(HttpServletRequest req) {
-		req.getSession().invalidate();
-		req.setAttribute(SESSION_PARAM_CURRENT_USER, null);
-		return new ModelAndView("redirect:/newapp/user/");
-	}
+	/*
+	 * @RequestMapping(value = "/check_User", method = RequestMethod.POST) public
+	 * ModelAndView checkUser(@ModelAttribute("user") User user, HttpServletRequest
+	 * req) { HttpSession session = req.getSession(); if
+	 * (session.getAttribute(SESSION_PARAM_CURRENT_USER) != null) { return new
+	 * ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE,
+	 * "You are already logged in"); } User foundUser = userService.readUser(new
+	 * HashMap<String, Object>() { { put("login", user.getLogin()); put("password",
+	 * user.getPassword()); } }); if (foundUser != null) {
+	 * session.setAttribute(SESSION_PARAM_CURRENT_USER, foundUser);
+	 * session.setMaxInactiveInterval(600); return new
+	 * ModelAndView("redirect:/newapp/user/"); } else { return new
+	 * ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE,
+	 * "Incorrect username or password"); } }
+	 * 
+	 * @RequestMapping(value = "/logout", method = RequestMethod.GET) public
+	 * ModelAndView logout(HttpServletRequest req) { req.getSession().invalidate();
+	 * req.setAttribute(SESSION_PARAM_CURRENT_USER, null); return new
+	 * ModelAndView("redirect:/newapp/user/"); }
+	 */
 
 	@RequestMapping(value = "/sign_up", method = RequestMethod.GET)
 	public ModelAndView newUser(ModelMap model) {
-		return new ModelAndView("user/signUp", "command", new User());
+		return new ModelAndView("springMvcPages/user/signUp", "command", new User());
 	}
 
 	@RequestMapping(value = "/checkLog", method = RequestMethod.GET)
@@ -173,7 +171,7 @@ public class NewUserController {
 		} catch (ParseException e) {
 			logger.error("jsonLogin parsing error");
 		}
-		return "error";
+		return "springMvcPages/error";
 	}
 
 	@RequestMapping(value = "/checkEmail", method = RequestMethod.GET)
@@ -213,22 +211,24 @@ public class NewUserController {
 		validateRequestParamNotNull(userLogin, userEmail, userPassword);
 
 		if (userService.readUser("login", userLogin) != null) {
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "This login is already taken");
+			return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE, "This login is already taken");
 		} else if (userService.readUser("email", userEmail) != null) {
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "This email is already taken");
+			return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE, "This email is already taken");
 		} else if (userPassword.length() < 5) {
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE, "This password is too short");
+			return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE, "This password is too short");
 		}
 		user.setRole(roleService.readRole(DEFAULT_ROLE_ID));
 		userService.createUser(user);
-		return new ModelAndView("success", REQUEST_PARAM_SUCCESS_MESSAGE,
+		return new ModelAndView("springMvcPages/success", REQUEST_PARAM_SUCCESS_MESSAGE,
 				"You are successfully signed up.<br>Now, you can log in.");
 	}
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public ModelAndView enterToProgile(@SessionAttribute(SESSION_PARAM_CURRENT_USER) User user) {
-		return new ModelAndView("user/profile", REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER,
-				ticketsOrderService.readCurrentUserNonPaidOrder(user));
+	public ModelAndView enterToProgile(Principal user, HttpSession session) {
+		User currentUser=userService.readUser("login", user.getName());
+		session.setAttribute(SESSION_PARAM_CURRENT_USER, currentUser);
+		return new ModelAndView("springMvcPages/user/profile", REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER,
+				ticketsOrderService.readCurrentUserNonPaidOrder(currentUser));
 	}
 
 	@RequestMapping(value = "/pay", method = RequestMethod.GET)
@@ -236,6 +236,13 @@ public class NewUserController {
 		TicketsOrder ticketsOrder = ticketsOrderService.readTicketsOrder(ticketsOrderid);
 		ticketsOrder.setPaid(true);
 		ticketsOrderService.updateTicketsOrder(ticketsOrder);
-		return new ModelAndView("success", REQUEST_PARAM_SUCCESS_MESSAGE, "You have successfully bought tickets.");
+		return new ModelAndView("springMvcPages/success", REQUEST_PARAM_SUCCESS_MESSAGE,
+				"You have successfully bought tickets.");
+	}
+
+	@RequestMapping(value = "/error", method = RequestMethod.GET)
+	public String error() {
+		System.out.println("in error");
+		return "springMvcPages/error";
 	}
 }
