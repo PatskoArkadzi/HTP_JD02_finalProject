@@ -39,7 +39,7 @@ public class CrudGenreController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(REQUEST_PARAM_GENRE_LIST, genres);
 		mav.addObject(REQUEST_PARAM_COMMAND_NAME_CRUD_GENRE, new Genre());
-		mav.setViewName("admin/crud_genre");
+		mav.setViewName("springMvcPages/admin/crud_genre");
 		return mav;
 	}
 
@@ -72,7 +72,7 @@ public class CrudGenreController {
 		if (genreService.isAnyFilmContainGenre(genre.getId())) {
 			mav.addObject(REQUEST_PARAM_ERROR_MESSAGE,
 					"You can't delete genre.<br>Some films are marked by this genre");
-			mav.setViewName("error");
+			mav.setViewName("springMvcPages/error");
 			return mav;
 		}
 		genreService.deleteGenre(genre);

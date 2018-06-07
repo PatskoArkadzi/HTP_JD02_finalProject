@@ -52,7 +52,7 @@ public class CrudUserController {
 		mav.addObject(REQUEST_PARAM_USER_LIST, users);
 		mav.addObject(REQUEST_PARAM_ROLE_LIST, roles);
 		mav.addObject(REQUEST_PARAM_COMMAND_NAME_CRUD_USER, new User());
-		mav.setViewName("admin/crud_user");
+		mav.setViewName("springMvcPages/admin/crud_user");
 		return mav;
 	}
 

@@ -48,7 +48,7 @@ public class CrudFilmController {
 		mav.addObject(REQUEST_PARAM_FILM_LIST, films);
 		mav.addObject(REQUEST_PARAM_GENRE_LIST, genres);
 		mav.addObject(REQUEST_PARAM_COMMAND_NAME_CRUD_FILM, new Film());
-		mav.setViewName("admin/crud_film");
+		mav.setViewName("springMvcPages/admin/crud_film");
 		return mav;
 	}
 

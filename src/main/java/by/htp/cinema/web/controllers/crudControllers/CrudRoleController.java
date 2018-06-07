@@ -37,7 +37,7 @@ public class CrudRoleController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(REQUEST_PARAM_ROLE_LIST, roles);
 		mav.addObject(REQUEST_PARAM_COMMAND_NAME_CRUD_ROLE, new Role());
-		mav.setViewName("admin/crud_role");
+		mav.setViewName("springMvcPages/admin/crud_role");
 		return mav;
 	}
 
@@ -69,7 +69,7 @@ public class CrudRoleController {
 		validateRequestParamIdnotNull(role.getId());
 		if (roleService.isAnyFilmContainGenre(role.getId())) {
 			mav.addObject(REQUEST_PARAM_ERROR_MESSAGE, "You can't delete role.<br>Some users are marked by this role");
-			mav.setViewName("error");
+			mav.setViewName("springMvcPages/error");
 			return mav;
 		}
 		roleService.deleteRole(role);

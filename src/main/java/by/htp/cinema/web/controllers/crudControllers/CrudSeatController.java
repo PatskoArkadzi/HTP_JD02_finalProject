@@ -40,7 +40,7 @@ public class CrudSeatController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView main() {
-		return new ModelAndView("admin/crud_seat").addAllObjects(new HashMap<String, Object>() {
+		return new ModelAndView("springMvcPages/admin/crud_seat").addAllObjects(new HashMap<String, Object>() {
 			{
 				put(REQUEST_PARAM_SEAT_LIST, seatService.getSeatList());
 				put(REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT, new Seat());
@@ -50,7 +50,7 @@ public class CrudSeatController {
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView mainUpdateDelete() {
-		return new ModelAndView("admin/crud_seat").addAllObjects(new HashMap<String, Object>() {
+		return new ModelAndView("springMvcPages/admin/crud_seat").addAllObjects(new HashMap<String, Object>() {
 			{
 				put(REQUEST_PARAM_SEAT_LIST, seatService.getSeatList());
 				put(REQUEST_PARAM_COMMAND_NAME_CRUD_SEAT, new Seat());
@@ -64,13 +64,13 @@ public class CrudSeatController {
 		int number = seat.getNumber();
 		validateRequestParamNotNull(row, number);
 		if (row <= 0 || number <= 0 || row > MAX_COUNT_SEAT_ROW_IN_HALL || number > MAX_COUNT_SEAT_NUMBER_IN_ROW) {
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+			return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE,
 					"Sorry. You can't create seat.<br> The seat can't be out of the hall.");
 		} else if (!seatService.isSeatExist(seat)) {
 			seatService.createSeat(seat);
 			return new ModelAndView("redirect:/newapp/admin/crud/seat/");
 		} else
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+			return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE,
 					"Sorry. You can't create seat.<br> The seat is already exist.");
 	}
 
@@ -88,16 +88,16 @@ public class CrudSeatController {
 			int number = seat.getNumber();
 			validateRequestParamNotNull(row, number);
 			if (row <= 0 || number <= 0 || row > MAX_COUNT_SEAT_ROW_IN_HALL || number > MAX_COUNT_SEAT_NUMBER_IN_ROW) {
-				return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+				return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE,
 						"Sorry. The seat can't be out of the hall.");
 			} else if (seatService.isSeatExist(seat.getId())) {
 				seatService.updateSeat(seat);
 				return new ModelAndView("redirect:/newapp/admin/crud/seat/");
 			} else
-				return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+				return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE,
 						"Sorry. You can't update seat.<br> The seat isn't exist.");
 		} else
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+			return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE,
 					"Sorry. You can't update seat.<br> Some tickets contain this seat");
 	}
 
@@ -108,7 +108,7 @@ public class CrudSeatController {
 			seatService.deleteSeat(seat);
 			return new ModelAndView("redirect:/newapp/admin/crud/seat/");
 		} else
-			return new ModelAndView("error", REQUEST_PARAM_ERROR_MESSAGE,
+			return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE,
 					"Sorry. You can't delete seat.<br> Some tickets contain this seat");
 	}
 }
