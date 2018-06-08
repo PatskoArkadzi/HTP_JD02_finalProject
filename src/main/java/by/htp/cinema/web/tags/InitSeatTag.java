@@ -15,7 +15,7 @@ import by.htp.cinema.service.TicketsOrderService;
 import by.htp.cinema.service.impl.SeatServiceImpl;
 import by.htp.cinema.service.impl.TicketsOrderServiceImpl;
 
-public class SeatTag extends TagSupport {
+public class InitSeatTag extends TagSupport {
 
 	// @Autowired
 	// private SeatService seatService;

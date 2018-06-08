@@ -38,7 +38,6 @@
 		<param-value>
 		classpath:cinema-main.xml
 		classpath:cinema-security.xml
-		classpath:sql-datasource.xml
 		</param-value>
 	</context-param>
 
@@ -66,13 +65,6 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
-	<jsp-config>
-		<taglib>
-			<taglib-uri>custom-cinema-tags</taglib-uri>
-			<taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
-		</taglib>
-	</jsp-config>
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

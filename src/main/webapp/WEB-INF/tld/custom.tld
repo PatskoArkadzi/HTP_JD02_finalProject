@@ -6,8 +6,8 @@
 	<short-name>cctg</short-name>
 	<uri>custom-cinema-tags</uri>
 	<tag>
-		<name>getSeatAndInitializeState</name>
-		<tag-class>by.htp.cinema.web.tags.SeatTag</tag-class>
+		<name>InitSeatParamTag</name>
+		<tag-class>by.htp.cinema.web.tags.InitSeatTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>row</name>
@@ -29,5 +29,10 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+	</tag>
+	<tag>
+		<name>DisplayGenresBlock</name>
+		<tag-class>by.htp.cinema.web.tags.DisplayGenresBlockTag</tag-class>
+		<body-content>empty</body-content>
 	</tag>
 </taglib>

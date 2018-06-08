@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="custom-cinema-tags" prefix="cctg"%>
+<%@ taglib uri="/WEB-INF/tld/custom.tld" prefix="cctg"%>
 <%@ include file="../include/begin-html.jsp"%>
 
 <!-- CRUD roles -->
@@ -63,7 +63,7 @@
 <div class="container" align="center">
 	<c:forEach begin="0" end="20" step="1" varStatus="row">
 		<c:forEach begin="0" end="25" step="1" varStatus="column">
-			<cctg:getSeatAndInitializeState row="${row.index}"
+			<cctg:InitSeatParamTag row="${row.index}"
 				column="${column.index}" filmSession="${user_chosen_filmSession}" />
 			<c:choose>
 				<c:when test="${seat!=null}">

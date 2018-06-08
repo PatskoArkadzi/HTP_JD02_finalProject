@@ -2,14 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="custom-cinema-tags" prefix="cctg"%>
+<%@ taglib uri="/WEB-INF/tld/custom.tld" prefix="cctg"%>
 <%@ include file="../include/begin-html.jsp"%>
 
 <p>Выберите место:</p>
 <div class="container" align="center">
 	<c:forEach begin="0" end="20" step="1" varStatus="row">
 		<c:forEach begin="0" end="25" step="1" varStatus="column">
-			<cctg:getSeatAndInitializeState row="${row.index}"
+			<cctg:InitSeatParamTag row="${row.index}"
 				column="${column.index}" filmSession="${user_chosen_filmSession}"
 				isStateRequired="true" />
 			<c:choose>
