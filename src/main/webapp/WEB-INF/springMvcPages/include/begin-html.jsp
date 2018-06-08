@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="by.htp.cinema.dao.impl.GenreDaoHibernateImpl"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+<%@ taglib uri="/WEB-INF/tld/custom.tld" prefix="cctg"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +34,7 @@ background-size: cover;
 
 			<div class="collapse navbar-collapse" id="navbarNavDropdown">
 				<ul class="nav navbar-nav">
-					<%-- <c:if test="${current_user.role.id==1}"> --%>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<div class="dropdown">
 							<button class="btn btn-secondary dropdown-toggle" type="button"
 								id="dropdownMenuButton" data-toggle="dropdown"
@@ -64,37 +66,28 @@ background-size: cover;
 									genre</a>
 							</div>
 						</div>
-					<%-- </c:if> --%>
+					</sec:authorize>
 				</ul>
 				<ul class="nav navbar-nav ml-auto">
-					<c:choose>
-						<c:when test="${pageContext.request.userPrincipal != null}">
-							<li class="nav-item active"><a class="nav-link"
-								href="/cinema/newapp/user/profile" style="color: #FF0000"><b>${pageContext.request.userPrincipal.name}</b></a></li>
-							<li class="nav-item active"><a class="nav-link"	href="<c:url value='/j_spring_security_logout' />">Logout</a></li>
-<!-- 							<li class="nav-item active"><a class="nav-link"
-								href="logout">Logout</a></li> -->
-						</c:when>
-						<c:otherwise>
-							<li class="nav-item active"><a class="nav-link"
-								href="/cinema/newapp/user/login">Login</a></li>
-							<li class="nav-item active"><a class="nav-link"
-								href="/cinema/newapp/user/sign_up">SignUp</a></li>
-						</c:otherwise>
-					</c:choose>
+					<sec:authorize access="isAuthenticated()">
+						<li class="nav-item active"><a class="nav-link"
+							href="/cinema/newapp/user/profile" style="color: #FF0000"><b><sec:authentication
+										property="principal.username" /></b></a></li>
+						<li class="nav-item active"><a class="nav-link"
+							href="<c:url value='/j_spring_security_logout' />">Logout</a></li>
+					</sec:authorize>
+					<sec:authorize access="!isAuthenticated()">
+						<li class="nav-item active"><a class="nav-link"
+							href="/cinema/newapp/user/login">Login</a></li>
+						<li class="nav-item active"><a class="nav-link"
+							href="/cinema/newapp/user/sign_up">SignUp</a></li>
+					</sec:authorize>
 				</ul>
 			</div>
 		</nav>
 		<div class="row">
 			<div class="col-md-2">
 				<br>
-				<h5>Choose genre:</h5>
-				<c:forEach
-					items='<%=new GenreDaoHibernateImpl().readAll("genreName")%>'
-					var="genre">
-					<hr>
-					<a
-						href="/cinema/newapp/user/chosenGenreFilms?user_chosen_genre_id=${genre.id}">${genre.genreName}</a>
-				</c:forEach>
+				<cctg:DisplayGenresBlock />
 			</div>
 			<div class="col-md-10">

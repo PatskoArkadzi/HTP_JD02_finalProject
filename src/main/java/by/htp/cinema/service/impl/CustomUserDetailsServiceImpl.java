@@ -29,7 +29,6 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
 		by.htp.cinema.domain.User user = userDao.read(username);
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
-
 		return new User(user.getLogin(), user.getPassword(), true, true, true, true, authorities);
 	}
 }

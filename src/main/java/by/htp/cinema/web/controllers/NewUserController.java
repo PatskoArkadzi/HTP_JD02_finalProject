@@ -73,8 +73,8 @@ public class NewUserController {
 	private static final Logger logger = LogManager.getLogger();
 
 	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView main(HttpSession session, Principal user) {
-		System.out.println("user " + user);
+	public ModelAndView main(HttpSession session, Principal principal) {
+		System.out.println("principal " + principal);
 
 		List<Film> films = filmService.getFilmList();
 		return new ModelAndView("springMvcPages/user/main", REQUEST_PARAM_FILM_LIST, films);
@@ -104,9 +104,10 @@ public class NewUserController {
 
 	@RequestMapping(value = "/toBasket", method = RequestMethod.POST)
 	public ModelAndView order(@ModelAttribute(REQUEST_PARAM_USER_CHOSEN_SEAT) Seat seat,
-			@RequestParam(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID) int filmSession_Id, HttpSession session) {
+			@RequestParam(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID) int filmSession_Id, Principal principal) {
 
-		User user = (User) session.getAttribute(SESSION_PARAM_CURRENT_USER);
+		User user = userService.readUser(principal.getName());
+		/* User user = (User) session.getAttribute(SESSION_PARAM_CURRENT_USER); */
 		if (user != null) {
 			FilmSession filmSession = filmSessionService.readFilmSession(filmSession_Id);
 			TicketsOrder ticketsOrder;
@@ -124,8 +125,11 @@ public class NewUserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
-		System.out.println("in login");
-		return new ModelAndView("springMvcPages/user/login", SESSION_PARAM_CURRENT_USER, new User());
+		return new ModelAndView("springMvcPages/user/login");
+		/*
+		 * return new ModelAndView("springMvcPages/user/login",
+		 * SESSION_PARAM_CURRENT_USER, new User());
+		 */
 	}
 
 	/*
@@ -224,8 +228,8 @@ public class NewUserController {
 	}
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public ModelAndView enterToProgile(Principal user, HttpSession session) {
-		User currentUser=userService.readUser("login", user.getName());
+	public ModelAndView enterToProgile(Principal principal, HttpSession session) {
+		User currentUser = userService.readUser(principal.getName());
 		session.setAttribute(SESSION_PARAM_CURRENT_USER, currentUser);
 		return new ModelAndView("springMvcPages/user/profile", REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER,
 				ticketsOrderService.readCurrentUserNonPaidOrder(currentUser));
@@ -242,7 +246,6 @@ public class NewUserController {
 
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
 	public String error() {
-		System.out.println("in error");
 		return "springMvcPages/error";
 	}
 }

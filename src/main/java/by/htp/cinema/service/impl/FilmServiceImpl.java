@@ -18,6 +18,10 @@ public class FilmServiceImpl implements FilmService {
 	public FilmServiceImpl() {
 	}
 
+	public FilmServiceImpl(FilmDao filmDao) {
+		this.filmDao = filmDao;
+	}
+
 	public FilmDao getFilmDao() {
 		return filmDao;
 	}
