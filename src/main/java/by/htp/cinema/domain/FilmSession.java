@@ -1,6 +1,7 @@
 package by.htp.cinema.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -37,7 +38,7 @@ public class FilmSession implements Serializable {
 	private String time;
 
 	@Column(name = "ticketPrice")
-	private double ticketPrice;
+	private BigDecimal ticketPrice;
 
 	@ManyToOne
 	@JoinColumn(name = "film_id")
@@ -61,7 +62,7 @@ public class FilmSession implements Serializable {
 		super();
 	}
 
-	public FilmSession(int id, String date, String time, double ticketPrice, Film film, Set<Ticket> tickets,
+	public FilmSession(int id, String date, String time, BigDecimal ticketPrice, Film film, Set<Ticket> tickets,
 			Set<TicketsOrder> ticketsOrders, Set<Seat> seats) {
 		super();
 		this.id = id;
@@ -98,11 +99,11 @@ public class FilmSession implements Serializable {
 		this.time = time;
 	}
 
-	public double getTicketPrice() {
+	public BigDecimal getTicketPrice() {
 		return ticketPrice;
 	}
 
-	public void setTicketPrice(double ticketPrice) {
+	public void setTicketPrice(BigDecimal ticketPrice) {
 		this.ticketPrice = ticketPrice;
 	}
 
@@ -145,9 +146,7 @@ public class FilmSession implements Serializable {
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((film == null) ? 0 : film.hashCode());
 		result = prime * result + id;
-		long temp;
-		temp = Double.doubleToLongBits(ticketPrice);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((ticketPrice == null) ? 0 : ticketPrice.hashCode());
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		return result;
 	}
@@ -173,8 +172,12 @@ public class FilmSession implements Serializable {
 			return false;
 		if (id != other.id)
 			return false;
-		if (Double.doubleToLongBits(ticketPrice) != Double.doubleToLongBits(other.ticketPrice))
+		if (ticketPrice == null) {
+			if (other.ticketPrice != null)
+				return false;
+		} else if (!ticketPrice.equals(other.ticketPrice))
 			return false;
+
 		if (time == null) {
 			if (other.time != null)
 				return false;

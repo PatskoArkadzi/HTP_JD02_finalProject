@@ -80,11 +80,11 @@ INSERT INTO `orders` (`id`, `orderNumber`, `user_id`, `isPaid`) VALUES
 DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`id`, `roleName`) VALUES
-	(1, 'admin'),
-	(2, 'user');
+	(1, 'ROLE_ADMIN'),
+	(2, 'ROLE_USER');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.seats: ~249 rows (приблизительно)
+-- Дамп данных таблицы cinema.seats: ~250 rows (приблизительно)
 DELETE FROM `seats`;
 /*!40000 ALTER TABLE `seats` DISABLE KEYS */;
 INSERT INTO `seats` (`id`, `row`, `number`) VALUES
@@ -345,13 +345,13 @@ INSERT INTO `seats` (`id`, `row`, `number`) VALUES
 DELETE FROM `sessions`;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` (`id`, `film_id`, `date`, `time`, `ticketPrice`) VALUES
-	(1, 1, '2018-05-06', '11.00', 5.2),
-	(2, 1, '2018-05-07', '11.00', 5),
-	(3, 1, '2018-05-08', '11.00', 5),
-	(4, 1, '2018-05-09', '11.00', 5),
-	(5, 1, '2018-05-12', '11.20', 5.2),
-	(6, 1, '2018-05-13', '11.20', 5.2),
-	(7, 2, '2018-05-10', '12.00', 4.5);
+	(1, 1, '2018-05-06', '11.00', 5.20),
+	(2, 1, '2018-05-07', '11.00', 5.00),
+	(3, 1, '2018-05-08', '11.00', 5.00),
+	(4, 1, '2018-05-09', '11.00', 5.00),
+	(5, 1, '2018-05-12', '11.20', 5.20),
+	(6, 1, '2018-05-13', '11.20', 5.20),
+	(7, 2, '2018-05-10', '12.00', 5.00);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 
 -- Дамп данных таблицы cinema.tickets: ~5 rows (приблизительно)
@@ -364,7 +364,8 @@ INSERT INTO `tickets` (`id`, `session_id`, `seat_id`, `order_id`) VALUES
 	(27, 6, 3, 4),
 	(28, 6, 4, 4),
 	(29, 6, 251, 2),
-	(31, 6, 5, 4);
+	(31, 6, 5, 4),
+	(32, 6, 6, 3);
 /*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 
 -- Дамп данных таблицы cinema.users: ~5 rows (приблизительно)
