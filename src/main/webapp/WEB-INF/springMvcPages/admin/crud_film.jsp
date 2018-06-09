@@ -97,9 +97,11 @@
 					value="${film.posterUrl}" />
 			</div>
 			<div class="row">
-				<div class=col-md-2>Description :</div>
-				<form:textarea cols="100" rows="7" path="description"
-					placeholder="${film.description}" />
+				<div class=col-md-10>
+					<p>Description :</p>
+					<form:textarea cols="100" rows="7" path="description"
+						placeholder="${film.description}" />
+				</div>
 				<div class=col-md-2>
 					<p>Genres :</p>
 					<form:select path="genres" multiple="true" size="5" required="true">
@@ -117,6 +119,7 @@
 			<form:button formaction="delete" class="btn btn-danger">Удалить</form:button>
 		</form:form>
 		<br>
+		<hr>
 	</c:forEach>
 </div>
 

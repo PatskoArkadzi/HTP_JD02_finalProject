@@ -1,6 +1,5 @@
 package by.htp.cinema.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,10 @@ public class FilmSessionServiceImpl implements FilmSessionService {
 	FilmSessionDao filmSessionDao;
 
 	public FilmSessionServiceImpl() {
+	}
+
+	public FilmSessionServiceImpl(FilmSessionDao filmSessionDao) {
+		this.filmSessionDao = filmSessionDao;
 	}
 
 	public FilmSessionDao getFilmSessionDao() {

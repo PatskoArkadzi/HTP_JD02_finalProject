@@ -22,6 +22,11 @@ public class GenreServiceImpl implements GenreService {
 	public GenreServiceImpl() {
 	}
 
+	public GenreServiceImpl(GenreDao genreDao, FilmDao filmDao) {
+		this.genreDao = genreDao;
+		this.filmDao = filmDao;
+	}
+
 	public GenreDao getGenreDao() {
 		return genreDao;
 	}

@@ -20,6 +20,10 @@ public class TicketServiceImpl implements TicketService {
 	public TicketServiceImpl() {
 	}
 
+	public TicketServiceImpl(TicketDao ticketDao) {
+		this.ticketDao = ticketDao;
+	}
+
 	public TicketDao getTicketDao() {
 		return ticketDao;
 	}

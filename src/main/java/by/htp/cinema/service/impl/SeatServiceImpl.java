@@ -24,6 +24,11 @@ public class SeatServiceImpl implements SeatService {
 	public SeatServiceImpl() {
 	}
 
+	public SeatServiceImpl(SeatDao seatDao, TicketsOrderDao ticketsOrderDao) {
+		this.seatDao = seatDao;
+		this.ticketsOrderDao = ticketsOrderDao;
+	}
+
 	public SeatDao getSeatDao() {
 		return seatDao;
 	}

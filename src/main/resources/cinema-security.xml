@@ -9,7 +9,7 @@
 
 	<http use-expressions="true">
 		<intercept-url pattern="/newapp/user/chooseSeat/**"
-			access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER',)" />
+			access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
 		<intercept-url pattern="/newapp/admin/**"
 			access="hasRole('ROLE_ADMIN')" />
 		<form-login login-processing-url="/j_spring_security_check"

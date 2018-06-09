@@ -21,6 +21,10 @@ public class TicketsOrderServiceImpl implements TicketsOrderService {
 	public TicketsOrderServiceImpl() {
 	}
 
+	public TicketsOrderServiceImpl(TicketsOrderDao ticketsOrderDao) {
+		this.ticketsOrderDao = ticketsOrderDao;
+	}
+
 	public TicketsOrderDao getTicketsOrderDao() {
 		return ticketsOrderDao;
 	}

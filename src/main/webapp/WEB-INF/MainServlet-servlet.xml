@@ -16,7 +16,7 @@
 		location="/resources/" cache-period="31556926" />
 
 	<context:component-scan
-		base-package="by.htp.cinema.web.controllers" />
+		base-package="by.htp.cinema" />
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

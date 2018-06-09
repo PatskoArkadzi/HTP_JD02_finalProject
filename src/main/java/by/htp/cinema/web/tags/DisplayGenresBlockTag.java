@@ -19,7 +19,7 @@ public class DisplayGenresBlockTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		List<Genre> genres = new GenreDaoHibernateImpl().readAll();
+		List<Genre> genres = new GenreDaoHibernateImpl().readAll("genreName");
 		StringBuilder genresBlock = new StringBuilder();
 		genresBlock.append("<h5>Choose genre:</h5>");
 		for (Genre g : genres) {

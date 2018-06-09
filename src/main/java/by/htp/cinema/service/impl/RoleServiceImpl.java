@@ -24,6 +24,11 @@ public class RoleServiceImpl implements RoleService {
 	public RoleServiceImpl() {
 	}
 
+	public RoleServiceImpl(RoleDao roleDao, UserDao userDao) {
+		this.roleDao = roleDao;
+		this.userDao = userDao;
+	}
+
 	public RoleDao getRoleDao() {
 		return roleDao;
 	}

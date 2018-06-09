@@ -20,6 +20,10 @@ public class UserServiceImpl implements UserService {
 	public UserServiceImpl() {
 	}
 
+	public UserServiceImpl(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
 	public UserDao getUserDao() {
 		return userDao;
 	}
@@ -44,8 +48,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public User readUser(String login) {
+		return userDao.read(login);
+	}
+
+	@Override
 	public User readUser(String parametre, Object value) {
-		return userDao.readAllWhereEq(new HashMap() {
+		return readUser(new HashMap() {
 			{
 				put(parametre, value);
 			}

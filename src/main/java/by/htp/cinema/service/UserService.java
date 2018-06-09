@@ -13,11 +13,14 @@ public interface UserService extends Service {
 
 	User readUser(int id);
 
+	User readUser(String login);
+
 	User readUser(String parametre, Object value);
 
-	User readUser(Map<String,Object> map);
+	User readUser(Map<String, Object> map);
 
 	void updateUser(User user);
 
 	void deleteUser(User user);
+
 }
