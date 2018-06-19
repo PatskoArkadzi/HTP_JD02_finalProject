@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import by.htp.cinema.dao.FilmDao;
@@ -30,6 +31,7 @@ import by.htp.cinema.service.SeatService;
 import by.htp.cinema.service.TicketService;
 import by.htp.cinema.service.TicketsOrderService;
 import by.htp.cinema.service.UserService;
+import by.htp.cinema.service.impl.CustomUserDetailsServiceImpl;
 import by.htp.cinema.service.impl.FilmServiceImpl;
 import by.htp.cinema.service.impl.FilmSessionServiceImpl;
 import by.htp.cinema.service.impl.GenreServiceImpl;
@@ -40,12 +42,16 @@ import by.htp.cinema.service.impl.TicketsOrderServiceImpl;
 import by.htp.cinema.service.impl.UserServiceImpl;
 
 @Configuration
-@EnableWebMvc
 public class SpringServiceConfig {
 	{
 		System.out.println("SpringServiceConfig");
 	}
-	
+
+	@Bean
+	protected UserDetailsService userDetailsService(UserDao userDao) {
+		return new CustomUserDetailsServiceImpl(userDao);
+	}
+
 	@Bean
 	FilmService filmService(FilmDao filmDao) {
 		return new FilmServiceImpl(filmDao);

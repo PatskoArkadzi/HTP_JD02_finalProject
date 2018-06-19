@@ -25,7 +25,6 @@ import by.htp.cinema.service.FilmService;
 import by.htp.cinema.service.impl.FilmServiceImpl;
 
 @Configuration
-@EnableWebMvc
 public class SpringDaoConfig {
 	{
 		System.out.println("SpringDaoConfig");

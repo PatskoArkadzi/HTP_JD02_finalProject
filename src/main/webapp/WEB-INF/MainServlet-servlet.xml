@@ -14,9 +14,15 @@
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/resources/**"
 		location="/resources/" cache-period="31556926" />
+		
+		<context:component-scan base-package="by.htp.cinema" />
 
-	<context:component-scan
-		base-package="by.htp.cinema" />
+	<!-- <context:annotation-config /> <context:component-scan base-package="by.htp.cinema"> 
+		<context:exclude-filter type="annotation" expression="by.htp.cinema.SpringConfig.SpringMainConfig" 
+		/> <context:exclude-filter type="annotation" expression="by.htp.cinema.SpringConfig.SpringDaoConfig" 
+		/> <context:exclude-filter type="annotation" expression="by.htp.cinema.SpringConfig.SpringSecurityConfig" 
+		/> <context:exclude-filter type="annotation" expression="by.htp.cinema.SpringConfig.SpringServiceConfig" 
+		/> </context:component-scan> -->
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,27 +48,35 @@ import by.htp.cinema.service.UserService;
 public class NewUserController {
 
 	@Autowired
+	@Qualifier("filmService")
 	FilmService filmService;
 
 	@Autowired
+	@Qualifier("genreService")
 	GenreService genreService;
 
 	@Autowired
+	@Qualifier("filmSessionService")
 	FilmSessionService filmSessionService;
 
 	@Autowired
+	@Qualifier("userService")
 	UserService userService;
 
 	@Autowired
+	@Qualifier("roleService")
 	RoleService roleService;
 
 	@Autowired
+	@Qualifier("seatService")
 	SeatService seatService;
 
 	@Autowired
+	@Qualifier("ticketService")
 	TicketService ticketService;
 
 	@Autowired
+	@Qualifier("ticketOrderService")
 	TicketsOrderService ticketsOrderService;
 
 	private static final Logger logger = LogManager.getLogger();

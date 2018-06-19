@@ -7,8 +7,8 @@
 
 <p>Выберите место:</p>
 <div class="container" align="center">
-	<c:forEach begin="0" end="20" step="1" varStatus="row">
-		<c:forEach begin="0" end="25" step="1" varStatus="column">
+	<c:forEach begin="1" end="19" step="1" varStatus="row">
+		<c:forEach begin="1" end="24" step="1" varStatus="column">
 			<cctg:InitSeatParamTag row="${row.index}"
 				column="${column.index}" filmSession="${user_chosen_filmSession}"
 				isStateRequired="true" />

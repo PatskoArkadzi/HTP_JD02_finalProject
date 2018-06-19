@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.htp.cinema.dao.UserDao;
 
-
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
@@ -27,7 +26,9 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
 	public CustomUserDetailsServiceImpl() {
 	}
 
-	
+	public CustomUserDetailsServiceImpl(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
 	@Transactional(readOnly = true)
 	@Override
