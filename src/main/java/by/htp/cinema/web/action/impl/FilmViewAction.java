@@ -42,7 +42,7 @@ public class FilmViewAction implements BaseAction {
 
 	@Override
 	public String executeAction(HttpServletRequest req) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String filmId = req.getParameter(REQUEST_PARAM_FILM_ID);
 		validateRequestParamNotNull(filmId);
 		Film chosenFilm = filmService.readFilm(getInt(filmId));
@@ -51,7 +51,7 @@ public class FilmViewAction implements BaseAction {
 		////////////////////
 		List<FilmSession> chosenFilmFilmSessions = filmSessionService.getChosenFilmFilmSessionList(chosenFilm);
 		
-		/*if (isPost(req)) {
+		if (isPost(req)) {
 			String chosenDate = req.getParameter(REQUEST_PARAM_USER_CHOSEN_DATE);
 			List<FilmSession> chosenFilmFilmSessions = filmSessionService.getChosenFilmFilmSessionList(chosenFilm);
 			req.setAttribute(REQUEST_PARAM_CHOSEN_FILM_FILM_SESSIONS, chosenFilmFilmSessions);

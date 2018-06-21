@@ -69,7 +69,7 @@
 				<c:when test="${seat!=null}">
 
 					<form:form commandName="crud_seat" method="post"
-						style="display:inline;">
+						style="display:inline-block;">
 						<!-- Button trigger modal -->
 						<button class="btn" type=button
 							title="id:${seat.id}

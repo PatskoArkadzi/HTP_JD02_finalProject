@@ -6,17 +6,16 @@
 <%@ include file="../include/begin-html.jsp"%>
 
 <p>Выберите место:</p>
-<div class="container" align="center">
-	<c:forEach begin="1" end="19" step="1" varStatus="row">
-		<c:forEach begin="1" end="24" step="1" varStatus="column">
+<div class="container" align="center" >
+	<c:forEach begin="1" end="20" step="1" varStatus="row">
+		<c:forEach begin="1" end="25" step="1" varStatus="column">
 			<cctg:InitSeatParamTag row="${row.index}"
 				column="${column.index}" filmSession="${user_chosen_filmSession}"
 				isStateRequired="true" />
 			<c:choose>
 				<c:when test="${seat!=null}">
 					<form:form method="post" commandName="user_chosen_seat"
-						action="toBasket?user_chosen_filmSession_id=${user_chosen_filmSession.id}"
-						style="display:inline;">
+						action="toBasket?user_chosen_filmSession_id=${user_chosen_filmSession.id}" style="display:inline-block;">
 						<form:hidden path="id" value="${seat.id}" />
 						<form:hidden path="row" value="${seat.row}" />
 						<form:hidden path="number" value="${seat.number}" />
