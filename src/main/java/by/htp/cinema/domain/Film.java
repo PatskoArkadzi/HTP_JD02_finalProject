@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
@@ -40,6 +41,7 @@ public class Film implements Serializable {
 
 	@Fetch(FetchMode.JOIN)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "film")
+	@OrderBy("date ASC, time ASC")
 	private Set<FilmSession> filmSessions;
 
 	@Fetch(FetchMode.JOIN)
