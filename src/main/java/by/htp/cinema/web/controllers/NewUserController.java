@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.PageContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,12 +25,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.FilmSession;
-import by.htp.cinema.domain.Genre;
 import by.htp.cinema.domain.Seat;
 import by.htp.cinema.domain.Ticket;
 import by.htp.cinema.domain.TicketsOrder;
@@ -42,6 +41,8 @@ import by.htp.cinema.service.SeatService;
 import by.htp.cinema.service.TicketService;
 import by.htp.cinema.service.TicketsOrderService;
 import by.htp.cinema.service.UserService;
+import by.htp.cinema.service.impl.TicketsOrderServiceImpl;
+import by.htp.cinema.web.util.TimerDaemon;
 
 @Controller
 @RequestMapping(value = "/newapp/user")
@@ -80,6 +81,7 @@ public class NewUserController {
 	TicketsOrderService ticketsOrderService;
 
 	private static final Logger logger = LogManager.getLogger();
+	private TimerDaemon timer;
 
 	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView main(HttpSession session, Principal principal) {
@@ -101,6 +103,7 @@ public class NewUserController {
 		return new ModelAndView("springMvcPages/user/filmPage", REQUEST_PARAM_USER_CHOSEN_FILM, chosenFilm);
 	}
 
+	@SuppressWarnings("serial")
 	@RequestMapping(value = "/chooseSeat", method = RequestMethod.GET)
 	public ModelAndView chooseSeat(@RequestParam(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID) int filmSession_Id) {
 		return new ModelAndView("springMvcPages/user/seatChoice").addAllObjects(new HashMap<String, Object>() {
@@ -113,7 +116,10 @@ public class NewUserController {
 
 	@RequestMapping(value = "/toBasket", method = RequestMethod.POST)
 	public ModelAndView order(@ModelAttribute(REQUEST_PARAM_USER_CHOSEN_SEAT) Seat seat,
-			@RequestParam(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID) int filmSession_Id, Principal principal) {
+			@RequestParam(REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID) int filmSession_Id, HttpSession session,
+			Principal principal) {
+		if (!seatService.isSeatFree(seat, filmSessionService.readFilmSession(filmSession_Id)))
+			return new ModelAndView("springMvcPages/error", REQUEST_PARAM_ERROR_MESSAGE, "This seat isn't free");
 
 		User user = userService.readUser(principal.getName());
 		/* User user = (User) session.getAttribute(SESSION_PARAM_CURRENT_USER); */
@@ -124,6 +130,12 @@ public class NewUserController {
 				ticketsOrder = new TicketsOrder();
 				ticketsOrder.setUser(user);
 				ticketsOrderService.createTicketsOrder(ticketsOrder);
+
+				timer = new TimerDaemon();
+				timer.setDaemon(true);
+				timer.start();
+				System.out.println("timer.start();");
+				session.setAttribute("isTimerNeed", true);
 			}
 			ticketService.createTicket(new Ticket(0, filmSession, seat, ticketsOrder));
 			return new ModelAndView("redirect:/newapp/user/chooseSeat", REQUEST_PARAM_USER_CHOSEN_FILM_SESSION_ID,
@@ -245,10 +257,13 @@ public class NewUserController {
 	}
 
 	@RequestMapping(value = "/pay", method = RequestMethod.GET)
-	public ModelAndView buyTickets(@RequestParam(REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER_ID) int ticketsOrderid) {
+	public ModelAndView buyTickets(@RequestParam(REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER_ID) int ticketsOrderid,
+			HttpSession session) {
 		TicketsOrder ticketsOrder = ticketsOrderService.readTicketsOrder(ticketsOrderid);
 		ticketsOrder.setPaid(true);
 		ticketsOrderService.updateTicketsOrder(ticketsOrder);
+		timer.setStop(true);
+		session.setAttribute("isTimerNeed", false);
 		return new ModelAndView("springMvcPages/success", REQUEST_PARAM_SUCCESS_MESSAGE,
 				"You have successfully bought tickets.");
 	}
@@ -256,5 +271,21 @@ public class NewUserController {
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
 	public String error() {
 		return "springMvcPages/error";
+	}
+
+	@RequestMapping(value = "/timer", method = RequestMethod.GET)
+	public @ResponseBody String getTimer(HttpSession session, Principal principal) {
+		if (timer != null && !timer.isAlive()) {
+			session.setAttribute("isTimerNeed", false);
+			return "Time is over";
+		}
+		return String.format("%02d : %02d", timer.getMinutesDisplay(), timer.getSecondsDisplay());
+	}
+
+	@RequestMapping(value = "/deleteNonPaidOrder", method = RequestMethod.GET)
+	public @ResponseBody void deleteNonPaidOrder(HttpSession session, Principal principal) {
+		User currentUser = userService.readUser(principal.getName());
+		TicketsOrder ticketsOrder = ticketsOrderService.readUserNonPaidOrder(currentUser);
+		ticketsOrderService.deleteTicketsOrder(ticketsOrder);
 	}
 }

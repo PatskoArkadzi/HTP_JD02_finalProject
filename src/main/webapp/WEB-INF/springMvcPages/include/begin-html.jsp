@@ -15,12 +15,6 @@
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <title>Cinema</title>
-<!-- <style>
-body{
-background-image: url(https://drive.google.com/uc?id=13CkZE_cDFG_oNT85vBjYBFNQq0WWoIAq) ;
-background-size: cover;
-}
-</style> -->
 </head>
 <body>
 	<div class="container">
@@ -67,6 +61,9 @@ background-size: cover;
 							</div>
 						</div>
 					</sec:authorize>
+				</ul>
+				<ul class="nav navbar-nav mx-auto">
+					<li id="timer" style="color: #FF0000; font-size: 30px;" />
 				</ul>
 				<ul class="nav navbar-nav ml-auto">
 					<sec:authorize access="isAuthenticated()">
