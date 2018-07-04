@@ -24,4 +24,6 @@ public interface SeatService extends Service {
 	boolean isSeatExist(Seat seat);
 
 	boolean isSeatExist(int id);
+
+	boolean isSeatFree(Seat seat, FilmSession filmSession);
 }

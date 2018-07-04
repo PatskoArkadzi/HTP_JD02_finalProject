@@ -96,4 +96,9 @@ public class SeatServiceImpl implements SeatService {
 	public boolean isSeatExist(int id) {
 		return seatDao.read(id) != null;
 	}
+
+	@Override
+	public boolean isSeatFree(Seat seat, FilmSession filmSession) {
+		return setSeatState(seat, filmSession).getState().equals(Seat.State.FREE);
+	}
 }
