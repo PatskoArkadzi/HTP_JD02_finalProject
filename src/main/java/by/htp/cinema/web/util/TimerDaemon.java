@@ -1,16 +1,16 @@
 package by.htp.cinema.web.util;
 
-public class TimerDaemon implements Runnable {
+public class TimerDaemon extends Thread {
 
-	private static final long RESERVATION_PERIOD = 1 * 60000L;// 1 min
-	private static long secondsDisplay;
-	private static long minutesDisplay;
+	private static final long RESERVATION_PERIOD = 1 * 30000L;// 30 sec
+	private long secondsDisplay;
+	private long minutesDisplay;
 
-	public static long getSecondsDisplay() {
+	public long getSecondsDisplay() {
 		return secondsDisplay;
 	}
 
-	public static long getMinutesDisplay() {
+	public long getMinutesDisplay() {
 		return minutesDisplay;
 	}
 
@@ -25,8 +25,9 @@ public class TimerDaemon implements Runnable {
 			remainingSeconds = (RESERVATION_PERIOD - elapsedTime) / 1000;
 			secondsDisplay = remainingSeconds % 60;
 			minutesDisplay = remainingSeconds / 60;
+
+			System.out.println(String.format("%02d : %02d", minutesDisplay, secondsDisplay));
 			try {
-				System.out.println(String.format("%02d : %02d", minutesDisplay, secondsDisplay));
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
