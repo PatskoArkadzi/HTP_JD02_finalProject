@@ -11,7 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Дамп данных таблицы cinema.films: ~7 rows (приблизительно)
+-- Дамп данных таблицы cinema.films: ~6 rows (приблизительно)
 DELETE FROM `films`;
 /*!40000 ALTER TABLE `films` DISABLE KEYS */;
 INSERT INTO `films` (`id`, `filmName`, `description`, `posterUrl`) VALUES
@@ -23,7 +23,7 @@ INSERT INTO `films` (`id`, `filmName`, `description`, `posterUrl`) VALUES
 	(8, 'Мстители: Война бесконечности', 'Пока Мстители и их союзники продолжают защищать мир от различных опасностей, с которыми не смог бы справиться один супергерой, новая угроза возникает из космоса: Танос. Межгалактический тиран преследует цель собрать все шесть Камней Бесконечности -  артефакты невероятной силы, с помощью которых можно менять реальность по своему желанию. Всё, с чем Мстители сталкивались ранее, вело к этому моменту -  судьба Земли никогда ещё не была столь неопределённой. ', 'https://drive.google.com/uc?id=157z5PWXbBEzKjd09-cbfZup-4HWeZ3Kf');
 /*!40000 ALTER TABLE `films` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.films_genres: ~23 rows (приблизительно)
+-- Дамп данных таблицы cinema.films_genres: ~22 rows (приблизительно)
 DELETE FROM `films_genres`;
 /*!40000 ALTER TABLE `films_genres` DISABLE KEYS */;
 INSERT INTO `films_genres` (`film_id`, `genre_id`) VALUES
@@ -51,7 +51,7 @@ INSERT INTO `films_genres` (`film_id`, `genre_id`) VALUES
 	(8, 1);
 /*!40000 ALTER TABLE `films_genres` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.genres: ~10 rows (приблизительно)
+-- Дамп данных таблицы cinema.genres: ~9 rows (приблизительно)
 DELETE FROM `genres`;
 /*!40000 ALTER TABLE `genres` DISABLE KEYS */;
 INSERT INTO `genres` (`id`, `genreName`) VALUES
@@ -66,14 +66,14 @@ INSERT INTO `genres` (`id`, `genreName`) VALUES
 	(9, 'Мелодрама');
 /*!40000 ALTER TABLE `genres` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.orders: ~0 rows (приблизительно)
+-- Дамп данных таблицы cinema.orders: ~4 rows (приблизительно)
 DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`id`, `orderNumber`, `user_id`, `isPaid`) VALUES
-	(1, 577069, 2, b'0'),
-	(2, 667369, 1, b'1'),
-	(3, 893708, 4, b'0'),
-	(4, 688543, 3, b'1');
+	(1, 776170, 2, b'0'),
+	(2, 745287, 1, b'1'),
+	(3, 397928, 4, b'0'),
+	(4, 553779, 3, b'1');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- Дамп данных таблицы cinema.roles: ~2 rows (приблизительно)
@@ -84,7 +84,7 @@ INSERT INTO `roles` (`id`, `roleName`) VALUES
 	(2, 'ROLE_USER');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.seats: ~250 rows (приблизительно)
+-- Дамп данных таблицы cinema.seats: ~251 rows (приблизительно)
 DELETE FROM `seats`;
 /*!40000 ALTER TABLE `seats` DISABLE KEYS */;
 INSERT INTO `seats` (`id`, `row`, `number`) VALUES
@@ -345,16 +345,16 @@ INSERT INTO `seats` (`id`, `row`, `number`) VALUES
 DELETE FROM `sessions`;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` (`id`, `film_id`, `date`, `time`, `ticketPrice`) VALUES
-	(1, 1, '2018-05-06', '11.00', 5.20),
-	(2, 1, '2018-05-07', '11.00', 5.00),
-	(3, 1, '2018-05-08', '11.00', 5.00),
-	(4, 1, '2018-05-09', '11.00', 5.00),
-	(5, 1, '2018-05-12', '11.20', 5.20),
-	(6, 1, '2018-05-13', '11.20', 5.20),
-	(7, 2, '2018-05-10', '12.00', 5.00);
+	(1, 1, '2018-07-06', '11:00', 5.20),
+	(2, 1, '2018-07-07', '11:00', 5.00),
+	(3, 1, '2018-07-08', '11:00', 5.00),
+	(4, 1, '2018-07-09', '11:00', 5.00),
+	(5, 1, '2018-07-12', '11:20', 5.20),
+	(6, 1, '2018-07-13', '11:20', 5.20),
+	(7, 2, '2018-07-10', '12:00', 5.00);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.tickets: ~5 rows (приблизительно)
+-- Дамп данных таблицы cinema.tickets: ~8 rows (приблизительно)
 DELETE FROM `tickets`;
 /*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
 INSERT INTO `tickets` (`id`, `session_id`, `seat_id`, `order_id`) VALUES
@@ -368,7 +368,7 @@ INSERT INTO `tickets` (`id`, `session_id`, `seat_id`, `order_id`) VALUES
 	(32, 6, 6, 3);
 /*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.users: ~5 rows (приблизительно)
+-- Дамп данных таблицы cinema.users: ~4 rows (приблизительно)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `login`, `email`, `password`, `role_id`) VALUES

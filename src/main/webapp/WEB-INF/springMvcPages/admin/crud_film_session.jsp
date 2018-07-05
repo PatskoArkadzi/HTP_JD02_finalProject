@@ -21,8 +21,8 @@
 					<div class=col-md-2>TicketPrice</div>
 				</div>
 
-				<form:form commandName="crud_film_session" action="create?user_id=0"
-					method="post">
+				<form:form commandName="crud_film_session"
+					action="create?film_session_id=0" method="post">
 					<div class="row">
 						<div class=col-md-3>
 							<form:select class="form-control" path="film.id" required="true">
