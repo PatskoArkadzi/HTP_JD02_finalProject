@@ -61,7 +61,7 @@ public class TicketsOrderServiceImpl implements TicketsOrderService {
 	@Override
 	public TicketsOrder readUserNonPaidOrder(User user) {
 		for (TicketsOrder order : ticketsOrderDao.readAll("user", user))
-			if (!order.isPaid())
+			if (!order.getIsPaid())
 				return order;
 		return null;
 	}

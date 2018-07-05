@@ -55,7 +55,7 @@ public class InitSeatTag extends TagSupport {
 			TicketsOrder ticketsOrder = new TicketsOrderDaoHibernateImpl().read(seat, filmSession);
 			if (ticketsOrder == null)
 				seat.setState(Seat.State.FREE);
-			else if (ticketsOrder.isPaid()) {
+			else if (ticketsOrder.getIsPaid()) {
 				seat.setState(Seat.State.OCCUPIED);
 			} else {
 				seat.setState(Seat.State.BOOKED);

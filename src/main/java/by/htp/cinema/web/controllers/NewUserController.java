@@ -260,7 +260,7 @@ public class NewUserController {
 	public ModelAndView buyTickets(@RequestParam(REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER_ID) int ticketsOrderid,
 			HttpSession session) {
 		TicketsOrder ticketsOrder = ticketsOrderService.readTicketsOrder(ticketsOrderid);
-		ticketsOrder.setPaid(true);
+		ticketsOrder.setIsPaid(true);
 		ticketsOrderService.updateTicketsOrder(ticketsOrder);
 		timer.setStop(true);
 		session.setAttribute("isTimerNeed", false);

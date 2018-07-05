@@ -80,7 +80,7 @@ public class SeatServiceImpl implements SeatService {
 		TicketsOrder ticketsOrder = ticketsOrderDao.read(seat, filmSession);
 		if (ticketsOrder == null)
 			seat.setState(Seat.State.FREE);
-		else if (ticketsOrder.isPaid())
+		else if (ticketsOrder.getIsPaid())
 			seat.setState(Seat.State.OCCUPIED);
 		else
 			seat.setState(Seat.State.BOOKED);
