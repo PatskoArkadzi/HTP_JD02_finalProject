@@ -76,6 +76,10 @@ public class TicketsOrder implements Serializable {
 		this.id = id;
 	}
 
+	public void setOrderNumber(int orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
 	public int getOrderNumber() {
 		return orderNumber;
 	}

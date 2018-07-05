@@ -28,6 +28,7 @@ import by.htp.cinema.domain.Film;
 import by.htp.cinema.domain.Genre;
 import by.htp.cinema.domain.Role;
 import by.htp.cinema.domain.Ticket;
+import by.htp.cinema.domain.TicketsOrder;
 import by.htp.cinema.domain.User;
 import by.htp.cinema.service.FilmService;
 import by.htp.cinema.service.FilmSessionService;
@@ -39,59 +40,54 @@ import by.htp.cinema.service.TicketsOrderService;
 import by.htp.cinema.service.UserService;
 
 @Controller
-@RequestMapping(value = "/newapp/admin/crud/ticket")
-public class CrudTicketController {
+@RequestMapping(value = "/newapp/admin/crud/order")
+public class CrudTicketsOrderController {
 
-	@Autowired
-	TicketService ticketService;
-	@Autowired
-	FilmSessionService filmSessionService;
-	@Autowired
-	SeatService seatService;
 	@Autowired
 	@Qualifier("ticketOrderService")
 	TicketsOrderService ticketsOrderService;
+	@Autowired
+	UserService userService;
 
 	private static final Logger logger = LogManager.getLogger();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView main() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject(REQUEST_PARAM_FILM_TICKET_LIST, ticketService.getTicketList());
-		mav.addObject(REQUEST_PARAM_FILM_SESSION_LIST, filmSessionService.getFilmSessionList());
-		mav.addObject(REQUEST_PARAM_SEAT_LIST, seatService.getSeatList());
 		mav.addObject(REQUEST_PARAM_FILM_TICKETS_ORDER_LIST, ticketsOrderService.getTicketsOrderList());
-		mav.addObject(REQUEST_PARAM_COMMAND_NAME_CRUD_TICKET, new Ticket());
-		mav.setViewName("springMvcPages/admin/crud_ticket");
+		mav.addObject(REQUEST_PARAM_USER_LIST, userService.getUserList());
+		mav.addObject(REQUEST_PARAM_COMMAND_NAME_CRUD_TICKETS_ORDER, new TicketsOrder());
+		mav.setViewName("springMvcPages/admin/crud_tickets_order");
 		return mav;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_TICKET) Ticket ticket) {
-		validateRequestParamNotNull(ticket.getFilmSession(), ticket.getSeat(), ticket.getOrder());
-		ticketService.createTicket(ticket);
-		return "redirect:/newapp/admin/crud/ticket/";
+	public String create(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_TICKETS_ORDER) TicketsOrder ticketsOrder) {
+		validateRequestParamNotNull(ticketsOrder.getUser(), ticketsOrder.getIsPaid());
+		ticketsOrderService.createTicketsOrder(ticketsOrder);
+		return "redirect:/newapp/admin/crud/order/";
 	}
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET, produces = { "application/json; charset=UTF-8" })
-	public @ResponseBody String read(@RequestParam String id) throws UnsupportedEncodingException {
+	public @ResponseBody String read(@RequestParam String id) {
 		validateRequestParamIdnotNull(getInt(id));
-		Ticket foundTicket = ticketService.readTicket(getInt(id));
-		return "{\"foundTicket\" : \"" + foundTicket + "\"}";
+		System.out.println(id);
+		TicketsOrder foundTicketsOrder = ticketsOrderService.readTicketsOrder(getInt(id));
+		return "{\"foundTicketsOrder\" : \"" + foundTicketsOrder + "\"}";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_TICKET) Ticket ticket) {
-		validateRequestParamNotNull(ticket.getId(), ticket.getFilmSession(), ticket.getSeat(), ticket.getOrder());
-		ticketService.updateTicket(ticket);
-		return "redirect:/newapp/admin/crud/ticket/";
+	public String update(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_TICKETS_ORDER) TicketsOrder ticketsOrder) {
+		validateRequestParamNotNull(ticketsOrder.getId(), ticketsOrder.getOrderNumber(), ticketsOrder.getUser(),
+				ticketsOrder.getIsPaid());
+		ticketsOrderService.updateTicketsOrder(ticketsOrder);
+		return "redirect:/newapp/admin/crud/order/";
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_TICKET) Ticket ticket) {
-		validateRequestParamIdnotNull(ticket.getId());
-		ticketService.deleteTicket(ticket);
-		return "redirect:/newapp/admin/crud/ticket/";
+	public String delete(@ModelAttribute(REQUEST_PARAM_COMMAND_NAME_CRUD_TICKETS_ORDER) TicketsOrder ticketsOrder) {
+		validateRequestParamIdnotNull(ticketsOrder.getId());
+		ticketsOrderService.deleteTicketsOrder(ticketsOrder);
+		return "redirect:/newapp/admin/crud/order/";
 	}
-
 }

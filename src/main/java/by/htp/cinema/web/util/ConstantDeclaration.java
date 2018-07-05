@@ -55,14 +55,15 @@ public final class ConstantDeclaration {
 	public static final String REQUEST_PARAM_FILM_SESSION_ID = "film_session_id";
 	public static final String REQUEST_PARAM_FOUND_FILM_SESSION = "found_film_session";
 	public static final String REQUEST_PARAM_COMMAND_NAME_CRUD_FILM_SESSION = "crud_film_session";
-	
+
 	public static final String REQUEST_PARAM_FILM_TICKET_LIST = "ticketList";
-//	public static final String REQUEST_PARAM_FILM_TICKET_ID = "ticket_id";
+	// public static final String REQUEST_PARAM_FILM_TICKET_ID = "ticket_id";
 	public static final String REQUEST_PARAM_FOUND_TICKET = "found_ticket";
 	public static final String REQUEST_PARAM_COMMAND_NAME_CRUD_TICKET = "crud_ticket";
-	
-	public static final String REQUEST_PARAM_FILM_TICKETS_ORDER_LIST = "ticketsOrderList";
 
+	public static final String REQUEST_PARAM_FILM_TICKETS_ORDER_LIST = "ticketsOrderList";
+	public static final String REQUEST_PARAM_FOUND_TICKETS_ORDER = "found_tickets_order";
+	public static final String REQUEST_PARAM_COMMAND_NAME_CRUD_TICKETS_ORDER = "crud_tickets_order";
 
 	public static final String REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER = "current_user_current_order";
 	public static final String REQUEST_PARAM_CURRENT_USER_CURRENT_ORDER_ID = "current_user_current_order_id";
