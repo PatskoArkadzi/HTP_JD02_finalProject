@@ -66,7 +66,7 @@ INSERT INTO `genres` (`id`, `genreName`) VALUES
 	(9, 'Мелодрама');
 /*!40000 ALTER TABLE `genres` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.orders: ~4 rows (приблизительно)
+-- Дамп данных таблицы cinema.orders: ~5 rows (приблизительно)
 DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`id`, `orderNumber`, `user_id`, `isPaid`) VALUES
@@ -354,7 +354,7 @@ INSERT INTO `sessions` (`id`, `film_id`, `date`, `time`, `ticketPrice`) VALUES
 	(7, 2, '2018-07-10', '12:00', 5.00);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 
--- Дамп данных таблицы cinema.tickets: ~8 rows (приблизительно)
+-- Дамп данных таблицы cinema.tickets: ~5 rows (приблизительно)
 DELETE FROM `tickets`;
 /*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
 INSERT INTO `tickets` (`id`, `session_id`, `seat_id`, `order_id`) VALUES

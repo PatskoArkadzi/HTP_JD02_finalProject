@@ -24,10 +24,12 @@
 	<c:set var="totalPrice" value="0" />
 	<c:forEach items="${current_user_current_order.tickets}" var="ticket"
 		varStatus="loop">
+
 		<c:set var="filmSession" value="${ticket.filmSession}" />
 		<c:set var="seat" value="${ticket.seat}" />
 		<c:set var="ticketPrice" value="${filmSession.ticketPrice}" />
 		<c:set var="totalPrice" value="${totalPrice+ticketPrice}" />
+
 		<div class="row">
 			<div class="col-md-0.5">${loop.count}.</div>
 			<div class="row col-md-11">
