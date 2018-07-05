@@ -22,4 +22,6 @@ public interface FilmSessionService extends Service {
 
 	void deleteFilmSession(FilmSession filmSession);
 
+	boolean isAnyTicketRelatedToFilmSession(int filmSessionId);
+
 }

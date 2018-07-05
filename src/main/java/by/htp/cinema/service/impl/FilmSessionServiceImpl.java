@@ -67,4 +67,9 @@ public class FilmSessionServiceImpl implements FilmSessionService {
 		filmSessionDao.delete(filmSession);
 	}
 
+	@Override
+	public boolean isAnyTicketRelatedToFilmSession(int filmSessionId) {
+		FilmSession filmSession = filmSessionDao.read(filmSessionId);
+		return !filmSession.getTickets().isEmpty();
+	}
 }
